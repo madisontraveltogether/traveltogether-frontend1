@@ -1,22 +1,22 @@
+// src/api.js
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext';
 
 const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL, // Set up this environment variable
-    headers: {
-        'Content-Type': 'application/json',
-    }
+  baseURL: 'https://traveltogether-server-6e176f53a84f.herokuapp.com/api', // Replace with your backend URL
 });
 
+// Attach token for authenticated requests
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
-    if (token) config.headers.Authorization = `Bearer ${token}`;
-    return config;
+  const token = localStorage.getItem('accessToken');
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+  return config;
 });
+
+export const createTrip = async (tripData) => {
+    const response = await api.post('/trips', tripData);
+    return response.data;
+  };
 
 export default api;
-export const login = (credentials) => api.post('/auth/login', credentials);
-export const fetchTrips = () => api.get('/trips');
-export const registerUser = (data) => api.post('/auth/register', data);
-export const loginUser = (credentials) => api.post('/auth/login', credentials);
-export const fetchUserProfile = () => api.get('/auth/me');
