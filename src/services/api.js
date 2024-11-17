@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://traveltogether-server-6e176f53a84f.herokuapp.com/api', // Replace with your backend URL
+  baseURL: 'https://traveltogether-server-6e176f53a84f.herokuapp.com/',
 });
 
 // Attach token for authenticated requests

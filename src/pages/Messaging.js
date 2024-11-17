@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
-import api from '../api';
+import api from '../services/api';
 
 const Messaging = () => {
   const { tripId } = useParams(); // Get tripId from the URL

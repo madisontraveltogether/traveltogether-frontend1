@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, Link } from 'react-router-dom';
-import api from './api';
+import api from './services/api';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';

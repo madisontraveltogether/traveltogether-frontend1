@@ -1,6 +1,6 @@
 // src/pages/TripInvitations.js
 import React, { useEffect, useState } from 'react';
-import api from '../api';
+import api from '../services/api';
 
 const TripInvitations = () => {
   const [invitations, setInvitations] = useState([]);

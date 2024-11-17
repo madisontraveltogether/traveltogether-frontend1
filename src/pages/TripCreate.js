@@ -1,7 +1,7 @@
 // src/pages/TripCreate.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createTrip } from '../api';
+import { createTrip } from '../services/api';
 
 const TripCreate = () => {
   const [name, setName] = useState('');

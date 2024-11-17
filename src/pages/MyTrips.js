@@ -1,7 +1,7 @@
 // src/pages/MyTrips.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api';
+import api from '../services/api';
 
 const MyTrips = () => {
   const [trips, setTrips] = useState([]);
