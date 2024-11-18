@@ -23,7 +23,7 @@ const TripCreate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(FormData)
+    console.log(FormData.entries)
   
     // Ensure name is not empty
     if (!name.trim()) {
