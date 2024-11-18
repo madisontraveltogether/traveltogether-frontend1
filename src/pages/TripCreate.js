@@ -15,7 +15,7 @@ const TripCreate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  console.log(name)
     try {
       // Assuming the API function expects the trip data as an object
       const tripData = { name, location, description, startDate, endDate, privacy, tripType };
