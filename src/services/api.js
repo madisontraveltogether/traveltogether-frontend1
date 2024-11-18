@@ -37,8 +37,8 @@ export const logout = async () => {
 
 // === Trips ===
 export const createTrip = async (tripData) => {
-  const response = await api.post('/trips', tripData); // `tripData` should be an object { name }
-  return response.data; // Assuming response contains the new trip's data
+  const response = await api.post('/trips', tripData);
+  return response.data;
 };
 
 export const getTripById = async (tripId) => {

@@ -13,6 +13,8 @@ const TripDetails = () => {
     const fetchTripDetails = async () => {
       try {
         const response = await api.get(`/trips/${tripId}`);
+        console.log('Trip details response:', response.data); // Debugging
+
         setTrip(response.data);
       } catch (err) {
         setError('Failed to load trip details.');
