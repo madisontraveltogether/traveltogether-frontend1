@@ -1,0 +1,141 @@
+/* General layout */
+.trip-dashboard {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    background-color: #fffdf7;
+  }
+  
+  /* Error message */
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  /* Header section */
+  .trip-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .trip-cover-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+  
+  .trip-title h1 {
+    font-size: 28px;
+    margin: 10px 0;
+    color: #333;
+  }
+  
+  .trip-dates,
+  .trip-location,
+  .trip-description,
+  .trip-organizer {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+  }
+  
+  .location-icon {
+    margin-right: 5px;
+  }
+  
+  /* Attendees section */
+  .attendees-section {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .attendees-section h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .attendees-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #f18f01;
+  }
+  
+  .attendees-avatars {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .attendee-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  /* Announcements section */
+  .announcements-section {
+    margin-top: 30px;
+  }
+  
+  .announcement {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .announcement-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .announcement-user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .announcement-date {
+    font-size: 12px;
+    color: #888;
+    margin-left: auto;
+  }
+  
+  /* Bottom navigation */
+  .bottom-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bottom-navigation button {
+    flex: 1;
+    padding: 10px;
+    margin: 0 5px;
+    font-size: 16px;
+    color: #f18f01;
+    background-color: #fff;
+    border: 1px solid #f18f01;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .bottom-navigation button:hover {
+    background-color: #f18f01;
+    color: #fff;
+  }
+  

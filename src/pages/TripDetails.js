@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import '../css/TripDashboard.css';
 
 const TripDetails = () => {
   const { tripId } = useParams();
   const [trip, setTrip] = useState(null);
-  const [editingField, setEditingField] = useState('');
-  const [formData, setFormData] = useState({});
   const [error, setError] = useState('');
-  const [saving, setSaving] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTripDetails = async () => {
       try {
         const response = await api.get(`/trips/${tripId}`);
         setTrip(response.data);
-        setFormData(response.data);
       } catch (err) {
         setError('Failed to load trip details.');
       }
@@ -24,127 +22,95 @@ const TripDetails = () => {
     fetchTripDetails();
   }, [tripId]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSave = async () => {
-    setSaving(true);
-    try {
-      const response = await api.put(`/trips/${tripId}`, formData);
-      setTrip(response.data); // Update with the saved data
-      setEditingField(''); // Exit edit mode
-    } catch (err) {
-      setError('Failed to save changes. Please try again.');
-    } finally {
-      setSaving(false);
-    }
-  };
-
   if (!trip) return <p>Loading...</p>;
 
   return (
-    <div className="trip-details">
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className="trip-dashboard">
+      {error && <p className="error-message">{error}</p>}
 
-      {/* Trip Name */}
-      <div>
-        <h2>
-          {editingField === 'name' ? (
-            <input
-              type="text"
-              name="name"
-              value={formData.name || ''}
-              onChange={handleInputChange}
-              onBlur={handleSave}
-              disabled={saving}
-            />
-          ) : (
-            <span onClick={() => setEditingField('name')}>{trip.name || 'Click to Edit'}</span>
-          )}
-        </h2>
+      {/* Trip Cover Image */}
+      <div className="trip-header">
+        <img
+          src={trip.coverImage || '/default-cover.jpg'}
+          alt={`${trip.name} Cover`}
+          className="trip-cover-image"
+        />
+        <div className="trip-title">
+          <h1>{trip.name}</h1>
+          <p className="trip-dates">
+            {trip.startDate && trip.endDate
+              ? `${new Date(trip.startDate).toLocaleDateString()} - ${new Date(
+                  trip.endDate
+                ).toLocaleDateString()}`
+              : 'No dates set'}
+          </p>
+          <p className="trip-location">
+            <i className="location-icon" /> {trip.location || 'Location not specified'}
+          </p>
+          <p className="trip-description">{trip.description || 'No description available'}</p>
+          <p className="trip-organizer">
+            Organized by <strong>{trip.organizer?.name || 'Unknown'}</strong>
+          </p>
+        </div>
       </div>
 
-      {/* Trip Description */}
-      <div>
-        <p>
-          {editingField === 'description' ? (
-            <textarea
-              name="description"
-              value={formData.description || ''}
-              onChange={handleInputChange}
-              onBlur={handleSave}
-              disabled={saving}
+      {/* Attendees Section */}
+      <div className="attendees-section">
+        <h2>Attendees</h2>
+        <div className="attendees-stats">
+          <div>
+            <strong>{trip.goingCount || 0}</strong> Going
+          </div>
+          <div>
+            <strong>{trip.maybeCount || 0}</strong> Maybe
+          </div>
+          <div>
+            <strong>{trip.invitedCount || 0}</strong> Invited
+          </div>
+        </div>
+        <div className="attendees-avatars">
+          {trip.attendees?.map((attendee, index) => (
+            <img
+              key={index}
+              src={attendee.avatar || '/default-avatar.jpg'}
+              alt={attendee.name}
+              className="attendee-avatar"
             />
-          ) : (
-            <span onClick={() => setEditingField('description')}>
-              {trip.description || 'Click to Edit'}
-            </span>
-          )}
-        </p>
+          ))}
+        </div>
       </div>
 
-      {/* Other Fields */}
-      <div>
-        <label>
-          Start Date:
-          {editingField === 'startDate' ? (
-            <input
-              type="date"
-              name="startDate"
-              value={formData.startDate || ''}
-              onChange={handleInputChange}
-              onBlur={handleSave}
-              disabled={saving}
-            />
-          ) : (
-            <span onClick={() => setEditingField('startDate')}>
-              {trip.startDate ? new Date(trip.startDate).toLocaleDateString() : 'Click to Edit'}
-            </span>
-          )}
-        </label>
+      {/* Announcements Section */}
+      <div className="announcements-section">
+        <h2>Announcements</h2>
+        {trip.announcements?.length > 0 ? (
+          trip.announcements.map((announcement, index) => (
+            <div key={index} className="announcement">
+              <div className="announcement-header">
+                <img
+                  src={announcement.user?.avatar || '/default-avatar.jpg'}
+                  alt={announcement.user?.name || 'Unknown'}
+                  className="announcement-user-avatar"
+                />
+                <span>{announcement.user?.name || 'Unknown'}</span>
+                <span className="announcement-date">
+                  {new Date(announcement.date).toLocaleString()}
+                </span>
+              </div>
+              <p>{announcement.message}</p>
+            </div>
+          ))
+        ) : (
+          <p>No announcements available.</p>
+        )}
       </div>
 
-      <div>
-        <label>
-          End Date:
-          {editingField === 'endDate' ? (
-            <input
-              type="date"
-              name="endDate"
-              value={formData.endDate || ''}
-              onChange={handleInputChange}
-              onBlur={handleSave}
-              disabled={saving}
-            />
-          ) : (
-            <span onClick={() => setEditingField('endDate')}>
-              {trip.endDate ? new Date(trip.endDate).toLocaleDateString() : 'Click to Edit'}
-            </span>
-          )}
-        </label>
-      </div>
-
-      {/* Privacy */}
-      <div>
-        <label>
-          Privacy:
-          {editingField === 'privacy' ? (
-            <select
-              name="privacy"
-              value={formData.privacy || 'private'}
-              onChange={handleInputChange}
-              onBlur={handleSave}
-              disabled={saving}
-            >
-              <option value="public">Public</option>
-              <option value="private">Private</option>
-            </select>
-          ) : (
-            <span onClick={() => setEditingField('privacy')}>{trip.privacy}</span>
-          )}
-        </label>
+      {/* Bottom Navigation */}
+      <div className="bottom-navigation">
+        <button onClick={() => navigate(`/trip/${tripId}`)}>Trip Home</button>
+        <button onClick={() => navigate(`/trip/${tripId}/plans`)}>Plans</button>
+        <button onClick={() => navigate(`/trip/${tripId}/expenses`)}>Expenses</button>
+        <button onClick={() => navigate(`/trip/${tripId}/messages`)}>Messages</button>
       </div>
     </div>
   );
