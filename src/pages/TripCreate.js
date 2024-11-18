@@ -21,7 +21,7 @@ const TripCreate = () => {
       const response = await createTrip({ name }); // Assuming the backend expects a single object with "name"
 
       // Navigate to the trip details page using the trip ID from the response
-      navigate(`/trip/${response._id}`); // Assuming the response contains `_id` as the trip ID
+      navigate(`/trips/${response._id}`); // Assuming the response contains `_id` as the trip ID
     } catch (err) {
       console.error('Error creating trip:', err);
       setError('Failed to create trip. Please try again.');

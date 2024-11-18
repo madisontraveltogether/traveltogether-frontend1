@@ -91,7 +91,7 @@ const MyTrips = () => {
           ) : (
             <ul>
               {pastTrips.map((trip) => (
-                <li key={trip._id} onClick={() => navigate(`/trip/${trip._id}`)} style={{ cursor: 'pointer', marginBottom: '15px' }}>
+                <li key={trip._id} onClick={() => navigate(`/trips/${trip._id}`)} style={{ cursor: 'pointer', marginBottom: '15px' }}>
                   <img src={trip.coverImage || '/default-cover.jpg'} alt={`${trip.name} cover`} width="100" height="auto" style={{ marginRight: '10px' }} />
                   <h3>{trip.name}</h3>
                   <p>Location: {trip.location || 'Not specified'}</p>
