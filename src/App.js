@@ -23,7 +23,6 @@ import Itinerary from './pages/Itinerary';
 import ErrorBoundary from './components/ErrorBoundary';
 import PasswordReset from './pages/PasswordReset';
 
-
 const ProtectedRoute = ({ user, children }) => {
   return user ? children : <Navigate to="/login" replace />;
 };
@@ -71,6 +70,7 @@ const App = () => {
         </nav>
 
         <Routes>
+          
           {/* Public Routes */}
           <Route path="/" element={<Navigate to={user ? '/my-trips' : '/login'} replace />} />
           <Route path="/login" element={!user ? <Login setUser={setUser} /> : <Navigate to="/my-trips" replace />} />

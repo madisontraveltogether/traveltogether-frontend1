@@ -11,10 +11,13 @@ const Login = ({ setUser }) => {
     e.preventDefault();
     try {
       const response = await api.post('/auth/login', { email, password });
-      localStorage.setItem('accessToken', response.data.accessToken);
-      setUser(response.data.user);
+      console.log(response.data);
     } catch (err) {
-      setError(err.response.data.message || 'Error logging in');
+      if (err.response) {
+        setError(err.response.data.message); // Backend error
+      } else {
+        setError('Network error. Please try again later.'); // Network or CORS error
+      }
     }
   };
 

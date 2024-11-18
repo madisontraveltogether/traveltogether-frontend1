@@ -36,11 +36,9 @@ export const logout = async () => {
 };
 
 // === Trips ===
-export const createTrip = async (formData) => {
-  const response = await api.post('/trips', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data', // Explicitly specify
-    },
+export const createTrip = async (tripData) => {
+  const response = await api.post('/trips', tripData, {
+    headers: { 'Content-Type': 'multipart/form-data' }, // For file uploads
   });
   return response.data;
 };

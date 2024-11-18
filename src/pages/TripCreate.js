@@ -1,7 +1,6 @@
-// src/pages/TripCreate.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createTrip } from '../services/api';
+import { createTrip } from '../services/api'; // Assuming createTrip is your API function
 
 const TripCreate = () => {
   const [name, setName] = useState('');
@@ -11,77 +10,23 @@ const TripCreate = () => {
   const [endDate, setEndDate] = useState('');
   const [privacy, setPrivacy] = useState('private');
   const [tripType, setTripType] = useState('vacation');
-  const [coverImage, setCoverImage] = useState(null);
-  const [guests, setGuests] = useState(['']); // Array for guests
-  const [collaborators, setCollaborators] = useState(['']); // Array for collaborators
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleImageUpload = (e) => {
-    setCoverImage(e.target.files[0]);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(FormData.entries)
-  
-    // Ensure name is not empty
-    if (!name.trim()) {
-      setError('Trip name is required');
-      return;
-    }
-  
+
     try {
-      const formData = new FormData();
-      formData.append('name', name);
-      if (location) formData.append('location', location);
-      if (description) formData.append('description', description);
-      if (startDate) formData.append('startDate', startDate);
-      if (endDate) formData.append('endDate', endDate);
-      formData.append('privacy', privacy);
-      formData.append('tripType', tripType);
-      if (coverImage) formData.append('coverImage', coverImage);
-  
-      guests.filter((guest) => guest.trim()).forEach((guest, index) => {
-        formData.append(`guests[${index}]`, guest);
-      });
-  
-      collaborators.filter((collaborator) => collaborator.trim()).forEach((collaborator, index) => {
-        formData.append(`collaborators[${index}]`, collaborator);
-      });
-  
-      console.log('Submitting trip form with data:');
-      for (let pair of formData.entries()) {
-        console.log(`${pair[0]}: ${pair[1]}`);
-      }
-  
-      const response = await createTrip(formData);
-      navigate(`/trip/${response._id}`);
+      // Assuming the API function expects the trip data as an object
+      const tripData = { name, location, description, startDate, endDate, privacy, tripType };
+      const response = await createTrip(tripData);
+
+      // Navigate to the trip details page after creating the trip
+      navigate(`/trip/${response._id}`); // Assuming the response contains the trip ID as `_id`
     } catch (err) {
       console.error('Error creating trip:', err);
-      setError(err.response?.data?.message || 'Error creating trip');
+      setError('Failed to create trip. Please try again.');
     }
-  };
-  
-
-  const handleGuestChange = (index, value) => {
-    const newGuests = [...guests];
-    newGuests[index] = value;
-    setGuests(newGuests);
-  };
-
-  const handleAddGuest = () => {
-    setGuests([...guests, '']);
-  };
-
-  const handleCollaboratorChange = (index, value) => {
-    const newCollaborators = [...collaborators];
-    newCollaborators[index] = value;
-    setCollaborators(newCollaborators);
-  };
-
-  const handleAddCollaborator = () => {
-    setCollaborators([...collaborators, '']);
   };
 
   return (
@@ -93,27 +38,22 @@ const TripCreate = () => {
           Name (Required):
           <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
         </label>
-
         <label>
           Location:
           <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
         </label>
-
         <label>
           Description:
           <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
         </label>
-
         <label>
           Start Date:
           <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
         </label>
-
         <label>
           End Date:
           <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
         </label>
-
         <label>
           Privacy:
           <select value={privacy} onChange={(e) => setPrivacy(e.target.value)}>
@@ -121,7 +61,6 @@ const TripCreate = () => {
             <option value="private">Private</option>
           </select>
         </label>
-
         <label>
           Trip Type:
           <select value={tripType} onChange={(e) => setTripType(e.target.value)}>
@@ -131,38 +70,6 @@ const TripCreate = () => {
             <option value="adventure">Adventure</option>
           </select>
         </label>
-
-        <label>
-          Cover Image:
-          <input type="file" accept="image/*" onChange={handleImageUpload} />
-        </label>
-
-        <h3>Guests</h3>
-        {guests.map((guest, index) => (
-          <div key={index}>
-            <input
-              type="email"
-              placeholder="Guest email"
-              value={guest}
-              onChange={(e) => handleGuestChange(index, e.target.value)}
-            />
-          </div>
-        ))}
-        <button type="button" onClick={handleAddGuest}>Add Guest</button>
-
-        <h3>Collaborators</h3>
-        {collaborators.map((collaborator, index) => (
-          <div key={index}>
-            <input
-              type="email"
-              placeholder="Collaborator email"
-              value={collaborator}
-              onChange={(e) => handleCollaboratorChange(index, e.target.value)}
-            />
-          </div>
-        ))}
-        <button type="button" onClick={handleAddCollaborator}>Add Collaborator</button>
-
         <button type="submit">Create Trip</button>
       </form>
     </div>
