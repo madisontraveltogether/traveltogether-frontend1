@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import api from '../services/api';
-import './css/Auth.css'; // Import the CSS file
+import '../css/Auth.css'; // Import the CSS file
 
 const Register = ({ setUser }) => {
   const [name, setName] = useState('');
