@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import TripCreate from './pages/TripCreate';
 import MyTrips from './pages/MyTrips';
+import TripDetails from './pages/TripDetails';
 import TripExpenses from './pages/TripExpenses';
 import AddExpense from './pages/AddExpense';
 import ExpenseDetails from './pages/ExpenseDetails';
@@ -82,6 +83,7 @@ const App = () => {
           <Route path="/profile" element={<ProtectedRoute user={user}><Profile user={user} setUser={setUser} /></ProtectedRoute>} />
           <Route path="/create-trip" element={<ProtectedRoute user={user}><TripCreate /></ProtectedRoute>} />
           <Route path="/my-trips" element={<ProtectedRoute user={user}><MyTrips /></ProtectedRoute>} />
+          <Route path="/trips/:tripId" element={<ProtectedRoute user={user}><TripDetails /></ProtectedRoute>} />
           <Route path="/trips/:tripId/expenses" element={<ProtectedRoute user={user}><TripExpenses /></ProtectedRoute>} />
           <Route path="/trips/:tripId/expenses/new" element={<ProtectedRoute user={user}><AddExpense /></ProtectedRoute>} />
           <Route path="/trips/:tripId/expenses/:expenseId" element={<ProtectedRoute user={user}><ExpenseDetails /></ProtectedRoute>} />
