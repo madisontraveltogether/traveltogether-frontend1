@@ -174,4 +174,9 @@ export const getMessages = async (tripId) => {
   return response.data;
 };
 
+export const resetPassword = async (oldPassword, newPassword) => {
+  const response = await api.patch('/auth/reset-password', { oldPassword, newPassword });
+  return response.data;
+};
+
 export default api;
