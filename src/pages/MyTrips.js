@@ -1,7 +1,7 @@
-// src/pages/MyTrips.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import '../css/MyTrips.css'; // Import the new CSS file
 
 const MyTrips = () => {
   const [trips, setTrips] = useState([]);
@@ -38,22 +38,22 @@ const MyTrips = () => {
   });
 
   const now = new Date();
-  const upcomingTrips = filteredTrips.filter(trip => new Date(trip.startDate) > now);
-  const pastTrips = filteredTrips.filter(trip => new Date(trip.startDate) <= now);
+  const upcomingTrips = filteredTrips.filter((trip) => new Date(trip.startDate) > now);
+  const pastTrips = filteredTrips.filter((trip) => new Date(trip.startDate) <= now);
 
   return (
-    <div>
-      <h2>My Trips</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button onClick={handleCreateNewTrip}>Create New Trip</button>
+    <div className="my-trips-container">
+      <div className="my-trips-header">
+        <h2>My Trips</h2>
+        <button onClick={handleCreateNewTrip}>Create New Trip</button>
+      </div>
 
-      <div style={{ marginTop: '20px' }}>
+      <div className="search-filter-container">
         <input
           type="text"
           placeholder="Search trips..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={{ marginRight: '10px' }}
         />
         <select value={filter} onChange={(e) => setFilter(e.target.value)}>
           <option value="all">All</option>
@@ -69,38 +69,66 @@ const MyTrips = () => {
       ) : (
         <div>
           <h3>Upcoming Trips</h3>
-          {upcomingTrips.length === 0 ? (
-            <p>No upcoming trips found.</p>
-          ) : (
-            <ul>
-              {upcomingTrips.map((trip) => (
-                <li key={trip._id} onClick={() => navigate(`/trip/${trip._id}`)} style={{ cursor: 'pointer', marginBottom: '15px' }}>
-                  <img src={trip.coverImage || '/default-cover.jpg'} alt={`${trip.name} cover`} width="100" height="auto" style={{ marginRight: '10px' }} />
-                  <h3>{trip.name}</h3>
-                  <p>Location: {trip.location || 'Not specified'}</p>
-                  <p>Dates: {trip.startDate ? new Date(trip.startDate).toLocaleDateString() : 'N/A'} - {trip.endDate ? new Date(trip.endDate).toLocaleDateString() : 'N/A'}</p>
-                  <p>Privacy: {trip.privacy}</p>
+          <ul className="trip-list">
+            {upcomingTrips.length === 0 ? (
+              <p>No upcoming trips found.</p>
+            ) : (
+              upcomingTrips.map((trip) => (
+                <li key={trip._id} onClick={() => navigate(`/trip/${trip._id}`)}>
+                  <img
+                    src={trip.coverImage || '/default-cover.jpg'}
+                    alt={`${trip.name} cover`}
+                  />
+                  <div>
+                    <h3>{trip.name}</h3>
+                    <p>Location: {trip.location || 'Not specified'}</p>
+                    <p>
+                      Dates:{' '}
+                      {trip.startDate
+                        ? new Date(trip.startDate).toLocaleDateString()
+                        : 'N/A'}{' '}
+                      -{' '}
+                      {trip.endDate
+                        ? new Date(trip.endDate).toLocaleDateString()
+                        : 'N/A'}
+                    </p>
+                    <p>Privacy: {trip.privacy}</p>
+                  </div>
                 </li>
-              ))}
-            </ul>
-          )}
+              ))
+            )}
+          </ul>
 
           <h3>Past Trips</h3>
-          {pastTrips.length === 0 ? (
-            <p>No past trips found.</p>
-          ) : (
-            <ul>
-              {pastTrips.map((trip) => (
-                <li key={trip._id} onClick={() => navigate(`/trips/${trip._id}`)} style={{ cursor: 'pointer', marginBottom: '15px' }}>
-                  <img src={trip.coverImage || '/default-cover.jpg'} alt={`${trip.name} cover`} width="100" height="auto" style={{ marginRight: '10px' }} />
-                  <h3>{trip.name}</h3>
-                  <p>Location: {trip.location || 'Not specified'}</p>
-                  <p>Dates: {trip.startDate ? new Date(trip.startDate).toLocaleDateString() : 'N/A'} - {trip.endDate ? new Date(trip.endDate).toLocaleDateString() : 'N/A'}</p>
-                  <p>Privacy: {trip.privacy}</p>
+          <ul className="trip-list">
+            {pastTrips.length === 0 ? (
+              <p>No past trips found.</p>
+            ) : (
+              pastTrips.map((trip) => (
+                <li key={trip._id} onClick={() => navigate(`/trip/${trip._id}`)}>
+                  <img
+                    src={trip.coverImage || '/default-cover.jpg'}
+                    alt={`${trip.name} cover`}
+                  />
+                  <div>
+                    <h3>{trip.name}</h3>
+                    <p>Location: {trip.location || 'Not specified'}</p>
+                    <p>
+                      Dates:{' '}
+                      {trip.startDate
+                        ? new Date(trip.startDate).toLocaleDateString()
+                        : 'N/A'}{' '}
+                      -{' '}
+                      {trip.endDate
+                        ? new Date(trip.endDate).toLocaleDateString()
+                        : 'N/A'}
+                    </p>
+                    <p>Privacy: {trip.privacy}</p>
+                  </div>
                 </li>
-              ))}
-            </ul>
-          )}
+              ))
+            )}
+          </ul>
         </div>
       )}
     </div>

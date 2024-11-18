@@ -1,42 +1,53 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import '../css/Auth.css'; // Import the CSS file
 
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await api.post('/auth/login', { email, password });
-      console.log(response.data);
-
-      // Assuming the response contains user data and tokens
-      setUser(response.data.user); // Update the user state
-      localStorage.setItem('accessToken', response.data.accessToken); // Save token to localStorage
-      
-      // Navigate to the user dashboard
+      setUser(response.data.user);
+      localStorage.setItem('accessToken', response.data.accessToken);
       navigate('/mytrips');
     } catch (err) {
-      if (err.response) {
-        setError(err.response.data.message); // Backend error
-      } else {
-        setError('Network error. Please try again later.'); // Network or CORS error
-      }
+      setError(err.response?.data?.message || 'Network error. Please try again.');
     }
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-      <button type="submit">Login</button>
-    </form>
+    <div className="auth-container">
+      <form className="auth-form" onSubmit={handleLogin}>
+        <h2>Login</h2>
+        {error && <p>{error}</p>}
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit">Login</button>
+      </form>
+      <div className="auth-footer">
+        <p>
+          Don't have an account? <a href="/register">Register here</a>
+        </p>
+      </div>
+    </div>
   );
 };
 
