@@ -23,6 +23,13 @@ const TripCreate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // Ensure name is not empty
+    if (!name.trim()) {
+      setError('Trip name is required');
+      return;
+    }
+  
     try {
       const formData = new FormData();
       formData.append('name', name);
@@ -33,21 +40,28 @@ const TripCreate = () => {
       formData.append('privacy', privacy);
       formData.append('tripType', tripType);
       if (coverImage) formData.append('coverImage', coverImage);
-
-      // Add guests and collaborators if they are entered
-      guests.forEach((guest, index) => {
-        if (guest) formData.append(`guests[${index}]`, guest);
+  
+      guests.filter((guest) => guest.trim()).forEach((guest, index) => {
+        formData.append(`guests[${index}]`, guest);
       });
-      collaborators.forEach((collaborator, index) => {
-        if (collaborator) formData.append(`collaborators[${index}]`, collaborator);
+  
+      collaborators.filter((collaborator) => collaborator.trim()).forEach((collaborator, index) => {
+        formData.append(`collaborators[${index}]`, collaborator);
       });
-
+  
+      console.log('Submitting trip form with data:');
+      for (let pair of formData.entries()) {
+        console.log(`${pair[0]}: ${pair[1]}`);
+      }
+  
       const response = await createTrip(formData);
       navigate(`/trip/${response._id}`);
     } catch (err) {
+      console.error('Error creating trip:', err);
       setError(err.response?.data?.message || 'Error creating trip');
     }
   };
+  
 
   const handleGuestChange = (index, value) => {
     const newGuests = [...guests];
