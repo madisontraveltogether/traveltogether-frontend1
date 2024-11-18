@@ -15,10 +15,14 @@ const TripCreate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Trip Data Sent:', { name, location, description, startDate, endDate, privacy, tripType });
+
     try {
       // Assuming the API function expects the trip data as an object
       const tripData = { name, location, description, startDate, endDate, privacy, tripType };
       const response = await createTrip(tripData);
+      console.log('Trip Data Sent:', { name, location, description, startDate, endDate, privacy, tripType });
+
 
       // Navigate to the trip details page after creating the trip
       navigate(`/trip/${response._id}`); // Assuming the response contains the trip ID as `_id`
