@@ -37,10 +37,11 @@ export const logout = async () => {
 
 // === Trips ===
 export const createTrip = async (tripData) => {
-
-  const response = await api.post('/trips', tripData)
-  console.log(tripData);
-
+  const response = await api.post('/trips', tripData, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
   return response.data;
 };
 
