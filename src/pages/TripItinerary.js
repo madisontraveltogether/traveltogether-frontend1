@@ -10,7 +10,7 @@ const Itinerary = () => {
   const navigate = useNavigate();
   const [itinerary, setItinerary] = useState([]);
   const [error, setError] = useState('');
-  const [activeTab, setActiveTab] = useState('itinerary'); // "itinerary" or "suggestions"
+  const [activeTab, setActiveTab] = useState('itinerary'); // Switch between 'itinerary' and 'suggestions'
 
   useEffect(() => {
     const fetchItinerary = async () => {
@@ -24,54 +24,6 @@ const Itinerary = () => {
 
     fetchItinerary();
   }, [tripId]);
-
-  const renderEmptyState = () => {
-    if (activeTab === 'itinerary') {
-      return (
-        <div className="empty-state">
-          <img
-            src="/assets/itinerary-empty-icon.svg"
-            alt="Adventure Awaits"
-            className="empty-icon"
-          />
-          <h3>Adventure Awaits</h3>
-          <p>
-            Add your first event or suggest an event to start building your
-            itinerary.
-          </p>
-          <button
-            className="add-event-btn"
-            onClick={() => navigate(`/trips/${tripId}/itinerary/new`)}
-          >
-            + Add Event
-          </button>
-        </div>
-      );
-    }
-
-    if (activeTab === 'suggestions') {
-      return (
-        <div className="empty-state">
-          <img
-            src="/assets/suggestions-empty-icon.svg"
-            alt="Got an Idea?"
-            className="empty-icon"
-          />
-          <h3>Got an Idea?</h3>
-          <p>
-            Add suggestions so members can discuss and vote on events. Then, you
-            can add your favorites to the itinerary.
-          </p>
-          <button
-            className="add-suggestion-btn"
-            onClick={() => navigate(`/trips/${tripId}/itinerary/suggestions/new`)}
-          >
-            + Add Suggestion
-          </button>
-        </div>
-      );
-    }
-  };
 
   return (
     <div className="itinerary-page">
@@ -94,39 +46,67 @@ const Itinerary = () => {
       {error && <p className="error">{error}</p>}
 
       {itinerary.length === 0 ? (
-        renderEmptyState()
+        <div className="empty-state">
+          <img
+            src={
+              activeTab === 'itinerary'
+                ? '/assets/itinerary-empty-icon.svg'
+                : '/assets/suggestions-empty-icon.svg'
+            }
+            alt="Empty State"
+            className="empty-icon"
+          />
+          <h3>{activeTab === 'itinerary' ? 'Adventure Awaits' : 'Got an Idea?'}</h3>
+          <p>
+            {activeTab === 'itinerary'
+              ? 'Add your first event or suggest an event to start building your itinerary.'
+              : 'Add suggestions so members can discuss and vote on events. Then, you can add your favorites to the itinerary.'}
+          </p>
+          <button
+            className="add-btn"
+            onClick={() =>
+              navigate(
+                activeTab === 'itinerary'
+                  ? `/trips/${tripId}/itinerary/new`
+                  : `/trips/${tripId}/itinerary/suggestions/new`
+              )
+            }
+          >
+            + {activeTab === 'itinerary' ? 'Add Event' : 'Add Suggestion'}
+          </button>
+        </div>
       ) : (
         <div className="itinerary-list">
-          {activeTab === 'itinerary' &&
-            itinerary.map((item) => (
-              <div key={item._id} className="itinerary-item">
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-                <p>
-                  {new Date(item.startTime).toLocaleString()} -{' '}
-                  {new Date(item.endTime).toLocaleString()}
-                </p>
+          {itinerary.map((item, index) => (
+            <div key={index} className="itinerary-card">
+              <div className="itinerary-header">
+                <span className="itinerary-day">Day {item.day}</span>
+                <span className="itinerary-date">
+                  {new Date(item.date).toLocaleDateString()}
+                </span>
               </div>
-            ))}
-          {activeTab === 'suggestions' &&
-            itinerary.flatMap((item) =>
-              item.suggestions.map((suggestion) => (
-                <div key={suggestion._id} className="suggestion-item">
-                  <h3>{suggestion.name}</h3>
-                  <p>{suggestion.description}</p>
-                  <button
-                    onClick={() =>
-                      handleVote(item._id, suggestion._id)
-                    }
-                  >
-                    Vote
-                  </button>
-                  <p>Votes: {suggestion.votes}</p>
+              <div className="itinerary-body">
+                <img
+                  src={item.image || '/assets/default-image.jpg'}
+                  alt={item.title}
+                  className="itinerary-image"
+                />
+                <div className="itinerary-details">
+                  <h3>{item.title}</h3>
+                  <p>Suggested by <strong>{item.suggestedBy}</strong></p>
+                  <p>{item.description}</p>
                 </div>
-              ))
-            )}
+              </div>
+              <div className="itinerary-footer">
+                <span className="comments">0 Comments ↩️</span>
+                <button className="vote-btn">👍</button>
+                <button className="vote-btn">👎</button>
+              </div>
+            </div>
+          ))}
         </div>
       )}
+
       <BottomNav />
     </div>
   );
