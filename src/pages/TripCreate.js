@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createTrip } from '../services/api'; // Assuming this sends a POST request to create a trip
+import TopBar from '../components/TopBar';
+import BottomNav from '../components/BottomNav';
 
 const TripCreate = () => {
   const [name, setName] = useState(''); // Only trip name is required

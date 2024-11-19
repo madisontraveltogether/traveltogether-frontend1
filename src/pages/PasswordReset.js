@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import api from '../services/api';
+import TopBar from '../components/TopBar';
+
 
 const PasswordReset = () => {
   const [oldPassword, setOldPassword] = useState('');

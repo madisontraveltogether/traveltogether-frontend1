@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import '../css/MyTrips.css'; // Import the new CSS file
+import '../css/MyTrips.css'; 
+import TopBar from '../components/TopBar';
 
 const MyTrips = () => {
   const [trips, setTrips] = useState([]);
