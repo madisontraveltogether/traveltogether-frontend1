@@ -139,3 +139,15 @@
     color: #fff;
   }
   
+  .edit-icon {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #f18f01;
+    font-size: 16px;
+    vertical-align: middle;
+  }
+  
+  .edit-icon:hover {
+    color: #d97300;
+  }
+  

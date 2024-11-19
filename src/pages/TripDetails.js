@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import api from '../services/api';
 import '../css/TripDashboard.css';
 
-const TripDetails = () => {
+const TripDetails = ({ currentUser }) => {
   const { tripId } = useParams();
   const [trip, setTrip] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [editingField, setEditingField] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const fetchTripDetails = async () => {
       try {
         const response = await api.get(`/trips/${tripId}`);
         setTrip(response.data);
+        setFormData(response.data); // Initialize form data
       } catch (err) {
         setError('Failed to load trip details.');
       }
@@ -22,7 +25,27 @@ const TripDetails = () => {
     fetchTripDetails();
   }, [tripId]);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const response = await api.put(`/trips/${tripId}`, formData);
+      setTrip(response.data); // Update trip data
+      setEditingField(''); // Exit edit mode
+    } catch (err) {
+      setError('Failed to save changes. Please try again.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
   if (!trip) return <p>Loading...</p>;
+
+  const isOrganizer = currentUser?.id === trip.organizer?.id; // Check if current user is the organizer
 
   return (
     <div className="trip-dashboard">
@@ -36,18 +59,117 @@ const TripDetails = () => {
           className="trip-cover-image"
         />
         <div className="trip-title">
-          <h1>{trip.name}</h1>
+          <h1>
+            {editingField === 'name' ? (
+              <input
+                type="text"
+                name="name"
+                value={formData.name || ''}
+                onChange={handleInputChange}
+                onBlur={handleSave}
+                disabled={saving}
+              />
+            ) : (
+              <>
+                {trip.name}
+                {isOrganizer && (
+                  <i
+                    className="edit-icon"
+                    onClick={() => setEditingField('name')}
+                  >
+                    ✏️
+                  </i>
+                )}
+              </>
+            )}
+          </h1>
           <p className="trip-dates">
-            {trip.startDate && trip.endDate
-              ? `${new Date(trip.startDate).toLocaleDateString()} - ${new Date(
-                  trip.endDate
-                ).toLocaleDateString()}`
-              : 'No dates set'}
+            {editingField === 'dates' ? (
+              <>
+                <input
+                  type="date"
+                  name="startDate"
+                  value={formData.startDate || ''}
+                  onChange={handleInputChange}
+                  disabled={saving}
+                />
+                {' - '}
+                <input
+                  type="date"
+                  name="endDate"
+                  value={formData.endDate || ''}
+                  onChange={handleInputChange}
+                  disabled={saving}
+                />
+                <button onClick={handleSave} disabled={saving}>
+                  Save
+                </button>
+              </>
+            ) : (
+              <>
+                {trip.startDate && trip.endDate
+                  ? `${new Date(trip.startDate).toLocaleDateString()} - ${new Date(
+                      trip.endDate
+                    ).toLocaleDateString()}`
+                  : 'No dates set'}
+                {isOrganizer && (
+                  <i
+                    className="edit-icon"
+                    onClick={() => setEditingField('dates')}
+                  >
+                    ✏️
+                  </i>
+                )}
+              </>
+            )}
           </p>
           <p className="trip-location">
-            <i className="location-icon" /> {trip.location || 'Location not specified'}
+            {editingField === 'location' ? (
+              <input
+                type="text"
+                name="location"
+                value={formData.location || ''}
+                onChange={handleInputChange}
+                onBlur={handleSave}
+                disabled={saving}
+              />
+            ) : (
+              <>
+                <i className="location-icon" /> {trip.location || 'Click to Edit'}
+                {isOrganizer && (
+                  <i
+                    className="edit-icon"
+                    onClick={() => setEditingField('location')}
+                  >
+                    ✏️
+                  </i>
+                )}
+              </>
+            )}
           </p>
-          <p className="trip-description">{trip.description || 'No description available'}</p>
+          <p className="trip-description">
+            {editingField === 'description' ? (
+              <textarea
+                name="description"
+                value={formData.description || ''}
+                onChange={handleInputChange}
+                onBlur={handleSave}
+                disabled={saving}
+              />
+            ) : (
+              <>
+                {trip.description || 'Click to Edit'}
+                {isOrganizer && (
+                  <i
+                    className="edit-icon"
+                    onClick={() => setEditingField('description')}
+                  >
+                    ✏️
+                  </i>
+                )}
+              </>
+            )}
+          </p>
           <p className="trip-organizer">
             Organized by <strong>{trip.organizer?.name || 'Unknown'}</strong>
           </p>
@@ -82,35 +204,29 @@ const TripDetails = () => {
 
       {/* Announcements Section */}
       <div className="announcements-section">
-        <h2>Announcements</h2>
+        <h3>Announcements</h3>
         {trip.announcements?.length > 0 ? (
-          trip.announcements.map((announcement, index) => (
-            <div key={index} className="announcement">
+          trip.announcements.map((announcement) => (
+            <div key={announcement.id || announcement._id} className="announcement">
               <div className="announcement-header">
-                <img
-                  src={announcement.user?.avatar || '/default-avatar.jpg'}
-                  alt={announcement.user?.name || 'Unknown'}
-                  className="announcement-user-avatar"
-                />
-                <span>{announcement.user?.name || 'Unknown'}</span>
-                <span className="announcement-date">
-                  {new Date(announcement.date).toLocaleString()}
-                </span>
+                <img src={announcement.user?.avatar || 'default-avatar.jpg'} alt={announcement.user?.name || 'Unknown user'} />
+                <span>{announcement.user?.name || 'Unknown user'}</span>
+                <span>{new Date(announcement.date || Date.now()).toLocaleString()}</span>
               </div>
-              <p>{announcement.message}</p>
+              <p>{announcement.message || 'No message provided'}</p>
             </div>
           ))
         ) : (
-          <p>No announcements available.</p>
+          <p>No announcements yet.</p>
         )}
       </div>
 
       {/* Bottom Navigation */}
-      <div className="bottom-navigation">
-        <button onClick={() => navigate(`/trip/${tripId}`)}>Trip Home</button>
-        <button onClick={() => navigate(`/trip/${tripId}/plans`)}>Plans</button>
-        <button onClick={() => navigate(`/trip/${tripId}/expenses`)}>Expenses</button>
-        <button onClick={() => navigate(`/trip/${tripId}/messages`)}>Messages</button>
+      <div className="bottom-nav">
+        <button onClick={() => navigate(`/trips/${tripId}`)}>Trip Home</button>
+        <button onClick={() => navigate(`/trips/${tripId}/plans`)}>Plans</button>
+        <button onClick={() => navigate(`/trips/${tripId}/expenses`)}>Expenses</button>
+        <button onClick={() => navigate(`/trips/${tripId}/messages`)}>Messages</button>
       </div>
     </div>
   );
