@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../services/api';
 import '../css/TripDashboard.css';
+import { useNavigate } from 'react-router-dom';
 
 const TripDetails = ({ currentUser }) => {
   const { tripId } = useParams();
@@ -10,6 +11,8 @@ const TripDetails = ({ currentUser }) => {
   const [editingField, setEditingField] = useState('');
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchTripDetails = async () => {
