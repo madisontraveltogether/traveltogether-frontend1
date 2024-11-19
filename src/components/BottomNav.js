@@ -6,7 +6,7 @@ const BottomNav = () => {
 
   return (
     <div style={styles.navContainer}>
-      <NavLink to={`/trips/${tripId}/details`} style={({ isActive }) => isActive ? styles.activeLink : styles.link}>
+      <NavLink to={`/trips/${tripId}`} style={({ isActive }) => isActive ? styles.activeLink : styles.link}>
         <img src="path-to-home-icon.png" alt="Home" style={styles.icon} />
         <span>Trip Home</span>
       </NavLink>

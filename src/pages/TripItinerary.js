@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import '../css/Itinerary.css';
 import TopBar from '../components/TopBar';
@@ -7,8 +7,10 @@ import BottomNav from '../components/BottomNav';
 
 const Itinerary = () => {
   const { tripId } = useParams();
+  const navigate = useNavigate();
   const [itinerary, setItinerary] = useState([]);
   const [error, setError] = useState('');
+  const [activeTab, setActiveTab] = useState('itinerary'); // "itinerary" or "suggestions"
 
   useEffect(() => {
     const fetchItinerary = async () => {
@@ -23,54 +25,109 @@ const Itinerary = () => {
     fetchItinerary();
   }, [tripId]);
 
-  const handleVote = async (itemId, suggestionId) => {
-    try {
-      await api.post(`/trips/${tripId}/itinerary/${itemId}/suggestions/${suggestionId}/vote`);
-      const updatedItinerary = itinerary.map((item) =>
-        item._id === itemId
-          ? {
-              ...item,
-              suggestions: item.suggestions.map((suggestion) =>
-                suggestion._id === suggestionId
-                  ? { ...suggestion, votes: suggestion.votes + 1 }
-                  : suggestion
-              ),
-            }
-          : item
+  const renderEmptyState = () => {
+    if (activeTab === 'itinerary') {
+      return (
+        <div className="empty-state">
+          <img
+            src="/assets/itinerary-empty-icon.svg"
+            alt="Adventure Awaits"
+            className="empty-icon"
+          />
+          <h3>Adventure Awaits</h3>
+          <p>
+            Add your first event or suggest an event to start building your
+            itinerary.
+          </p>
+          <button
+            className="add-event-btn"
+            onClick={() => navigate(`/trips/${tripId}/itinerary/new`)}
+          >
+            + Add Event
+          </button>
+        </div>
       );
-      setItinerary(updatedItinerary);
-    } catch (err) {
-      setError('Failed to vote on suggestion.');
+    }
+
+    if (activeTab === 'suggestions') {
+      return (
+        <div className="empty-state">
+          <img
+            src="/assets/suggestions-empty-icon.svg"
+            alt="Got an Idea?"
+            className="empty-icon"
+          />
+          <h3>Got an Idea?</h3>
+          <p>
+            Add suggestions so members can discuss and vote on events. Then, you
+            can add your favorites to the itinerary.
+          </p>
+          <button
+            className="add-suggestion-btn"
+            onClick={() => navigate(`/trips/${tripId}/itinerary/suggestions/new`)}
+          >
+            + Add Suggestion
+          </button>
+        </div>
+      );
     }
   };
 
   return (
-    <div className="itinerary">
-      <TopBar title="Itinerary" />
+    <div className="itinerary-page">
+      <TopBar title={activeTab === 'itinerary' ? 'Itinerary' : 'Suggestions'} />
+      <div className="tabs">
+        <button
+          className={activeTab === 'itinerary' ? 'active' : ''}
+          onClick={() => setActiveTab('itinerary')}
+        >
+          Itinerary
+        </button>
+        <button
+          className={activeTab === 'suggestions' ? 'active' : ''}
+          onClick={() => setActiveTab('suggestions')}
+        >
+          Suggestions
+        </button>
+      </div>
+
       {error && <p className="error">{error}</p>}
-      <div className="itinerary-list">
-        {itinerary.map((item) => (
-          <div key={item._id} className="itinerary-item">
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
-            <p>
-              {new Date(item.startTime).toLocaleString()} - {new Date(item.endTime).toLocaleString()}
-            </p>
-            <div className="suggestions">
-              <h4>Suggestions</h4>
-              {item.suggestions.map((suggestion) => (
+
+      {itinerary.length === 0 ? (
+        renderEmptyState()
+      ) : (
+        <div className="itinerary-list">
+          {activeTab === 'itinerary' &&
+            itinerary.map((item) => (
+              <div key={item._id} className="itinerary-item">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+                <p>
+                  {new Date(item.startTime).toLocaleString()} -{' '}
+                  {new Date(item.endTime).toLocaleString()}
+                </p>
+              </div>
+            ))}
+          {activeTab === 'suggestions' &&
+            itinerary.flatMap((item) =>
+              item.suggestions.map((suggestion) => (
                 <div key={suggestion._id} className="suggestion-item">
-                  <p>{suggestion.name}</p>
-                  <button onClick={() => handleVote(item._id, suggestion._id)}>Vote</button>
+                  <h3>{suggestion.name}</h3>
+                  <p>{suggestion.description}</p>
+                  <button
+                    onClick={() =>
+                      handleVote(item._id, suggestion._id)
+                    }
+                  >
+                    Vote
+                  </button>
                   <p>Votes: {suggestion.votes}</p>
                 </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+              ))
+            )}
+        </div>
+      )}
       <BottomNav />
-
     </div>
   );
 };
