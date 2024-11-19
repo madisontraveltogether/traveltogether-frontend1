@@ -1,0 +1,36 @@
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #fff;
+    padding: 0.5rem 0;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  .bottom-nav button {
+    background: none;
+    border: none;
+    color: #666;
+    text-align: center;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  
+  .bottom-nav button.active,
+  .bottom-nav button:hover {
+    color: #ff7e1a;
+  }
+  
+  .bottom-nav button span {
+    margin-top: 0.3rem;
+    font-size: 0.75rem;
+  }
+  

@@ -5,6 +5,7 @@ import '../css/TripDashboard.css';
 import TopBar from '../components/TopBar';
 import BottomNav from '../components/BottomNav';
 
+
 const TripDetails = ({ currentUser }) => {
   const { tripId } = useParams();
   const [trip, setTrip] = useState(null);

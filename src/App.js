@@ -57,21 +57,6 @@ const App = () => {
   return (
     <ErrorBoundary>
       <Router>
-        <nav>
-          {user ? (
-            <>
-              <span>Welcome, {user.name}</span>
-              <Link to="/my-trips">My Trips</Link>
-              <Link to="/profile">Profile</Link>
-              <button onClick={handleLogout}>Logout</button>
-            </>
-          ) : (
-            <>
-              <Link to="/login">Login</Link> | <Link to="/register">Register</Link>
-            </>
-          )}
-        </nav>
-
         <Routes>
           
           {/* Public Routes */}
@@ -95,7 +80,7 @@ const App = () => {
           <Route path="/trips/:tripId/tasks" element={<ProtectedRoute user={user}><TripTasks /></ProtectedRoute>} />
           <Route path="/trips/:tripId/tasks/new" element={<ProtectedRoute user={user}><AddTask /></ProtectedRoute>} />
           <Route path="/trips/:tripId/tasks/:taskId" element={<ProtectedRoute user={user}><TaskDetails /></ProtectedRoute>} />
-          <Route path="/trips/:tripId/announcements" element={<ProtectedRoute user={user}><Announcements /></ProtectedRoute>} />
+          <Route path="/announcements" element={<ProtectedRoute user={user}><Announcements /></ProtectedRoute>} />
           <Route path="/trips/:tripId/messages" element={<ProtectedRoute user={user}><Messaging /></ProtectedRoute>} />
           <Route path="/trips/:tripId/guests" element={<ProtectedRoute user={user}><GuestList /></ProtectedRoute>} />
           <Route path="/trips/:tripId/balance-report" element={<ProtectedRoute user={user}><BalanceReport /></ProtectedRoute>} />

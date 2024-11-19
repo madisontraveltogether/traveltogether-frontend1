@@ -1,24 +1,39 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle, faBell } from '@fortawesome/free-solid-svg-icons';
 
-const TopBar = ({ title, trips }) => {
+const TopBar = ({ title, trips, user }) => {
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleTripClick = (tripId) => {
-    navigate(`/trips/${tripId}/details`);
+    navigate(`/trips/${tripId}`);
     setShowDropdown(false); // Close dropdown
   };
 
   return (
     <div style={styles.topBar}>
-      <img
-        src="path-to-profile-picture.jpg"
-        alt="Profile"
-        style={styles.profilePic}
-        onClick={() => navigate('/profile')}
-      />
+      {/* Profile Picture or Default Icon */}
+      {user?.profilePicture ? (
+        <img
+          src={user.profilePicture}
+          alt="Profile"
+          style={styles.profilePic}
+          onClick={() => navigate('/profile')}
+        />
+      ) : (
+        <FontAwesomeIcon
+          icon={faUserCircle}
+          style={styles.profileIcon}
+          onClick={() => navigate('/profile')}
+        />
+      )}
+
+      {/* Page Title */}
       <h1 style={styles.title}>{title}</h1>
+
+      {/* My Trips Dropdown */}
       <div style={styles.myTripsContainer}>
         <button onClick={() => setShowDropdown(!showDropdown)} style={styles.myTripsButton}>
           My Trips
@@ -41,20 +56,43 @@ const TopBar = ({ title, trips }) => {
           </div>
         )}
       </div>
-      <img
-        src="path-to-bell-icon.png"
-        alt="Notifications"
+
+      {/* Notifications Icon */}
+      <FontAwesomeIcon
+        icon={faBell}
         style={styles.notificationIcon}
-        onClick={() => navigate('/notifications')}
+        onClick={() => navigate('/announcements')}
       />
     </div>
   );
 };
 
 const styles = {
-  topBar: { /* same as before */ },
-  profilePic: { /* same as before */ },
-  title: { /* same as before */ },
+  topBar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '1rem',
+    background: '#fff',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  },
+  profilePic: {
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
+    cursor: 'pointer',
+  },
+  profileIcon: {
+    fontSize: '40px',
+    color: '#ccc',
+    cursor: 'pointer',
+  },
+  title: {
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    flexGrow: 1,
+    textAlign: 'center',
+  },
   myTripsContainer: {
     position: 'relative',
   },
@@ -82,7 +120,11 @@ const styles = {
     textAlign: 'left',
     width: '100%',
   },
-  notificationIcon: { /* same as before */ },
+  notificationIcon: {
+    fontSize: '24px',
+    color: '#666',
+    cursor: 'pointer',
+  },
 };
 
 export default TopBar;
