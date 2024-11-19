@@ -10,7 +10,7 @@ const Messaging = () => {
   const [typingUsers, setTypingUsers] = useState([]);
   const [user, setUser] = useState(null); // Store user info
   const [onlineUsers, setOnlineUsers] = useState({});
-  const socket = useRef(null);
+  const socket = io(process.env.REACT_APP_SOCKET_URL || 'https://www.gettraveltogether.com/');
   const messageEndRef = useRef(null);
 
   // Scroll to the bottom of the chat
@@ -75,21 +75,20 @@ const Messaging = () => {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
-
-    const messageData = { content: newMessage, tripId };
-
+  
+    const messageData = { content: newMessage };
+  
     try {
-      const response = await api.post(`/trips/${tripId}/messages`, messageData);
-      socket.current.emit('sendMessage', {
-        ...response.data,
-        userId: user._id,
-        name: user.name,
+      const response = await api.post(`/trips/${tripId}/messages`, messageData, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
       });
+      socket.current.emit('sendMessage', response.data);
       setNewMessage('');
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error('Error sending message:', error.response?.data || error.message);
     }
   };
+  
 
   const handleTyping = () => {
     socket.current.emit('typing', { tripId, userId: user._id, userName: user.name });
