@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../services/api';
+import TopBar from '../components/TopBar';
+import BottomNav from '../components/BottomNav';
 
 const GuestList = () => {
   const { tripId } = useParams();
@@ -88,7 +90,7 @@ const GuestList = () => {
 
   return (
     <div>
-      <h2>Guest List</h2>
+      <TopBar title="Guest List" />
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       {/* RSVP Counters */}
@@ -141,6 +143,8 @@ const GuestList = () => {
           </li>
         ))}
       </ul>
+      <BottomNav />
+
     </div>
   );
 };

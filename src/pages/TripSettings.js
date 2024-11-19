@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../services/api';
+import TopBar from '../components/TopBar';
+import BottomNav from '../components/BottomNav';
 
 const TripSettings = () => {
   const { tripId } = useParams();
@@ -60,7 +62,7 @@ const TripSettings = () => {
 
   return (
     <div>
-      <h2>Trip Settings</h2>
+      <TopBar title="Settings" />
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {message && <p style={{ color: 'green' }}>{message}</p>}
 
@@ -108,6 +110,7 @@ const TripSettings = () => {
       </label>
 
       {canEdit && <button onClick={handleSave}>Save Settings</button>}
+      <BottomNav />
     </div>
   );
 };

@@ -30,7 +30,7 @@ const TripCreate = () => {
 
   return (
     <div>
-      <h2>Create a New Trip</h2>
+      <TopBar title="Create a New Trip" />
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <label>
@@ -45,6 +45,8 @@ const TripCreate = () => {
         </label>
         <button type="submit">Create Trip</button>
       </form>
+      <BottomNav />
+
     </div>
   );
 };

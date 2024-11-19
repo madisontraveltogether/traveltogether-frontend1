@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import TopBar from '../components/TopBar';
+import BottomNav from '../components/BottomNav';
 
 const ExpenseDetails = () => {
   const { tripId, expenseId } = useParams();
@@ -71,7 +73,7 @@ const ExpenseDetails = () => {
 
   return (
     <div>
-      <h2>Expense Details</h2>
+      <TopBar title="Expense Details" />
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       <button onClick={() => navigate(`/trips/${tripId}/expenses`)}>Back to Expenses</button>
@@ -109,6 +111,8 @@ const ExpenseDetails = () => {
         onChange={(e) => setNewComment(e.target.value)}
       />
       <button onClick={handleAddComment}>Add Comment</button>
+      <BottomNav />
+
     </div>
   );
 };

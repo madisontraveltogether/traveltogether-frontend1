@@ -1,6 +1,8 @@
 // src/pages/Notifications.js
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
+import TopBar from '../components/TopBar';
+import BottomNav from '../components/BottomNav';
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
@@ -34,7 +36,7 @@ const Notifications = () => {
 
   return (
     <div className="notifications">
-      <h2>Notifications</h2>
+      <TopBar title="Notifications" />
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       <ul>
@@ -48,6 +50,8 @@ const Notifications = () => {
           </li>
         ))}
       </ul>
+      <BottomNav />
+
     </div>
   );
 };

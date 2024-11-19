@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import TopBar from '../components/TopBar';
+import BottomNav from '../components/BottomNav';
 
 const TaskDetails = () => {
   const { tripId, taskId } = useParams();
@@ -57,7 +59,7 @@ const TaskDetails = () => {
 
   return (
     <div>
-      <h2>Task Details</h2>
+      <TopBar title="Task Details" />
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <h3>{task.title}</h3>
       <p>Description: {task.description}</p>
@@ -83,6 +85,8 @@ const TaskDetails = () => {
 
       <button onClick={handleDelete}>Delete Task</button>
       <button onClick={() => navigate(`/trips/${tripId}/tasks`)}>Back to Tasks</button>
+      <BottomNav />
+
     </div>
   );
 };

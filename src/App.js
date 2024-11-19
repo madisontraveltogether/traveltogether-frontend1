@@ -20,7 +20,8 @@ import Announcements from './pages/Announcements';
 import Messaging from './pages/Messaging';
 import GuestList from './pages/GuestList';
 import BalanceReport from './pages/BalanceReport';
-import Itinerary from './pages/Itinerary';
+import Add from './pages/AddItinerary';
+import Itinerary from './pages/TripItinerary'
 import ErrorBoundary from './components/ErrorBoundary';
 import PasswordReset from './pages/PasswordReset';
 
@@ -97,8 +98,9 @@ const App = () => {
           <Route path="/trips/:tripId/messages" element={<ProtectedRoute user={user}><Messaging /></ProtectedRoute>} />
           <Route path="/trips/:tripId/guests" element={<ProtectedRoute user={user}><GuestList /></ProtectedRoute>} />
           <Route path="/trips/:tripId/balance-report" element={<ProtectedRoute user={user}><BalanceReport /></ProtectedRoute>} />
+          <Route path="/trips/:tripId/itinerary/new" element={<ProtectedRoute user={user}><AddItinerary /></ProtectedRoute>} />
           <Route path="/trips/:tripId/itinerary" element={<ProtectedRoute user={user}><Itinerary /></ProtectedRoute>} />
-          
+
         </Routes>
       </Router>
     </ErrorBoundary>

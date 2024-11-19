@@ -1,78 +1,20 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import '../css/AddExpense.css'; 
+import TopBar from '../components/TopBar';
+import BottomNav from '../components/BottomNav';
 
 const AddExpense = () => {
   const { tripId } = useParams();
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
-  const [payer, setPayer] = useState('');
   const [splitType, setSplitType] = useState('even');
-  const [splitWith, setSplitWith] = useState([{ user: '', amount: '' }]);
-  const [calculatedSplit, setCalculatedSplit] = useState([]);
+  const [splitWith, setSplitWith] = useState('');
   const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
-  const calculateSplit = () => {
-    const totalAmount = parseFloat(amount);
-    let calculated = [];
-
-    switch (splitType) {
-      case 'even':
-        const evenAmount = Math.floor((totalAmount / splitWith.length) * 100) / 100;
-        const remainder = totalAmount - evenAmount * splitWith.length;
-        calculated = splitWith.map((entry, index) => ({
-          user: entry.user,
-          amount: index === splitWith.length - 1 ? evenAmount + remainder : evenAmount,
-        }));
-        break;
-
-      case 'byAmount':
-        const totalSplitAmount = splitWith.reduce((acc, entry) => acc + parseFloat(entry.amount || 0), 0);
-        if (totalSplitAmount !== totalAmount) {
-          setError('Split amounts do not add up to the total expense amount');
-          return;
-        }
-        calculated = splitWith.map((entry) => ({ user: entry.user, amount: parseFloat(entry.amount) }));
-        break;
-
-      case 'byPercentage':
-        const totalPercentage = splitWith.reduce((acc, entry) => acc + parseFloat(entry.amount || 0), 0);
-        if (totalPercentage !== 100) {
-          setError('Total percentage must equal 100%');
-          return;
-        }
-        calculated = splitWith.map((entry) => ({
-          user: entry.user,
-          amount: Math.floor((totalAmount * (parseFloat(entry.amount) / 100)) * 100) / 100,
-        }));
-        break;
-
-      case 'byShares':
-        const totalShares = splitWith.reduce((acc, entry) => acc + parseFloat(entry.amount || 0), 0);
-        if (totalShares === 0) {
-          setError('Total shares cannot be zero');
-          return;
-        }
-        calculated = splitWith.map((entry) => ({
-          user: entry.user,
-          amount: Math.floor((totalAmount * (parseFloat(entry.amount) / totalShares)) * 100) / 100,
-        }));
-        break;
-
-      default:
-        setError('Invalid split type');
-    }
-
-    setCalculatedSplit(calculated);
-    setError('');
-  };
-
-  const handleAddSplitWith = () => {
-    setSplitWith([...splitWith, { user: '', amount: '' }]);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,9 +22,8 @@ const AddExpense = () => {
       await api.post(`/trips/${tripId}/expenses`, {
         title,
         amount: parseFloat(amount),
-        payer,
         splitType,
-        splitWith: calculatedSplit,
+        splitWith,
         date,
         description,
       });
@@ -93,95 +34,87 @@ const AddExpense = () => {
   };
 
   return (
-    <div>
-      <h2>Add Expense</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Title:
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
-        </label>
-        <label>
-          Amount:
+    <div className="add-expense-container">
+            <TopBar title="Add an Expense" />
+      <header className="expense-header">
+        <button className="back-button">←</button>
+        <h1 className="header-title">New Budget Item</h1>
+        <button className="notification-button">🔔</button>
+      </header>
+
+      <form className="expense-form" onSubmit={handleSubmit}>
+        {error && <p className="error-message">{error}</p>}
+        
+        <div className="form-group">
+          <label className="form-label">Expense Name *</label>
           <input
-            type="number"
-            value={amount}
-            onChange={(e) => {
-              setAmount(e.target.value);
-              setCalculatedSplit([]);
-            }}
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter expense name"
+            className="form-input"
             required
           />
-        </label>
-        <label>
-          Payer:
-          <input type="text" value={payer} onChange={(e) => setPayer(e.target.value)} required />
-        </label>
-        <label>
-          Split Type:
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Type</label>
           <select
             value={splitType}
-            onChange={(e) => {
-              setSplitType(e.target.value);
-              setCalculatedSplit([]);
-            }}
+            onChange={(e) => setSplitType(e.target.value)}
+            className="form-select"
           >
             <option value="even">Even</option>
             <option value="byAmount">By Amount</option>
             <option value="byPercentage">By Percentage</option>
             <option value="byShares">By Shares</option>
           </select>
-        </label>
-        <label>
-          Split With:
-          {splitWith.map((split, index) => (
-            <div key={index}>
-              <input
-                type="text"
-                placeholder="User"
-                value={split.user}
-                onChange={(e) => {
-                  const newSplitWith = [...splitWith];
-                  newSplitWith[index].user = e.target.value;
-                  setSplitWith(newSplitWith);
-                }}
-              />
-              <input
-                type="number"
-                placeholder={splitType === 'even' ? 'N/A' : splitType === 'byAmount' ? 'Amount' : splitType === 'byPercentage' ? 'Percentage' : 'Shares'}
-                value={split.amount}
-                onChange={(e) => {
-                  const newSplitWith = [...splitWith];
-                  newSplitWith[index].amount = e.target.value;
-                  setSplitWith(newSplitWith);
-                }}
-              />
-            </div>
-          ))}
-          <button type="button" onClick={handleAddSplitWith}>
-            Add Split Participant
-          </button>
-        </label>
-        <button type="button" onClick={calculateSplit}>
-          Calculate Split
-        </button>
-        <h4>Calculated Split:</h4>
-        <ul>
-          {calculatedSplit.map((split, index) => (
-            <li key={index}>
-              {split.user}: ${split.amount}
-            </li>
-          ))}
-        </ul>
-        <label>
-          Date:
-          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-        </label>
-        <label>
-          Description:
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
-        </label>
-        <button type="submit">Add Expense</button>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Date & Time</label>
+          <input
+            type="datetime-local"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="form-input"
+          />
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Total Cost *</label>
+          <input
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="Enter total cost"
+            className="form-input"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">To be split by</label>
+          <input
+            type="text"
+            value={splitWith}
+            onChange={(e) => setSplitWith(e.target.value)}
+            placeholder="Enter group members or number of persons"
+            className="form-input"
+          />
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Notes</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Add any notes"
+            className="form-textarea"
+          />
+        </div>
+
+        <button type="submit" className="submit-button">Add Budget Item</button>
       </form>
     </div>
   );

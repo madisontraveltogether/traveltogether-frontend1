@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import api from '../services/api';
 import '../css/TripDashboard.css';
 import { useNavigate } from 'react-router-dom';
+import TopBar from '../components/TopBar';
+import BottomNav from '../components/BottomNav';
 
 const TripDetails = ({ currentUser }) => {
   const { tripId } = useParams();
@@ -51,7 +53,10 @@ const TripDetails = ({ currentUser }) => {
   const isOrganizer = currentUser?.id === trip.organizer?.id; // Check if current user is the organizer
 
   return (
+
     <div className="trip-dashboard">
+            <TopBar title="Trip Home" />
+
       {error && <p className="error-message">{error}</p>}
 
       {/* Trip Cover Image */}
@@ -231,6 +236,8 @@ const TripDetails = ({ currentUser }) => {
         <button onClick={() => navigate(`/trips/${tripId}/expenses`)}>Expenses</button>
         <button onClick={() => navigate(`/trips/${tripId}/messages`)}>Messages</button>
       </div>
+      <BottomNav />
+
     </div>
   );
 };

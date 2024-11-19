@@ -43,8 +43,9 @@ const MyTrips = () => {
 
   return (
     <div className="my-trips-container">
+            <TopBar title="My Trips" />
+
       <div className="my-trips-header">
-        <h2>My Trips</h2>
         <button onClick={handleCreateNewTrip}>Create New Trip</button>
       </div>
 

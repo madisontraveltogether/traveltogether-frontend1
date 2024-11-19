@@ -84,7 +84,7 @@ const Profile = ({ user, setUser }) => {
 
   return (
     <div>
-      <h2>Profile</h2>
+      <TopBar title="Profile" />
       {message && <p style={{ color: 'green' }}>{message}</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
 

@@ -39,7 +39,7 @@ const TripInvitations = () => {
 
   return (
     <div>
-      <h2>Trip Invitations</h2>
+      <TopBar title="Trip Invitations" />
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {invitations.length === 0 ? (
         <p>You have no invitations.</p>
@@ -56,6 +56,8 @@ const TripInvitations = () => {
           ))}
         </ul>
       )}
+            <BottomNav />
+
     </div>
   );
 };

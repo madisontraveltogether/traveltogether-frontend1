@@ -1,14 +1,14 @@
-// src/pages/TripExpenses.js
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import TripExpenses from '../css/TripExpenses.css';
+import TopBar from '../components/TopBar';
+import BottomNav from '../components/BottomNav';
 
 const TripExpenses = () => {
   const { tripId } = useParams();
   const [expenses, setExpenses] = useState([]);
-  const [search, setSearch] = useState('');
   const [error, setError] = useState('');
-  const [balances, setBalances] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,7 +16,6 @@ const TripExpenses = () => {
       try {
         const response = await api.get(`/trips/${tripId}/expenses`);
         setExpenses(response.data);
-        calculateBalances(response.data);
       } catch (err) {
         setError('Failed to load expenses.');
       }
@@ -29,68 +28,70 @@ const TripExpenses = () => {
     navigate(`/trips/${tripId}/expenses/new`);
   };
 
-  const calculateBalances = (expenses) => {
-    const balanceMap = {};
-    expenses.forEach((expense) => {
-      // Update payer's balance
-      if (!balanceMap[expense.payer]) balanceMap[expense.payer] = 0;
-      balanceMap[expense.payer] += expense.amount;
-
-      // Update balances for those sharing the expense
-      expense.splitWith.forEach((split) => {
-        if (!balanceMap[split.user]) balanceMap[split.user] = 0;
-        balanceMap[split.user] -= split.amount;
-      });
-    });
-    setBalances(balanceMap);
-  };
-
-  const filteredExpenses = expenses.filter((expense) =>
-    expense.title.toLowerCase().includes(search.toLowerCase())
-  );
-
   return (
-    <div>
-      <h2>Trip Expenses</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button onClick={handleAddExpense}>Add Expense</button>
+    <div className="trip-expenses-page">
+      <header className="expenses-header">
+        <h1>Budget Forecast</h1>
+        <button className="add-expense-btn" onClick={handleAddExpense}>
+          + Add Item
+        </button>
+      </header>
 
-      <div style={{ margin: '1em 0' }}>
-        <input
-          type="text"
-          placeholder="Search expenses..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
+      {error && <p className="error-message">{error}</p>}
 
-      {filteredExpenses.length === 0 ? (
-        <p>No expenses match your search.</p>
+      {expenses.length === 0 ? (
+        <div className="no-expenses">
+          <div className="icon-placeholder">
+            <img src="/assets/no-expenses-icon.svg" alt="No expenses" />
+          </div>
+          <p>Let’s Talk Money</p>
+          <p>
+            Add potential expense items and who it will be split with. We’ll do
+            the rest.
+          </p>
+        </div>
       ) : (
-        <ul>
-          {filteredExpenses.map((expense) => (
-            <li
+        <div className="expenses-list">
+          {expenses.map((expense) => (
+            <div
               key={expense._id}
-              onClick={() => navigate(`/trips/${tripId}/expenses/${expense._id}`)}
-              style={{ cursor: 'pointer', margin: '1em 0', padding: '1em', border: '1px solid #ccc' }}
+              className="expense-item"
+              onClick={() =>
+                navigate(`/trips/${tripId}/expenses/${expense._id}`)
+              }
             >
-              <h3>{expense.title}</h3>
-              <p>Amount: ${expense.amount}</p>
-              <p>Payer: {expense.payer?.name || 'Unknown'}</p>
-              <p>Date: {expense.date || 'Not specified'}</p>
-            </li>
+              <div className="expense-date">
+                {new Date(expense.date).toLocaleDateString()}
+              </div>
+              <div className="expense-content">
+                <div className="expense-info">
+                  <h3>{expense.title}</h3>
+                  <p>Total: ${expense.amount}</p>
+                  <p>Cost per person: ${expense.amount / expense.splitWith.length}</p>
+                </div>
+                {expense.image && (
+                  <img
+                    src={expense.image}
+                    alt={expense.title}
+                    className="expense-image"
+                  />
+                )}
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
 
-      <h3>Balances</h3>
-      <ul>
-        {Object.entries(balances).map(([user, balance]) => (
-          <li key={user}>
-            {user}: ${balance.toFixed(2)}
-          </li>
-        ))}
-      </ul>
+      <footer className="bottom-nav">
+        <button onClick={() => navigate(`/trips/${tripId}`)}>Trip Home</button>
+        <button onClick={() => navigate(`/trips/${tripId}/plans`)}>Plans</button>
+        <button className="active">Expenses</button>
+        <button onClick={() => navigate(`/trips/${tripId}/messages`)}>
+          Messages
+        </button>
+      </footer>
+      <BottomNav />
+
     </div>
   );
 };

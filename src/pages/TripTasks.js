@@ -1,7 +1,9 @@
-// src/pages/TripTasks.js
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import '../css/TaskPages.css';
+import TopBar from '../components/TopBar';
+import BottomNav from '../components/BottomNav';
 
 const TripTasks = () => {
   const { tripId } = useParams();
@@ -42,23 +44,32 @@ const TripTasks = () => {
   });
 
   return (
-    <div>
-      <h2>Trip Tasks</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className="tasks-container">
+      <TopBar title="Tasks" />
+      {error && <p className="error-message">{error}</p>}
 
-      <div>
-        <label>
-          Filter by Status:
-          <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
+      <div className="filter-sort-container">
+        <label className="filter-label">
+          Filter by Status
+          <select
+            className="form-select"
+            value={filterStatus}
+            onChange={(e) => setFilterStatus(e.target.value)}
+          >
             <option value="">All</option>
             <option value="pending">Pending</option>
             <option value="in-progress">In Progress</option>
             <option value="completed">Completed</option>
           </select>
         </label>
-        <label>
-          Sort by:
-          <select value={sortField} onChange={(e) => setSortField(e.target.value)}>
+
+        <label className="filter-label">
+          Sort by
+          <select
+            className="form-select"
+            value={sortField}
+            onChange={(e) => setSortField(e.target.value)}
+          >
             <option value="">None</option>
             <option value="dueDate">Due Date</option>
             <option value="priority">Priority</option>
@@ -67,22 +78,29 @@ const TripTasks = () => {
         </label>
       </div>
 
-      <button onClick={handleAddTask}>Create New Task</button>
+      <button className="add-task-button" onClick={handleAddTask}>
+        Create New Task
+      </button>
 
       {tasks.length === 0 ? (
-        <p>No tasks added yet.</p>
+        <p className="no-tasks-message">No tasks added yet.</p>
       ) : (
-        <ul>
+        <ul className="task-list">
           {sortedTasks.map((task) => (
-            <li key={task._id} onClick={() => navigate(`/trips/${tripId}/tasks/${task._id}`)}>
-              <h3>{task.title}</h3>
-              <p>Due Date: {task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'Not specified'}</p>
-              <p>Priority: {task.priority}</p>
-              <p>Status: {task.status}</p>
+            <li
+              key={task._id}
+              className="task-card"
+              onClick={() => navigate(`/trips/${tripId}/tasks/${task._id}`)}
+            >
+              <h3 className="task-title">{task.title}</h3>
+              <p className="task-meta">Due Date: {task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'Not specified'}</p>
+              <p className="task-meta">Priority: {task.priority}</p>
+              <p className="task-meta">Status: {task.status}</p>
             </li>
           ))}
         </ul>
       )}
+            <BottomNav />
     </div>
   );
 };

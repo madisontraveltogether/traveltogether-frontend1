@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../services/api';
+import TopBar from '../components/TopBar';
+import BottomNav from '../components/BottomNav';
 
 const Announcements = () => {
   const { tripId } = useParams();
@@ -58,7 +60,7 @@ const Announcements = () => {
 
   return (
     <div className="announcements">
-      <h2>Announcements</h2>
+      <TopBar title="Announcements" />
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       {/* New Announcement Input */}
@@ -95,6 +97,7 @@ const Announcements = () => {
           </li>
         ))}
       </ul>
+      <BottomNav />
     </div>
   );
 };

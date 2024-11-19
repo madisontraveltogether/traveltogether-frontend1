@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../services/api';
+import TopBar from '../components/TopBar';
+import BottomNav from '../components/BottomNav';
 
 const ReportBalance = () => {
   const { tripId } = useParams();
@@ -69,7 +71,7 @@ const ReportBalance = () => {
 
   return (
     <div>
-      <h2>Trip Report & Balance</h2>
+      <TopBar title="Report Balance" />
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       <div>
@@ -112,6 +114,8 @@ const ReportBalance = () => {
           ))}
         </ul>
       )}
+            <BottomNav />
+
     </div>
   );
 };

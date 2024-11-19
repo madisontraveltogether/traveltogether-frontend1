@@ -1,7 +1,9 @@
-// src/pages/AddPoll.js
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import '../css/Polls.css';
+import TopBar from '../components/TopBar';
+import BottomNav from '../components/BottomNav';
 
 const AddPoll = () => {
   const { tripId } = useParams();
@@ -50,39 +52,58 @@ const AddPoll = () => {
   };
 
   return (
-    <div>
-      <h2>Create Poll</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Question:
-          <input type="text" value={question} onChange={(e) => setQuestion(e.target.value)} required />
-        </label>
-        <label>
-          Options:
+    <div className="add-poll-container">
+      <TopBar title="Add a Poll" />
+      {error && <p className="error-message">{error}</p>}
+      <form className="poll-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label className="form-label">Poll Question</label>
+          <input
+            type="text"
+            className="form-input"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            placeholder="Enter your question"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Options</label>
           {options.map((option, index) => (
-            <input
-              key={index}
-              type="text"
-              placeholder={`Option ${index + 1}`}
-              value={option}
-              onChange={(e) => {
-                const newOptions = [...options];
-                newOptions[index] = e.target.value;
-                setOptions(newOptions);
-              }}
-              required
-            />
+            <div key={index} className="poll-option">
+              <input
+                type="text"
+                className="form-input"
+                placeholder={`Option ${index + 1}`}
+                value={option}
+                onChange={(e) => {
+                  const newOptions = [...options];
+                  newOptions[index] = e.target.value;
+                  setOptions(newOptions);
+                }}
+                required
+              />
+            </div>
           ))}
-          <button type="button" onClick={handleAddOption}>
+          <button type="button" className="add-option-button" onClick={handleAddOption}>
             Add Option
           </button>
-        </label>
-        <label>
-          Expiration Date:
-          <input type="date" value={expirationDate} onChange={(e) => setExpirationDate(e.target.value)} />
-        </label>
-        <button type="submit">Create Poll</button>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Expiration Date</label>
+          <input
+            type="date"
+            className="form-input"
+            value={expirationDate}
+            onChange={(e) => setExpirationDate(e.target.value)}
+          />
+        </div>
+
+        <button type="submit" className="submit-button">
+          Create Poll
+        </button>
       </form>
     </div>
   );

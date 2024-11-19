@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import TopBar from '../components/TopBar';
+import BottomNav from '../components/BottomNav';
 
 const PollDetails = () => {
   const { tripId, pollId } = useParams();
@@ -41,7 +43,7 @@ const PollDetails = () => {
 
   return (
     <div>
-      <h2>Poll Details</h2>
+      <TopBar title="Poll Details" />
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {voteMessage && <p style={{ color: 'green' }}>{voteMessage}</p>}
       <h3>{poll.question}</h3>
@@ -56,6 +58,8 @@ const PollDetails = () => {
         ))}
       </ul>
       <button onClick={() => navigate(`/trips/${tripId}/polls`)}>Back to Polls</button>
+      <BottomNav />
+
     </div>
   );
 };
