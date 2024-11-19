@@ -1,22 +1,24 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 
 const BottomNav = () => {
+  const { tripId } = useParams(); // Get the tripId from the URL
+
   return (
     <div style={styles.navContainer}>
-      <NavLink to="/trip-home" style={({ isActive }) => isActive ? styles.activeLink : styles.link}>
+      <NavLink to={`/trips/${tripId}/details`} style={({ isActive }) => isActive ? styles.activeLink : styles.link}>
         <img src="path-to-home-icon.png" alt="Home" style={styles.icon} />
         <span>Trip Home</span>
       </NavLink>
-      <NavLink to="/plans" style={({ isActive }) => isActive ? styles.activeLink : styles.link}>
+      <NavLink to={`/trips/${tripId}/itinerary`} style={({ isActive }) => isActive ? styles.activeLink : styles.link}>
         <img src="path-to-plans-icon.png" alt="Plans" style={styles.icon} />
         <span>Plans</span>
       </NavLink>
-      <NavLink to="/expenses" style={({ isActive }) => isActive ? styles.activeLink : styles.link}>
+      <NavLink to={`/trips/${tripId}/expenses`} style={({ isActive }) => isActive ? styles.activeLink : styles.link}>
         <img src="path-to-expenses-icon.png" alt="Expenses" style={styles.icon} />
         <span>Expenses</span>
       </NavLink>
-      <NavLink to="/messages" style={({ isActive }) => isActive ? styles.activeLink : styles.link}>
+      <NavLink to={`/trips/${tripId}/messages`} style={({ isActive }) => isActive ? styles.activeLink : styles.link}>
         <img src="path-to-messages-icon.png" alt="Messages" style={styles.icon} />
         <span>Messages</span>
       </NavLink>

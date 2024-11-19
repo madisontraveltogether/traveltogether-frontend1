@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import '../css/AddItinerary.css';
 import TopBar from '../components/TopBar';
@@ -17,6 +17,8 @@ const AddItinerary = () => {
   });
   const [photos, setPhotos] = useState([]);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+
 
   const handleAddPhoto = (e) => {
     const files = Array.from(e.target.files);
