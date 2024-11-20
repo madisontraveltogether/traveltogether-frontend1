@@ -13,7 +13,7 @@ const Messaging = () => {
   const messageEndRef = useRef(null);
 
   useEffect(() => {
-    const socket = io(process.env.REACT_APP_SOCKET_URL || 'https://example.com');
+    const socket = io(process.env.REACT_APP_SOCKET_URL || 'https://traveltogether-server-6e176f53a84f.herokuapp.com');
     socket.emit('joinTrip', tripId);
 
     socket.on('receiveMessage', (message) => {
