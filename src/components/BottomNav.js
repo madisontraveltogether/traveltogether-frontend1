@@ -1,11 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faMap, faMoneyBillWave, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import '../css/BottomNav.css';
 
-const BottomNav = ({ tripId }) => {
+const BottomNav = () => {
   const navigate = useNavigate(); // Use the useNavigate hook
+  const { tripId } = useParams();
 
   return (
     <div className="bottom-nav">
