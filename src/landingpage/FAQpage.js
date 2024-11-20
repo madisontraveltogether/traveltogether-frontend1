@@ -1,7 +1,7 @@
 // src/pages/FAQ.js
 import React, { useState } from 'react';
 import './LandingPages.css';
-import TopMenu from '../components/TopMenu';
+import TopMenu from './TopMenu';
 
 const FAQ = () => {
   const [activeIndex, setActiveIndex] = useState(null);

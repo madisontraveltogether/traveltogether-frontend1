@@ -1,7 +1,7 @@
 // src/pages/TermsOfUse.js
 import React from 'react';
 import './LandingPages.css';
-import TopMenu from '../components/TopMenu';
+import TopMenu from './TopMenu';
 
 const TermsOfUse = () => {
   return (
