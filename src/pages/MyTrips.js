@@ -16,6 +16,11 @@ const MyTrips = () => {
     const fetchTrips = async () => {
       setLoading(true);
       try {
+        const token = localStorage.getItem('accessToken'); // Retrieve token from localStorage
+    if (!token) {
+      setError('User is not authenticated.');
+      return;
+    }
         const response = await api.get('/trips/all');
         setTrips(response.data);
       } catch (err) {
