@@ -100,8 +100,7 @@ const TripTasks = () => {
           ))}
         </ul>
       )}
-            <BottomNav />
-    </div>
+<BottomNav tripId={tripId} />    </div>
   );
 };
 

@@ -111,8 +111,7 @@ const ExpenseDetails = () => {
         onChange={(e) => setNewComment(e.target.value)}
       />
       <button onClick={handleAddComment}>Add Comment</button>
-      <BottomNav />
-
+src/pages/TripDetails.js
     </div>
   );
 };

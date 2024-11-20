@@ -70,7 +70,7 @@ const Messaging = () => {
       </form>
 
       {/* Bottom Navigation */}
-      <BottomNav active="messages" />
+      <BottomNav tripId={tripId} active="messages" />
     </div>
   );
 };

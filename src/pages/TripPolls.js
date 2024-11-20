@@ -54,8 +54,7 @@ const TripPolls = () => {
           ))}
         </ul>
       )}
-            <BottomNav />
-
+<BottomNav tripId={tripId} />
     </div>
   );
 };

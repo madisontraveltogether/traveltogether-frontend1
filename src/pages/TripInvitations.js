@@ -56,8 +56,7 @@ const TripInvitations = () => {
           ))}
         </ul>
       )}
-            <BottomNav />
-
+<BottomNav tripId={tripId} />
     </div>
   );
 };

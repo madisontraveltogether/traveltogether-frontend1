@@ -143,8 +143,7 @@ const GuestList = () => {
           </li>
         ))}
       </ul>
-      <BottomNav />
-
+ctive="messages"
     </div>
   );
 };

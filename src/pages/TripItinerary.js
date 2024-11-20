@@ -107,8 +107,7 @@ const Itinerary = () => {
         </div>
       )}
 
-      <BottomNav />
-    </div>
+<BottomNav tripId={tripId} />    </div>
   );
 };
 

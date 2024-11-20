@@ -85,8 +85,7 @@ const TaskDetails = () => {
 
       <button onClick={handleDelete}>Delete Task</button>
       <button onClick={() => navigate(`/trips/${tripId}/tasks`)}>Back to Tasks</button>
-      <BottomNav />
-
+      <BottomNav tripId={tripId} />
     </div>
   );
 };

@@ -110,8 +110,7 @@ const TripSettings = () => {
       </label>
 
       {canEdit && <button onClick={handleSave}>Save Settings</button>}
-      <BottomNav />
-    </div>
+      <BottomNav tripId={tripId} />    </div>
   );
 };
 

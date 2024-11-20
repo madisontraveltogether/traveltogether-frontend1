@@ -14,6 +14,7 @@ const TripExpenses = () => {
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
+        console.log(tripId)
         const response = await api.get(`/trips/${tripId}/expenses`);
         setExpenses(response.data);
       } catch (err) {
@@ -90,8 +91,7 @@ const TripExpenses = () => {
           Messages
         </button>
       </footer>
-      <BottomNav />
-
+      <BottomNav tripId={tripId} />
     </div>
   );
 };

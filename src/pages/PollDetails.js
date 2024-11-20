@@ -58,8 +58,7 @@ const PollDetails = () => {
         ))}
       </ul>
       <button onClick={() => navigate(`/trips/${tripId}/polls`)}>Back to Polls</button>
-      <BottomNav />
-
+      <BottomNav tripId={tripId} />
     </div>
   );
 };
