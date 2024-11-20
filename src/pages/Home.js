@@ -1,6 +1,7 @@
 // src/pages/Home.js
 import React from 'react';
 import { FaPlane, FaWallet, FaCalendarAlt, FaComments } from 'react-icons/fa';
+import '../css/Home.css'
 
 const Home = () => {
   return (
