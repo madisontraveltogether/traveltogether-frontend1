@@ -145,8 +145,8 @@ const TripDetails = ({ currentUser }) => {
       </div>
 
       {/* Bottom Navigation */}
-      <BottomNav />
-    </div>
+      <BottomNav tripId={tripId} />
+      </div>
   );
 };
 
