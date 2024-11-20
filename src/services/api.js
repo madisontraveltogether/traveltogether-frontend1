@@ -2,7 +2,8 @@ import axios from 'axios';
 
 // Create an Axios instance
 const api = axios.create({
-  baseURL: 'https://traveltogether-server-6e176f53a84f.herokuapp.com/api', // Update with your server's base URL
+  baseURL: process.env.REACT_APP_API_URL,
+  withCredentials: true, // If cookies or tokens are required
 });
 
 // Attach token for authenticated requests
