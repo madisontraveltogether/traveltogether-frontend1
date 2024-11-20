@@ -39,7 +39,7 @@ const App = () => {
       const token = localStorage.getItem('accessToken');
       if (token) {
         try {
-          const response = await api.get('/auth/me');
+          const response = await api.get('api/auth/me');
           setUser(response.data);
         } catch (error) {
           console.error('User not authenticated');
