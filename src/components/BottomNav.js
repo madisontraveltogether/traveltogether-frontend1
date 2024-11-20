@@ -6,9 +6,12 @@ import { useNavigate } from 'react-router-dom';
 const BottomNav = ({ tripId }) => {
   const navigate = useNavigate();
 
+  // Log the tripId to ensure it's being received correctly
+  console.log('Trip ID in BottomNav:', tripId);
+
   if (!tripId) {
     console.error('Trip ID is missing in BottomNav');
-    return null; // Prevent rendering if tripId is not available
+    return <div>Invalid trip navigation. Please refresh or try again.</div>;
   }
 
   return (
@@ -16,7 +19,7 @@ const BottomNav = ({ tripId }) => {
       <button onClick={() => navigate(`/trips/${tripId}`)}>
         <FontAwesomeIcon icon={faHome} /> <span>Home</span>
       </button>
-      <button onClick={() => navigate(`/trips/${tripId}/plans`)}>
+      <button onClick={() => navigate(`/trips/${tripId}/itinerary`)}>
         <FontAwesomeIcon icon={faMap} /> <span>Plans</span>
       </button>
       <button onClick={() => navigate(`/trips/${tripId}/expenses`)}>
