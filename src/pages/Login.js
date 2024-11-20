@@ -12,7 +12,7 @@ const Login = ({ setUser }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post('/auth/login', { email, password });
+      const response = await api.post('api/auth/login', { email, password });
       setUser(response.data.user);
       localStorage.setItem('accessToken', response.data.accessToken);
       navigate('/mytrips');
