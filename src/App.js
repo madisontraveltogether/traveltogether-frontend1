@@ -39,6 +39,7 @@ const ProtectedRoute = ({ user, children }) => {
 
 const App = () => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // Check if the user is already logged in on app load
   useEffect(() => {
@@ -52,6 +53,7 @@ const App = () => {
           console.error('User not authenticated');
         }
       }
+      setLoading(false); // Stop loading whether the user is authenticated or not
     };
     fetchUser();
   }, []);
@@ -60,6 +62,8 @@ const App = () => {
     localStorage.removeItem('accessToken');
     setUser(null);
   };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <ErrorBoundary>
