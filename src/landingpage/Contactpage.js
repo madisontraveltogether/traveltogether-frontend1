@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './LandingPages.css';
-import TopBar from '../components/TopBar';
+import TopMenu from './TopMenu';
 
 const ContactPage = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -17,7 +17,7 @@ const ContactPage = () => {
 
   return (
     <div className="contact-page">
-      <TopBar title="Contact Us" />
+      <TopMenu/>
       <form className="contact-form" onSubmit={handleSubmit}>
         <label>
           Name:

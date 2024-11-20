@@ -1,11 +1,11 @@
 import React from 'react';
 import './LandingPages.css';
-import TopBar from '../components/TopBar';
+import TopMenu from './TopMenu';
 
 const AboutPage = () => {
   return (
     <div className="about-page">
-      <TopBar title="About Us" />
+      <TopMenu/>
       <section className="about-section">
         <h2>Our Mission</h2>
         <p>

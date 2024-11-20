@@ -1,6 +1,6 @@
 import React from 'react';
 import './LandingPages.css';
-import TopBar from '../components/TopBar';
+import TopMenu from './TopMenu';
 
 const FeaturesPage = () => {
   const features = [
@@ -23,7 +23,7 @@ const FeaturesPage = () => {
 
   return (
     <div className="features-page">
-      <TopBar title="Features" />
+      <TopMenu />
       <section className="features-list">
         {features.map((feature, index) => (
           <div key={index} className="feature-item">

@@ -1,12 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LandingPages.css'; // Import your CSS file
+import TopMenu from './TopMenu';
 
 const Homepage = () => {
   const navigate = useNavigate();
 
   return (
     <div className="homepage">
+      <TopMenu />
       {/* Top Section */}
       <header className="homepage-header">
         <h1>TravelTogether</h1>
