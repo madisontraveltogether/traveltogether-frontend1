@@ -14,7 +14,7 @@ const BottomNav = () => {
         <FontAwesomeIcon icon={faHome} />
         <span>Trip Home</span>
       </button>
-      <button onClick={() => navigate(`/trips/${tripId}/plans`)}>
+      <button onClick={() => navigate(`/trips/${tripId}/itinerary`)}>
         <FontAwesomeIcon icon={faMap} />
         <span>Plans</span>
       </button>
