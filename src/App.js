@@ -25,6 +25,13 @@ import Itinerary from './pages/TripItinerary'
 import ErrorBoundary from './components/ErrorBoundary';
 import PasswordReset from './pages/PasswordReset';
 import AddItinerary from './pages/AddItinerary';
+import AboutPage from './landingpage/Aboutpage';
+import Contactpage from './landingpage/Contactpage';
+import FAQpage from './landingpage/FAQpage';
+import Featurespage from './landingpage/Featurespage';
+import Homepage from './landingpage/Homepage';
+import PrivacyPolicy from './landingpage/PrivacyPolicy';
+import TermsOfUse from './landingpage/TermsOfUse';
 
 const ProtectedRoute = ({ user, children }) => {
   return user ? children : <Navigate to="/login" replace />;
@@ -60,7 +67,13 @@ const App = () => {
         <Routes>
           
           {/* Public Routes */}
-          <Route path="/" element={<Navigate to={user ? '/my-trips' : '/login'} replace />} />
+          <Route path="/" element={<Homepage/>} />
+          <Route path="/about" element={<AboutPage/>} />
+          <Route path="/FAQ" element={<FAQpage/>} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
+          <Route path="/terms-of-use" element={<TermsOfUse/>} />
+          <Route path="/contact-us" element={<Contactpage/>} />
+          <Route path="/features" element={<Featurespage/>} />
           <Route path="/login" element={!user ? <Login setUser={setUser} /> : <Navigate to="/my-trips" replace />} />
           <Route path="/register" element={!user ? <Register setUser={setUser} /> : <Navigate to="/my-trips" replace />} />
           <Route path="/reset-password" element={<PasswordReset />} />
