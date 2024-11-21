@@ -1,153 +1,236 @@
-/* General layout */
+/* Global Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff9f2; /* Soft beige background for readability */
+}
+
+/* Mobile-First Design */
 .trip-dashboard {
-    font-family: 'Arial', sans-serif;
-    padding: 20px;
-    background-color: #fffdf7;
+  padding: 1rem;
+}
+
+/* Trip Details Section */
+.trip-details {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.trip-details h1 {
+  font-size: 1.5rem;
+  color: #ff8000;
+  margin-bottom: 0.5rem;
+}
+
+.trip-details p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0.3rem 0;
+}
+
+.edit-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background-color: #ff8000;
+  color: #fff;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background-color: #e07000;
+}
+
+/* Navigation Buttons */
+.trip-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.trip-navigation button {
+  flex: 1 1 48%; /* Fit two buttons per row on mobile */
+  background-color: #fff;
+  color: #ff8000;
+  border: 2px solid #ff8000;
+  border-radius: 8px;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.trip-navigation button:hover {
+  background-color: #ff8000;
+  color: #fff;
+}
+
+/* Attendees Section */
+.attendees-section {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.attendees-section h2 {
+  font-size: 1.3rem;
+  color: #ff8000;
+  margin-bottom: 0.5rem;
+}
+
+.attendees-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.attendees-list li {
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  color: #555;
+  border-bottom: 1px solid #eee;
+}
+
+.attendees-list li:last-child {
+  border-bottom: none;
+}
+
+.rsvp-section {
+  margin-top: 1rem;
+}
+
+.rsvp-section h3 {
+  font-size: 1rem;
+  color: #ff8000;
+  margin-bottom: 0.5rem;
+}
+
+.rsvp-section button {
+  background-color: #fff;
+  color: #ff8000;
+  border: 2px solid #ff8000;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.rsvp-section button.active {
+  background-color: #ff8000;
+  color: #fff;
+}
+
+/* Invite Guests Section */
+.invite-guests-section {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.invite-guests-section h3 {
+  font-size: 1.3rem;
+  color: #ff8000;
+  margin-bottom: 0.5rem;
+}
+
+.invite-guests-section input {
+  width: calc(100% - 100px); /* Reserve space for the button */
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.invite-guests-section button {
+  width: 100px;
+  background-color: #ff8000;
+  color: #fff;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.invite-guests-section button:hover {
+  background-color: #e07000;
+}
+
+/* Announcements Section */
+.announcements-section {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+.announcements-section h3 {
+  font-size: 1.3rem;
+  color: #ff8000;
+  margin-bottom: 0.5rem;
+}
+
+.announcement {
+  border-bottom: 1px solid #eee;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.announcement:last-child {
+  border-bottom: none;
+}
+
+/* Error Message */
+.error-message {
+  color: red;
+  background-color: #ffe6e6;
+  padding: 0.5rem;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* Responsive Breakpoints */
+@media (min-width: 768px) {
+  .trip-details h1 {
+    font-size: 2rem;
   }
-  
-  /* Error message */
-  .error-message {
-    color: red;
-    font-size: 14px;
-    margin-bottom: 10px;
+
+  .edit-btn {
+    width: auto;
   }
-  
-  /* Header section */
-  .trip-header {
-    text-align: center;
-    margin-bottom: 20px;
+
+  .trip-navigation button {
+    flex: 1 1 22%; /* Show 4 buttons in a row */
+    font-size: 1rem;
   }
-  
-  .trip-cover-image {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
+
+  .attendees-list li {
+    font-size: 1rem;
   }
-  
-  .trip-title h1 {
-    font-size: 28px;
-    margin: 10px 0;
-    color: #333;
+
+  .invite-guests-section input {
+    width: calc(100% - 150px); /* Adjust for larger screens */
   }
-  
-  .trip-dates,
-  .trip-location,
-  .trip-description,
-  .trip-organizer {
-    font-size: 16px;
-    color: #555;
-    margin: 5px 0;
+
+  .invite-guests-section button {
+    width: 150px;
   }
-  
-  .location-icon {
-    margin-right: 5px;
-  }
-  
-  /* Attendees section */
-  .attendees-section {
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 12px;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .attendees-section h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  .attendees-stats {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-    font-size: 18px;
-    color: #f18f01;
-  }
-  
-  .attendees-avatars {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .attendee-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  /* Announcements section */
-  .announcements-section {
-    margin-top: 30px;
-  }
-  
-  .announcement {
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .announcement-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .announcement-user-avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .announcement-date {
-    font-size: 12px;
-    color: #888;
-    margin-left: auto;
-  }
-  
-  /* Bottom navigation */
-  .bottom-navigation {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .bottom-navigation button {
-    flex: 1;
-    padding: 10px;
-    margin: 0 5px;
-    font-size: 16px;
-    color: #f18f01;
-    background-color: #fff;
-    border: 1px solid #f18f01;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .bottom-navigation button:hover {
-    background-color: #f18f01;
-    color: #fff;
-  }
-  
-  .edit-icon {
-    margin-left: 10px;
-    cursor: pointer;
-    color: #f18f01;
-    font-size: 16px;
-    vertical-align: middle;
-  }
-  
-  .edit-icon:hover {
-    color: #d97300;
-  }
-  
+}
