@@ -16,7 +16,7 @@ const PollDetails = () => {
   useEffect(() => {
     const fetchPoll = async () => {
       try {
-        const response = await api.get(`/trips/${tripId}/polls/${pollId}`);
+        const response = await api.get(`api/trips/${tripId}/polls/${pollId}`);
         setPoll(response.data);
       } catch (err) {
         setError('Failed to load poll.');
@@ -32,7 +32,7 @@ const PollDetails = () => {
       setSelectedOption(optionId);
 
       // Optionally refetch poll to update vote counts
-      const response = await api.get(`/trips/${tripId}/polls/${pollId}`);
+      const response = await api.get(`api/trips/${tripId}/polls/${pollId}`);
       setPoll(response.data);
     } catch (err) {
       setError('Failed to cast vote.');

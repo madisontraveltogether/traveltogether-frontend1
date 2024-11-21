@@ -21,7 +21,7 @@ const GuestList = () => {
   useEffect(() => {
     const fetchGuests = async () => {
       try {
-        const response = await api.get(`/trips/${tripId}/guests`);
+        const response = await api.get(`api/trips/${tripId}/guests`);
         setGuests(response.data);
         fetchRSVPCounters();
       } catch (err) {
@@ -31,7 +31,7 @@ const GuestList = () => {
 
     const fetchRSVPCounters = async () => {
       try {
-        const response = await api.get(`/trips/${tripId}/guests/rsvp-counters`);
+        const response = await api.get(`api/trips/${tripId}/guests/rsvp-counters`);
         setRSVPCounters(response.data);
       } catch (err) {
         setError('Failed to fetch RSVP counters.');

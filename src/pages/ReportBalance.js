@@ -18,7 +18,7 @@ const ReportBalance = () => {
   useEffect(() => {
     const fetchBalances = async () => {
       try {
-        const response = await api.get(`/trips/${tripId}/balances`);
+        const response = await api.get(`api/trips/${tripId}/balances`);
         setBalances(response.data.balances);
         setSummary(response.data.summary);
         setFilteredSummary(response.data.summary);
@@ -54,7 +54,7 @@ const ReportBalance = () => {
   const handleExport = async () => {
     setIsExporting(true);
     try {
-      const response = await api.get(`/trips/${tripId}/balances/export`, { responseType: 'blob' });
+      const response = await api.get(`api/trips/${tripId}/balances/export`, { responseType: 'blob' });
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;

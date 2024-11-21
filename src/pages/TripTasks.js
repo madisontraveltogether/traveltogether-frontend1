@@ -16,7 +16,7 @@ const TripTasks = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await api.get(`/trips/${tripId}/tasks`);
+        const response = await api.get(`api/trips/${tripId}/tasks`);
         setTasks(response.data);
       } catch (err) {
         setError('Failed to load tasks.');

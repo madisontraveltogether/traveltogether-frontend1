@@ -22,11 +22,11 @@ const TripSettings = () => {
     const fetchSettings = async () => {
       setIsLoading(true);
       try {
-        const response = await api.get(`/trips/${tripId}/settings`);
+        const response = await api.get(`api/trips/${tripId}/settings`);
         setSettings(response.data);
 
         // Check if the user has edit permissions
-        const roleResponse = await api.get(`/trips/${tripId}/role`);
+        const roleResponse = await api.get(`api/trips/${tripId}/role`);
         setCanEdit(roleResponse.data.canEdit);
       } catch (err) {
         setError('Failed to load settings.');

@@ -18,7 +18,7 @@ const TripDetails = ({ currentUser }) => {
   useEffect(() => {
     const fetchTripDetails = async () => {
       try {
-        const response = await api.get(`/trips/${tripId}`);
+        const response = await api.get(`api/trips/${tripId}`);
         setTrip(response.data);
         setFormData(response.data);
       } catch (err) {

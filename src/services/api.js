@@ -69,112 +69,112 @@ export const addGuest = async (tripId, guestData) => {
 };
 
 export const getGuestList = async (tripId) => {
-  const response = await api.get(`/trips/${tripId}/guests`);
+  const response = await api.get(`api/trips/${tripId}/guests`);
   return response.data;
 };
 
 export const removeGuest = async (tripId, guestId) => {
-  const response = await api.delete(`/trips/${tripId}/guests`, { data: { guestId } });
+  const response = await api.delete(`api/trips/${tripId}/guests`, { data: { guestId } });
   return response.data;
 };
 
 // === Tasks ===
 export const createTask = async (tripId, taskData) => {
-  const response = await api.post(`/trips/${tripId}/tasks`, taskData);
+  const response = await api.post(`api/trips/${tripId}/tasks`, taskData);
   return response.data;
 };
 
 export const getTasks = async (tripId) => {
-  const response = await api.get(`/trips/${tripId}/tasks`);
+  const response = await api.get(`api/trips/${tripId}/tasks`);
   return response.data;
 };
 
 export const updateTask = async (tripId, taskId, updateData) => {
-  const response = await api.patch(`/trips/${tripId}/tasks/${taskId}`, updateData);
+  const response = await api.patch(`api/trips/${tripId}/tasks/${taskId}`, updateData);
   return response.data;
 };
 
 export const deleteTask = async (tripId, taskId) => {
-  const response = await api.delete(`/trips/${tripId}/tasks/${taskId}`);
+  const response = await api.delete(`api/trips/${tripId}/tasks/${taskId}`);
   return response.data;
 };
 
 // === Expenses ===
 export const createExpense = async (tripId, expenseData) => {
-  const response = await api.post(`/trips/${tripId}/expenses`, expenseData);
+  const response = await api.post(`api/trips/${tripId}/expenses`, expenseData);
   return response.data;
 };
 
 export const getExpenses = async (tripId) => {
-  const response = await api.get(`/trips/${tripId}/expenses`);
+  const response = await api.get(`api/trips/${tripId}/expenses`);
   return response.data;
 };
 
 export const updateExpense = async (tripId, expenseId, updateData) => {
-  const response = await api.patch(`/trips/${tripId}/expenses/${expenseId}`, updateData);
+  const response = await api.patch(`api/trips/${tripId}/expenses/${expenseId}`, updateData);
   return response.data;
 };
 
 export const deleteExpense = async (tripId, expenseId) => {
-  const response = await api.delete(`/trips/${tripId}/expenses/${expenseId}`);
+  const response = await api.delete(`api/trips/${tripId}/expenses/${expenseId}`);
   return response.data;
 };
 
 // === Itinerary ===
 export const createItineraryItem = async (tripId, itemData) => {
-  const response = await api.post(`/trips/${tripId}/itinerary`, itemData);
+  const response = await api.post(`api/trips/${tripId}/itinerary`, itemData);
   return response.data;
 };
 
 export const getItinerary = async (tripId) => {
-  const response = await api.get(`/trips/${tripId}/itinerary`);
+  const response = await api.get(`api/trips/${tripId}/itinerary`);
   return response.data;
 };
 
 export const updateItineraryItem = async (tripId, itemId, updateData) => {
-  const response = await api.patch(`/trips/${tripId}/itinerary/${itemId}`, updateData);
+  const response = await api.patch(`api/trips/${tripId}/itinerary/${itemId}`, updateData);
   return response.data;
 };
 
 export const deleteItineraryItem = async (tripId, itemId) => {
-  const response = await api.delete(`/trips/${tripId}/itinerary/${itemId}`);
+  const response = await api.delete(`api/trips/${tripId}/itinerary/${itemId}`);
   return response.data;
 };
 
 // === Polls ===
 export const createPoll = async (tripId, pollData) => {
-  const response = await api.post(`/trips/${tripId}/polls`, pollData);
+  const response = await api.post(`api/trips/${tripId}/polls`, pollData);
   return response.data;
 };
 
 export const getPolls = async (tripId) => {
-  const response = await api.get(`/trips/${tripId}/polls`);
+  const response = await api.get(`api/trips/${tripId}/polls`);
   return response.data;
 };
 
 export const voteOnPoll = async (tripId, pollId, voteData) => {
-  const response = await api.post(`/trips/${tripId}/polls/${pollId}/vote`, voteData);
+  const response = await api.post(`api/trips/${tripId}/polls/${pollId}/vote`, voteData);
   return response.data;
 };
 
 export const deletePoll = async (tripId, pollId) => {
-  const response = await api.delete(`/trips/${tripId}/polls/${pollId}`);
+  const response = await api.delete(`api/trips/${tripId}/polls/${pollId}`);
   return response.data;
 };
 
 // === Messaging ===
 export const sendMessage = async (tripId, messageData) => {
-  const response = await api.post(`/trips/${tripId}/messages`, messageData);
+  const response = await api.post(`api/trips/${tripId}/messages`, messageData);
   return response.data;
 };
 
 export const getMessages = async (tripId) => {
-  const response = await api.get(`/trips/${tripId}/messages`);
+  const response = await api.get(`api/trips/${tripId}/messages`);
   return response.data;
 };
 
 export const resetPassword = async (oldPassword, newPassword) => {
-  const response = await api.patch('/auth/reset-password', { oldPassword, newPassword });
+  const response = await api.patch('api/auth/reset-password', { oldPassword, newPassword });
   return response.data;
 };
 

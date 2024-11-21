@@ -15,7 +15,7 @@ const Announcements = () => {
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
-        const response = await api.get(`/trips/${tripId}/announcements`);
+        const response = await api.get(`api/trips/${tripId}/announcements`);
         setAnnouncements(response.data);
       } catch (err) {
         setError('Failed to load announcements.');
@@ -24,7 +24,7 @@ const Announcements = () => {
 
     const fetchUserRole = async () => {
       try {
-        const response = await api.get(`/trips/${tripId}/user-role`);
+        const response = await api.get(`api/trips/${tripId}/user-role`);
         setUserRole(response.data.role);
       } catch (err) {
         console.error('Failed to fetch user role.');

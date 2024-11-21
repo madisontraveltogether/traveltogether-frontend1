@@ -14,7 +14,7 @@ const TaskDetails = () => {
   useEffect(() => {
     const fetchTask = async () => {
       try {
-        const response = await api.get(`/trips/${tripId}/tasks/${taskId}`);
+        const response = await api.get(`api/trips/${tripId}/tasks/${taskId}`);
         setTask(response.data);
         setStatus(response.data.status);
       } catch (err) {

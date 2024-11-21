@@ -14,7 +14,7 @@ const TripPolls = () => {
   useEffect(() => {
     const fetchPolls = async () => {
       try {
-        const response = await api.get(`/trips/${tripId}/polls`);
+        const response = await api.get(`api/trips/${tripId}/polls`);
         setPolls(response.data);
       } catch (err) {
         setError('Failed to load polls.');

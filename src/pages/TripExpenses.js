@@ -14,7 +14,7 @@ const TripExpenses = () => {
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const response = await api.get(`/trips/${tripId}/expenses`);
+        const response = await api.get(`api/trips/${tripId}/expenses`);
         setExpenses(response.data);
       } catch (err) {
         setError('Failed to load expenses.');

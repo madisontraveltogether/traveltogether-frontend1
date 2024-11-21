@@ -15,7 +15,7 @@ const Itinerary = () => {
   useEffect(() => {
     const fetchItinerary = async () => {
       try {
-        const response = await api.get(`/trips/${tripId}/itinerary`);
+        const response = await api.get(`api/trips/${tripId}/itinerary`);
         setItinerary(response.data);
       } catch (err) {
         setError('Failed to load itinerary.');

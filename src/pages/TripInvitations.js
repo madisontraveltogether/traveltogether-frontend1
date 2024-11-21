@@ -9,7 +9,7 @@ const TripInvitations = () => {
   useEffect(() => {
     const fetchInvitations = async () => {
       try {
-        const response = await api.get('/user/invitations');
+        const response = await api.get('api/user/invitations');
         setInvitations(response.data);
       } catch (err) {
         setError('Failed to load invitations.');

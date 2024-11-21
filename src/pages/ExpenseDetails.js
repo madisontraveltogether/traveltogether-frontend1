@@ -17,10 +17,10 @@ const ExpenseDetails = () => {
   useEffect(() => {
     const fetchExpenseAndComments = async () => {
       try {
-        const expenseResponse = await api.get(`/trips/${tripId}/expenses/${expenseId}`);
+        const expenseResponse = await api.get(`api/trips/${tripId}/expenses/${expenseId}`);
         setExpense(expenseResponse.data);
 
-        const commentsResponse = await api.get(`/trips/${tripId}/expenses/${expenseId}/comments`);
+        const commentsResponse = await api.get(`api/trips/${tripId}/expenses/${expenseId}/comments`);
         setComments(commentsResponse.data);
       } catch (err) {
         setError('Failed to load expense details or comments.');

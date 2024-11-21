@@ -11,7 +11,7 @@ const BalanceReport = () => {
   useEffect(() => {
     const fetchBalances = async () => {
       try {
-        const response = await api.get(`/trips/${tripId}/balances`);
+        const response = await api.get(`api/trips/${tripId}/balances`);
         setBalances(response.data.balances);
         setTotalExpenses(response.data.totalExpenses);
       } catch (err) {
