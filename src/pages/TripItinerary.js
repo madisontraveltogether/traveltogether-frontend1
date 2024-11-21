@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import '../css/Itinerary.css';
 import TopBar from '../components/TopBar';
 import BottomNav from '../components/BottomNav';
+import '../css/Itinerary.css';
 
 const Itinerary = () => {
   const { tripId } = useParams();
   const navigate = useNavigate();
   const [itinerary, setItinerary] = useState([]);
   const [error, setError] = useState('');
-  const [activeTab, setActiveTab] = useState('itinerary'); // Switch between 'itinerary' and 'suggestions'
 
   useEffect(() => {
     const fetchItinerary = async () => {
       try {
-        const response = await api.get(`api/trips/${tripId}/itinerary`);
+        const response = await api.get(`/api/trips/${tripId}/itinerary`);
         setItinerary(response.data);
       } catch (err) {
         setError('Failed to load itinerary.');
@@ -25,88 +24,60 @@ const Itinerary = () => {
     fetchItinerary();
   }, [tripId]);
 
+  const handleDelete = async (itemId) => {
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      try {
+        await api.delete(`/api/trips/${tripId}/itinerary/${itemId}`);
+        setItinerary(itinerary.filter((item) => item._id !== itemId));
+      } catch (err) {
+        setError('Failed to delete the itinerary item.');
+      }
+    }
+  };
+
   return (
     <div className="itinerary-page">
-      <TopBar title={activeTab === 'itinerary' ? 'Itinerary' : 'Suggestions'} />
-      <div className="tabs">
-        <button
-          className={activeTab === 'itinerary' ? 'active' : ''}
-          onClick={() => setActiveTab('itinerary')}
-        >
-          Itinerary
-        </button>
-        <button
-          className={activeTab === 'suggestions' ? 'active' : ''}
-          onClick={() => setActiveTab('suggestions')}
-        >
-          Suggestions
-        </button>
-      </div>
-
+      <TopBar title="Itinerary" />
       {error && <p className="error">{error}</p>}
 
       {itinerary.length === 0 ? (
         <div className="empty-state">
-          <img
-            src={
-              activeTab === 'itinerary'
-                ? '/assets/itinerary-empty-icon.svg'
-                : '/assets/suggestions-empty-icon.svg'
-            }
-            alt="Empty State"
-            className="empty-icon"
-          />
-          <h3>{activeTab === 'itinerary' ? 'Adventure Awaits' : 'Got an Idea?'}</h3>
-          <p>
-            {activeTab === 'itinerary'
-              ? 'Add your first event or suggest an event to start building your itinerary.'
-              : 'Add suggestions so members can discuss and vote on events. Then, you can add your favorites to the itinerary.'}
-          </p>
+          <img src="/assets/itinerary-empty-icon.svg" alt="Empty Itinerary" />
+          <h3>Adventure Awaits</h3>
+          <p>Add your first event to start building your itinerary.</p>
           <button
             className="add-btn"
-            onClick={() =>
-              navigate(
-                activeTab === 'itinerary'
-                  ? `/trips/${tripId}/itinerary/new`
-                  : `/trips/${tripId}/itinerary/suggestions/new`
-              )
-            }
+            onClick={() => navigate(`/trips/${tripId}/itinerary/new`)}
           >
-            + {activeTab === 'itinerary' ? 'Add Event' : 'Add Suggestion'}
+            + Add Event
           </button>
         </div>
       ) : (
         <div className="itinerary-list">
-          {itinerary.map((item, index) => (
-            <div key={index} className="itinerary-card">
+          {itinerary.map((item) => (
+            <div key={item._id} className="itinerary-card">
               <div className="itinerary-header">
-                <span className="itinerary-day">Day {item.day}</span>
-                <span className="itinerary-date">
-                  {new Date(item.date).toLocaleDateString()}
-                </span>
+                <span>{item.title}</span>
+                <button
+                  onClick={() => handleDelete(item._id)}
+                  className="delete-btn"
+                >
+                  Delete
+                </button>
               </div>
               <div className="itinerary-body">
-                <img
-                  src={item.image || '/assets/default-image.jpg'}
-                  alt={item.title}
-                  className="itinerary-image"
-                />
                 <div className="itinerary-details">
-                  <h3>{item.title}</h3>
-                  <p>Suggested by <strong>{item.suggestedBy}</strong></p>
                   <p>{item.description}</p>
+                  <p>
+                    {item.startTime && new Date(item.startTime).toLocaleString()} -{' '}
+                    {item.endTime && new Date(item.endTime).toLocaleString()}
+                  </p>
                 </div>
-              </div>
-              <div className="itinerary-footer">
-                <span className="comments">0 Comments ↩️</span>
-                <button className="vote-btn">👍</button>
-                <button className="vote-btn">👎</button>
               </div>
             </div>
           ))}
         </div>
       )}
-
       <BottomNav />
     </div>
   );
