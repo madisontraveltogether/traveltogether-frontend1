@@ -1,17 +1,17 @@
 /* General Styles */
 body {
-    font-family: 'Roboto', sans-serif; /* Match your app's font */
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    background-color: #f9f9f9; /* Light background color for consistency */
-    color: #333; /* Primary text color */
+    background-color: #ffffff; /* White background */
+    color: #333; /* Neutral text color */
   }
   
   h1, h2, h3 {
     margin: 0;
     padding: 0;
-    color: #123456; /* Match your prototype's primary brand color */
+    color: #ff9900; /* Bright orange for headings */
   }
   
   a {
@@ -23,32 +23,32 @@ body {
     font-family: inherit;
     font-size: 1rem;
     padding: 0.75rem 1.5rem;
-    background-color: #ff9900; /* Accent color */
+    background-color: #ff9900; /* Primary orange */
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
   }
   
   button:hover {
-    background-color: #e68a00; /* Darker hover state */
-    transform: scale(1.05); /* Subtle hover animation */
+    background-color: #e68a00; /* Slightly darker orange */
+    transform: scale(1.05); /* Subtle hover effect */
   }
   
   /* Layout Styles */
   header {
-    background-color: #123456; /* Primary color */
-    color: white;
+    background-color: white;
+    color: #ff9900;
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   header h1 {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
   
   header ul {
@@ -58,13 +58,13 @@ body {
   }
   
   header ul li a {
-    color: white;
+    color: #ff9900;
     font-weight: bold;
     transition: color 0.3s ease;
   }
   
   header ul li a:hover {
-    color: #ff9900; /* Accent color */
+    color: #e68a00;
   }
   
   .auth-buttons {
@@ -76,8 +76,8 @@ body {
   .hero {
     text-align: center;
     padding: 4rem 2rem;
-    background: linear-gradient(135deg, #123456, #345678); /* Subtle gradient for hero */
-    color: white;
+    background-color: #fff5e6; /* Soft orange background */
+    color: #333;
   }
   
   .hero h1 {
@@ -88,6 +88,7 @@ body {
   .hero p {
     font-size: 1.2rem;
     margin-bottom: 2rem;
+    color: #666;
   }
   
   .hero button {
@@ -108,13 +109,15 @@ body {
   
   .about p {
     font-size: 1.1rem;
-    color: #555;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto;
   }
   
   /* Features Section */
   .features {
     padding: 4rem 2rem;
-    background-color: #f3f3f3;
+    background-color: #fff5e6;
     text-align: center;
   }
   
@@ -141,17 +144,18 @@ body {
   
   .features-list li svg {
     font-size: 3rem; /* Icon size */
-    color: #123456;
+    color: #ff9900;
   }
   
   .features-list li h3 {
     font-size: 1.2rem;
     margin: 0.5rem 0;
+    color: #333;
   }
   
   .features-list li p {
     font-size: 1rem;
-    color: #555;
+    color: #666;
   }
   
   /* Pricing Section */
@@ -167,9 +171,9 @@ body {
   }
   
   .pricing div {
-    background-color: #f9f9f9;
+    background-color: #fff5e6;
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: 1rem auto;
     max-width: 400px;
@@ -178,17 +182,18 @@ body {
   .pricing h3 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
+    color: #ff9900;
   }
   
   .pricing p {
     font-size: 1rem;
-    color: #555;
+    color: #666;
   }
   
   /* FAQ Section */
   .faq {
     padding: 4rem 2rem;
-    background-color: #f3f3f3;
+    background-color: #fff5e6;
     text-align: center;
   }
   
@@ -203,13 +208,13 @@ body {
   
   .faq h3 {
     font-size: 1.2rem;
-    color: #123456;
+    color: #ff9900;
     margin-bottom: 0.5rem;
   }
   
   .faq p {
     font-size: 1rem;
-    color: #555;
+    color: #666;
   }
   
   /* Contact Section */
@@ -236,7 +241,7 @@ body {
     width: 100%;
     padding: 0.8rem;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 1rem;
   }
   
@@ -246,14 +251,15 @@ body {
   
   /* Footer */
   footer {
-    background-color: #123456;
+    background-color: #ff9900;
     color: white;
-    padding: 1rem 2rem;
+    padding: 1.5rem 2rem;
     text-align: center;
   }
   
   footer p {
     margin: 0;
+    font-size: 1rem;
   }
   
   footer ul {
@@ -261,12 +267,12 @@ body {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin: 0.5rem 0 0;
+    margin: 1rem 0 0;
     padding: 0;
   }
   
   footer ul li a {
-    color: #ff9900;
+    color: white;
   }
   
   footer ul li a:hover {
