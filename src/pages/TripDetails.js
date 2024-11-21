@@ -9,7 +9,10 @@ const TripDetails = ({ currentUser }) => {
   const { tripId } = useParams();
   const navigate = useNavigate();
   const [coverPhoto, setCoverPhoto] = useState(null);
-  const [trip, setTrip] = useState(null);
+  const [trip, setTrip] = useState({
+    pendingInvites: [],
+    attendees: [],
+  });
   const [email, setEmail] = useState('');
   const [attendees, setAttendees] = useState([]);
   const [rsvpStatus, setRsvpStatus] = useState('');
@@ -143,34 +146,51 @@ const TripDetails = ({ currentUser }) => {
       </div>
 
       {/* Pending Invites */}
-      {isOrganizer && (
-        <div className="pending-invites-section">
-          <h3>Pending Invites</h3>
-          <ul className="pending-invites-list">
-            {trip.pendingInvites.map((invite) => (
-              <li key={invite}>
-                {invite}
-                <button onClick={() => handleResendInvite(invite)}>Resend</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {trip?.pendingInvites?.length > 0 ? (
+  <ul className="pending-invites-list">
+    {trip.pendingInvites.map((invite) => (
+      <li key={invite}>
+        {invite}
+        <button onClick={() => handleResendInvite(invite)}>Resend</button>
+      </li>
+    ))}
+  </ul>
+) : (
+  <p>No pending invites.</p>
+)}
 
-      {/* RSVP List */}
-      <div className="attendees-section">
-        <h3>Attendees</h3>
-        <ul className="attendees-list">
-          {trip.attendees.map((attendee) => (
-            <li key={attendee.id}>
-              {attendee.name}
-              <span className={`rsvp-status ${attendee.rsvpStatus.toLowerCase()}`}>
-                {attendee.rsvpStatus}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
+{trip?.attendees?.length > 0 ? (
+  <ul className="attendees-list">
+    {trip.attendees.map((attendee) => (
+      <li key={attendee.id}>
+        {attendee.name}
+        <span className={`rsvp-status ${attendee.rsvpStatus?.toLowerCase()}`}>
+          {attendee.rsvpStatus}
+        </span>
+      </li>
+    ))}
+  </ul>
+) : (
+  <p>No attendees yet.</p>
+)}
+
+      
+
+{trip?.attendees?.length > 0 ? (
+  <ul className="attendees-list">
+    {trip.attendees.map((attendee) => (
+      <li key={attendee.id}>
+        {attendee.name}
+        <span className={`rsvp-status ${attendee.rsvpStatus?.toLowerCase()}`}>
+          {attendee.rsvpStatus}
+        </span>
+      </li>
+    ))}
+  </ul>
+) : (
+  <p>No attendees yet.</p>
+)}
+
 
       {/* Navigation Section */}
       <div className="trip-navigation">

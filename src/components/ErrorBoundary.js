@@ -31,6 +31,7 @@ class ErrorBoundary extends Component {
         <div style={{ padding: '20px', textAlign: 'center' }}>
           <h1>Something went wrong.</h1>
           <p>We're working on it! Please try again later or reload the page.</p>
+          <p>If this issue persists please email help@gettraveltogether.com</p>
           <button onClick={this.handleReload} style={{ marginTop: '10px' }}>
             Reload Page
           </button>
