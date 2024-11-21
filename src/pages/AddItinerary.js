@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import api from '../services/api';
+import '../css/AddItinerary.css';
 import TopBar from '../components/TopBar';
 import BottomNav from '../components/BottomNav';
-import '../css/AddItinerary.css';
 
 const AddItinerary = () => {
   const { tripId } = useParams();
-  const [formData, setFormData] = useState({
+  const navigate = useNavigate();
+  const location = useLocation();
+  const tripDates = location.state?.tripDates || [];  const [formData, setFormData] = useState({
     title: '',
     description: '',
     location: '',
-    startTime: '',
-    endTime: '',
+    day: '', // Selected day
   });
   const [error, setError] = useState('');
-  const navigate = useNavigate();
+  console.log('Received Trip Dates:', tripDates); // Debugging: Ensure the dates are passed correctly
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -65,22 +67,16 @@ const AddItinerary = () => {
           />
         </div>
         <div className="form-group">
-          <label>Start Time</label>
-          <input
-            type="datetime-local"
-            name="startTime"
-            value={formData.startTime}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>End Time</label>
-          <input
-            type="datetime-local"
-            name="endTime"
-            value={formData.endTime}
-            onChange={handleChange}
-          />
+          <label>Day *</label>
+          {tripDates.length > 0 ? (
+        <ul>
+          {tripDates.map((date, index) => (
+            <li key={index}>{date}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>No trip dates available</p>
+      )}
         </div>
         <button type="submit" className="submit-btn">
           Add Item
