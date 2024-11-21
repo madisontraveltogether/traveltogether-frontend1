@@ -1,7 +1,7 @@
 // src/pages/Home.js
 import React from 'react';
-import { FaPlane, FaWallet, FaCalendarAlt, FaComments } from 'react-icons/fa';
-import './Homepage.css'
+import { Flight, AttachMoney, EventNote, Chat } from '@mui/icons-material';
+import './Homepage.css';
 
 const Home = () => {
   return (
@@ -31,22 +31,22 @@ const Home = () => {
         <h2>Features</h2>
         <ul className="features-list">
           <li>
-            <FaPlane aria-hidden="true" />
+            <Flight fontSize="large" aria-hidden="true" />
             <h3>Collaborative Trip Planning</h3>
             <p>Plan trips with your group effortlessly.</p>
           </li>
           <li>
-            <FaWallet aria-hidden="true" />
+            <AttachMoney fontSize="large" aria-hidden="true" />
             <h3>Expense Tracking</h3>
             <p>Split bills and track budgets seamlessly.</p>
           </li>
           <li>
-            <FaCalendarAlt aria-hidden="true" />
+            <EventNote fontSize="large" aria-hidden="true" />
             <h3>Customizable Itineraries</h3>
             <p>Organize every detail in one place.</p>
           </li>
           <li>
-            <FaComments aria-hidden="true" />
+            <Chat fontSize="large" aria-hidden="true" />
             <h3>Polls and Messaging</h3>
             <p>Engage your group in real-time.</p>
           </li>
@@ -97,3 +97,4 @@ const Home = () => {
 };
 
 export default Home;
+

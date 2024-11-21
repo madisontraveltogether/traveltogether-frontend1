@@ -25,7 +25,7 @@ import Itinerary from './pages/TripItinerary'
 import ErrorBoundary from './components/ErrorBoundary';
 import PasswordReset from './pages/PasswordReset';
 import AddItinerary from './pages/AddItinerary';
-import Homepage from './landing pages/Homepage'
+import Homepage from './landingpages/Homepage'
 
 const ProtectedRoute = ({ user, children }) => {
   return user ? children : <Navigate to="/login" replace />;
