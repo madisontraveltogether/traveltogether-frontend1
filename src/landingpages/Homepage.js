@@ -1,6 +1,6 @@
 // src/pages/Home.js
 import React from 'react';
-import { Flight, AttachMoney, EventNote, Chat } from '@mui/icons-material';
+//import { Flight, AttachMoney, EventNote, Chat } from '@mui/icons-material';
 import './Homepage.css';
 
 const Home = () => {
@@ -31,22 +31,22 @@ const Home = () => {
         <h2>Features</h2>
         <ul className="features-list">
           <li>
-            <Flight fontSize="large" aria-hidden="true" />
+           {/* <Flight fontSize="large" aria-hidden="true" /> */}
             <h3>Collaborative Trip Planning</h3>
             <p>Plan trips with your group effortlessly.</p>
           </li>
           <li>
-            <AttachMoney fontSize="large" aria-hidden="true" />
+            {/* <AttachMoney fontSize="large" aria-hidden="true" /> */}
             <h3>Expense Tracking</h3>
             <p>Split bills and track budgets seamlessly.</p>
           </li>
           <li>
-            <EventNote fontSize="large" aria-hidden="true" />
+            {/* <EventNote fontSize="large" aria-hidden="true" /> */}
             <h3>Customizable Itineraries</h3>
             <p>Organize every detail in one place.</p>
           </li>
           <li>
-            <Chat fontSize="large" aria-hidden="true" />
+            {/* <Chat fontSize="large" aria-hidden="true" /> */}
             <h3>Polls and Messaging</h3>
             <p>Engage your group in real-time.</p>
           </li>
@@ -82,15 +82,7 @@ const Home = () => {
       {/* Contact Section */}
       <section id="contact" className="contact">
         <h2>Contact Us</h2>
-        <form>
-          <label htmlFor="name">Name</label>
-          <input id="name" type="text" placeholder="Your Name" aria-required="true" />
-          <label htmlFor="email">Email</label>
-          <input id="email" type="email" placeholder="Your Email" aria-required="true" />
-          <label htmlFor="message">Message</label>
-          <textarea id="message" placeholder="Your Message" aria-required="true"></textarea>
-          <button type="submit">Submit</button>
-        </form>
+        <p>help@gettraveltogether.com</p>
       </section>
     </div>
   );
