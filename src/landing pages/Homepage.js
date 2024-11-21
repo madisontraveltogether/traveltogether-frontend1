@@ -1,62 +1,99 @@
+// src/pages/Home.js
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Homepage.css'; // Import your CSS file
+import { FaPlane, FaWallet, FaCalendarAlt, FaComments } from 'react-icons/fa';
+import './Homepage.css'
 
-const Homepage = () => {
-  const navigate = useNavigate();
-
+const Home = () => {
   return (
-    <div className="homepage">
-      {/* Top Section */}
-      <header className="homepage-header">
-        <h1>TravelTogether</h1>
-        <p>Plan. Collaborate. Travel Stress-Free.</p>
-        <button className="cta-button" onClick={() => navigate('/signup')}>
-          Get Started
+    <div>
+      {/* Hero Section */}
+      <section id="home" className="hero">
+        <h1>Welcome to TravelTogether</h1>
+        <p>Effortless group travel planning at your fingertips.</p>
+        <button onClick={() => window.location.href = '/signup'} aria-label="Sign up for an account">
+          Sign Up
         </button>
-      </header>
+        <button onClick={() => window.location.href = '/login'} aria-label="Log in to your account">
+          Log In
+        </button>
+      </section>
 
-      {/* Key Features Section */}
-      <section className="features-section">
-        <h2>Why Choose TravelTogether?</h2>
-        <div className="features-grid">
-          <div className="feature-item">
-            <img src="/assets/budget-icon.svg" alt="Budgeting Icon" />
-            <h3>Effortless Budgeting</h3>
-            <p>Split expenses and track spending with ease.</p>
-          </div>
-          <div className="feature-item">
-            <img src="/assets/itinerary-icon.svg" alt="Itinerary Icon" />
-            <h3>Collaborative Itineraries</h3>
-            <p>Plan and vote on trip activities together.</p>
-          </div>
-          <div className="feature-item">
-            <img src="/assets/messaging-icon.svg" alt="Messaging Icon" />
-            <h3>Group Messaging</h3>
-            <p>Stay connected with your travel group.</p>
-          </div>
+      {/* About Section */}
+      <section id="about" className="about">
+        <h2>About Us</h2>
+        <p>
+          At TravelTogether, our mission is to make group travel seamless and fun. Whether you're planning a family reunion, a friend's getaway, or a corporate retreat, we have the tools you need to bring everyone together.
+        </p>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="features">
+        <h2>Features</h2>
+        <ul className="features-list">
+          <li>
+            <FaPlane aria-hidden="true" />
+            <h3>Collaborative Trip Planning</h3>
+            <p>Plan trips with your group effortlessly.</p>
+          </li>
+          <li>
+            <FaWallet aria-hidden="true" />
+            <h3>Expense Tracking</h3>
+            <p>Split bills and track budgets seamlessly.</p>
+          </li>
+          <li>
+            <FaCalendarAlt aria-hidden="true" />
+            <h3>Customizable Itineraries</h3>
+            <p>Organize every detail in one place.</p>
+          </li>
+          <li>
+            <FaComments aria-hidden="true" />
+            <h3>Polls and Messaging</h3>
+            <p>Engage your group in real-time.</p>
+          </li>
+        </ul>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="pricing">
+        <h2>Pricing</h2>
+        <div>
+          <h3>Free Plan</h3>
+          <p>Basic features to get started.</p>
+        </div>
+        <div>
+          <h3>Premium Plan</h3>
+          <p>All features, unlimited trips, and priority support.</p>
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="cta-section">
-        <h2>Start Planning Your Next Trip Today!</h2>
-        <button className="cta-button" onClick={() => navigate('/signup')}>
-          Sign Up for Free
-        </button>
+      {/* FAQ Section */}
+      <section id="faq" className="faq">
+        <h2>FAQ</h2>
+        <div>
+          <h3>How does TravelTogether work?</h3>
+          <p>We make group travel planning easier by centralizing all the tools you need.</p>
+        </div>
+        <div>
+          <h3>Is there a free plan?</h3>
+          <p>Yes! You can start with basic features for free.</p>
+        </div>
       </section>
 
-      {/* Footer */}
-      <footer className="homepage-footer">
-        <p>&copy; 2024 TravelTogether. All rights reserved.</p>
-        <nav>
-          <a href="/about">About</a>
-          <a href="/features">Features</a>
-          <a href="/contact">Contact</a>
-        </nav>
-      </footer>
+      {/* Contact Section */}
+      <section id="contact" className="contact">
+        <h2>Contact Us</h2>
+        <form>
+          <label htmlFor="name">Name</label>
+          <input id="name" type="text" placeholder="Your Name" aria-required="true" />
+          <label htmlFor="email">Email</label>
+          <input id="email" type="email" placeholder="Your Email" aria-required="true" />
+          <label htmlFor="message">Message</label>
+          <textarea id="message" placeholder="Your Message" aria-required="true"></textarea>
+          <button type="submit">Submit</button>
+        </form>
+      </section>
     </div>
   );
 };
 
-export default Homepage;
+export default Home;
