@@ -21,7 +21,7 @@ const MyTrips = () => {
       setError('User is not authenticated.');
       return;
     }
-        const response = await api.get('/trips/all');
+        const response = await api.get('api/trips/all');
         setTrips(response.data);
       } catch (err) {
         setError('Failed to load trips.');

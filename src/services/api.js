@@ -27,44 +27,44 @@ export const register = async (userData) => {
 };
 
 export const getCurrentUser = async () => {
-  const response = await api.get('/auth/me');
+  const response = await api.get('api/auth/me');
   return response.data;
 };
 
 export const logout = async () => {
-  const response = await api.post('/auth/logout');
+  const response = await api.post('api/auth/logout');
   return response.data;
 };
 
 // === Trips ===
 export const createTrip = async (tripData) => {
-  const response = await api.post('/trips', tripData);
+  const response = await api.post('api/trips', tripData);
   return response.data;
 };
 
 export const getTripById = async (tripId) => {
-  const response = await api.get(`/trips/${tripId}`);
+  const response = await api.get(`api/trips/${tripId}`);
   return response.data;
 };
 
 export const updateTrip = async (tripId, updateData) => {
-  const response = await api.patch(`/trips/${tripId}`, updateData);
+  const response = await api.patch(`api/trips/${tripId}`, updateData);
   return response.data;
 };
 
 export const deleteTrip = async (tripId) => {
-  const response = await api.delete(`/trips/${tripId}`);
+  const response = await api.delete(`api/trips/${tripId}`);
   return response.data;
 };
 
 export const getAllUserTrips = async () => {
-  const response = await api.get('/trips/all');
+  const response = await api.get('api/trips/all');
   return response.data;
 };
 
 // === Guests ===
 export const addGuest = async (tripId, guestData) => {
-  const response = await api.post(`/trips/${tripId}/guests`, guestData);
+  const response = await api.post(`api/trips/${tripId}/guests`, guestData);
   return response.data;
 };
 
