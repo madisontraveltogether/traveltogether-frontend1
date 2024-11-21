@@ -1,47 +1,134 @@
 /* General Styles */
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif; /* Match your app's font */
     margin: 0;
     padding: 0;
+    line-height: 1.6;
+    background-color: #f9f9f9; /* Light background color for consistency */
+    color: #333; /* Primary text color */
   }
   
-  header, footer {
-    background-color: #123456;
-    color: #fff;
+  h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+    color: #123456; /* Match your prototype's primary brand color */
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  button {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #ff9900; /* Accent color */
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #e68a00; /* Darker hover state */
+    transform: scale(1.05); /* Subtle hover animation */
+  }
+  
+  /* Layout Styles */
+  header {
+    background-color: #123456; /* Primary color */
+    color: white;
     padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
-  header ul, footer ul {
+  header h1 {
+    font-size: 1.8rem;
+  }
+  
+  header ul {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     list-style: none;
+    gap: 1.5rem;
+  }
+  
+  header ul li a {
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+  
+  header ul li a:hover {
+    color: #ff9900; /* Accent color */
+  }
+  
+  .auth-buttons {
+    display: flex;
     gap: 1rem;
   }
   
+  /* Hero Section */
   .hero {
     text-align: center;
     padding: 4rem 2rem;
-    background: linear-gradient(135deg, #123456, #345678);
+    background: linear-gradient(135deg, #123456, #345678); /* Subtle gradient for hero */
     color: white;
   }
   
+  .hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
   .hero button {
-    margin: 1rem;
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 4px;
-    background-color: #ff9900;
-    color: white;
-    cursor: pointer;
-    transition: transform 0.3s, background-color 0.3s;
+    margin: 0.5rem;
+  }
+  
+  /* About Section */
+  .about {
+    padding: 4rem 2rem;
+    background-color: white;
+    text-align: center;
+  }
+  
+  .about h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .about p {
+    font-size: 1.1rem;
+    color: #555;
+  }
+  
+  /* Features Section */
+  .features {
+    padding: 4rem 2rem;
+    background-color: #f3f3f3;
+    text-align: center;
+  }
+  
+  .features h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
   }
   
   .features-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    padding: 2rem;
+    gap: 2rem;
+    padding: 0;
+    list-style: none;
   }
   
   .features-list li {
@@ -49,25 +136,156 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .features-list li svg {
+    font-size: 3rem; /* Icon size */
+    color: #123456;
   }
   
   .features-list li h3 {
+    font-size: 1.2rem;
     margin: 0.5rem 0;
+  }
+  
+  .features-list li p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* Pricing Section */
+  .pricing {
+    padding: 4rem 2rem;
+    background-color: white;
+    text-align: center;
+  }
+  
+  .pricing h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .pricing div {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 1rem auto;
+    max-width: 400px;
+  }
+  
+  .pricing h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .pricing p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* FAQ Section */
+  .faq {
+    padding: 4rem 2rem;
+    background-color: #f3f3f3;
+    text-align: center;
+  }
+  
+  .faq h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .faq div {
+    margin-bottom: 2rem;
+  }
+  
+  .faq h3 {
+    font-size: 1.2rem;
+    color: #123456;
+    margin-bottom: 0.5rem;
+  }
+  
+  .faq p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* Contact Section */
+  .contact {
+    padding: 4rem 2rem;
+    background-color: white;
+    text-align: center;
+  }
+  
+  .contact h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .contact form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+    margin: auto;
+  }
+  
+  .contact input, .contact textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .contact button {
+    width: 100%;
+  }
+  
+  /* Footer */
+  footer {
+    background-color: #123456;
+    color: white;
+    padding: 1rem 2rem;
+    text-align: center;
+  }
+  
+  footer p {
+    margin: 0;
+  }
+  
+  footer ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 0.5rem 0 0;
+    padding: 0;
+  }
+  
+  footer ul li a {
+    color: #ff9900;
+  }
+  
+  footer ul li a:hover {
+    text-decoration: underline;
   }
   
   /* Responsive Design */
   @media (max-width: 768px) {
-    header ul, footer ul {
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-  
     .hero h1 {
       font-size: 2rem;
     }
   
     .features-list {
       grid-template-columns: 1fr;
+    }
+  
+    header ul {
+      flex-direction: column;
+      gap: 1rem;
     }
   }
   
