@@ -50,6 +50,7 @@ const TripDetails = ({ currentUser }) => {
   if (!trip) return <p>Loading...</p>;
 
   const isOrganizer = currentUser?.id === trip.organizer?.id;
+  console.log(currentUser)
 
   return (
     <div className="trip-dashboard">

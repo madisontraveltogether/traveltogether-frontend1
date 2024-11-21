@@ -82,15 +82,8 @@ const TripExpenses = () => {
         </div>
       )}
 
-      <footer className="bottom-nav">
-        <button onClick={() => navigate(`/trips/${tripId}`)}>Trip Home</button>
-        <button onClick={() => navigate(`/trips/${tripId}/plans`)}>Plans</button>
-        <button className="active">Expenses</button>
-        <button onClick={() => navigate(`/trips/${tripId}/messages`)}>
-          Messages
-        </button>
-      </footer>
-      <BottomNav />
+<BottomNav tripId={tripId} />
+
 
     </div>
   );
