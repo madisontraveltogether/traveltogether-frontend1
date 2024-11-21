@@ -8,7 +8,7 @@ import BottomNav from '../components/BottomNav';
 const TripDetails = ({ currentUser }) => {
   const { tripId } = useParams();
   const navigate = useNavigate();
-
+  const [coverPhoto, setCoverPhoto] = useState(null);
   const [trip, setTrip] = useState(null);
   const [email, setEmail] = useState('');
   const [attendees, setAttendees] = useState([]);
@@ -48,6 +48,29 @@ const TripDetails = ({ currentUser }) => {
     }
   };
 
+  const handleResendInvite = async (inviteEmail) => {
+    try {
+      await api.post(`/api/trips/${tripId}/invite`, { email: inviteEmail });
+      alert('Invitation resent!');
+    } catch (err) {
+      alert('Failed to resend invitation.');
+    }
+  };
+
+  const handleCoverPhotoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('coverPhoto', file);
+      try {
+        const response = await api.post(`/api/trips/${tripId}/cover`, formData);
+        setTrip((prev) => ({ ...prev, coverImage: response.data.coverImage }));
+      } catch (err) {
+        alert('Failed to upload cover photo.');
+      }
+    }
+  };
+
   const handleRsvpChange = async (status) => {
     try {
       await api.patch(`/api/trips/${tripId}/rsvp`, { status });
@@ -80,69 +103,73 @@ const TripDetails = ({ currentUser }) => {
 
       {error && <p className="error-message">{error}</p>}
 
-      {/* Trip Details Section */}
-      <div className="trip-details">
-        {isEditing ? (
-          <div className="edit-form">
+      {/* Cover Photo */}
+      <img
+        src={trip.coverImage || '/assets/default-trip-image.jpg'}
+        alt="Trip Cover"
+        className="trip-banner"
+      />
+
+
+       {/* Trip Details */}
+       <div className="trip-details">
+        <span className="trip-dates">{`${new Date(trip.startDate).toLocaleDateString()} - ${new Date(trip.endDate).toLocaleDateString()}`}</span>
+        <h1 className="trip-title">{trip.name}</h1>
+        <p className="trip-location">{trip.location}</p>
+        <p className="trip-description">{trip.description}</p>
+        <div className="trip-organizer">
+          <img
+            src={trip.organizer?.profileImage || '/assets/default-avatar.png'}
+            alt={trip.organizer?.name}
+          />
+          <span>
+            {trip.organizer?.name}
+            {isOrganizer && <span className="organizer-badge">Organizer</span>}
+          </span>
+        </div>
+
+        {/* Cover Photo Upload */}
+        {isOrganizer && (
+          <div className="cover-photo-upload">
             <input
-              type="text"
-              name="name"
-              value={editForm.name}
-              onChange={handleEditChange}
-              placeholder="Trip Name"
-              required
+              type="file"
+              id="cover-photo"
+              accept="image/*"
+              onChange={handleCoverPhotoUpload}
             />
-            <input
-              type="text"
-              name="location"
-              value={editForm.location}
-              onChange={handleEditChange}
-              placeholder="Location"
-            />
-            <input
-              type="date"
-              name="startDate"
-              value={editForm.startDate?.slice(0, 10)}
-              onChange={handleEditChange}
-            />
-            <input
-              type="date"
-              name="endDate"
-              value={editForm.endDate?.slice(0, 10)}
-              onChange={handleEditChange}
-            />
-            <textarea
-              name="description"
-              value={editForm.description}
-              onChange={handleEditChange}
-              placeholder="Description"
-            />
-            <button onClick={handleSaveChanges} className="save-btn">
-              Save Changes
-            </button>
-          </div>
-        ) : (
-          <div>
-            <h1>{trip.name}</h1>
-            <p>
-              {trip.startDate && trip.endDate
-                ? `${new Date(trip.startDate).toLocaleDateString()} - ${new Date(
-                    trip.endDate
-                  ).toLocaleDateString()}`
-                : 'No dates set'}
-            </p>
-            <p>{trip.location || 'Location not set'}</p>
-            <p>{trip.description || 'No description provided.'}</p>
-            <p>
-              Organized by <strong>{trip.organizer?.name || 'Unknown'}</strong>
-            </p>
-            {isOrganizer && (
-              <button onClick={() => setIsEditing(true)} className="edit-btn">
-                Edit Trip
-              </button>
-            )}
+            <label htmlFor="cover-photo">Upload Cover Photo</label>
           </div>
         )}
+      </div>
+
+      {/* Pending Invites */}
+      {isOrganizer && (
+        <div className="pending-invites-section">
+          <h3>Pending Invites</h3>
+          <ul className="pending-invites-list">
+            {trip.pendingInvites.map((invite) => (
+              <li key={invite}>
+                {invite}
+                <button onClick={() => handleResendInvite(invite)}>Resend</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* RSVP List */}
+      <div className="attendees-section">
+        <h3>Attendees</h3>
+        <ul className="attendees-list">
+          {trip.attendees.map((attendee) => (
+            <li key={attendee.id}>
+              {attendee.name}
+              <span className={`rsvp-status ${attendee.rsvpStatus.toLowerCase()}`}>
+                {attendee.rsvpStatus}
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* Navigation Section */}
@@ -156,7 +183,7 @@ const TripDetails = ({ currentUser }) => {
         </button>
       </div>
 
-      {/* Attendees Section */}
+      {/* Attendees Section
       <div className="attendees-section">
         <h2>Attendees</h2>
         <ul>
@@ -204,7 +231,7 @@ const TripDetails = ({ currentUser }) => {
             </form>
           </div>
         )}
-      </div>
+      </div> */}
 
       <BottomNav tripId={tripId} />
     </div>

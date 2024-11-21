@@ -234,3 +234,106 @@ body {
     width: 150px;
   }
 }
+
+/* Organizer Badge */
+.organizer-badge {
+  display: inline-block;
+  background-color: #ea8c1a;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+/* Pending Invites */
+.pending-invites-section {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+}
+
+.pending-invites-section h3 {
+  font-size: 1.1rem;
+  color: #443c3c;
+  margin-bottom: 0.5rem;
+}
+
+.pending-invites-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.pending-invites-list li:last-child {
+  border-bottom: none;
+}
+
+.pending-invites-list button {
+  background-color: #ff8000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.pending-invites-list button:hover {
+  background-color: #e07000;
+}
+
+/* RSVP Color Codes */
+.rsvp-status {
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 5px;
+}
+
+.rsvp-status.going {
+  background-color: #28a745;
+  color: white;
+}
+
+.rsvp-status.maybe {
+  background-color: #ffc107;
+  color: white;
+}
+
+.rsvp-status.not-going {
+  background-color: #dc3545;
+  color: white;
+}
+
+.rsvp-status.pending {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Upload Cover Photo */
+.cover-photo-upload {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.cover-photo-upload input {
+  display: none;
+}
+
+.cover-photo-upload label {
+  display: inline-block;
+  background-color: #ff8000;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.cover-photo-upload label:hover {
+  background-color: #e07000;
+}
