@@ -26,7 +26,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import PasswordReset from './pages/PasswordReset';
 import AddItinerary from './pages/AddItinerary';
 import Home from './landingpages/Homepage'
-import Join from './pages/JoinTrip'
+import Join from './pages/JoinTripPage'
 
 const ProtectedRoute = ({ user, children }) => {
   return user ? children : <Navigate to="/login" replace />;
