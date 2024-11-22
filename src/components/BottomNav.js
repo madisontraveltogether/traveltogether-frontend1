@@ -10,7 +10,6 @@ const BottomNav = ({ tripId }) => {
   console.log('Trip ID in BottomNav:', tripId);
 
   if (!tripId) {
-    console.error('Trip ID is missing in BottomNav');
     return <div>Invalid trip navigation. Please refresh or try again.</div>;
   }
 
