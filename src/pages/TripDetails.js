@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import api from "../services/api";
 import "../css/TripDashboard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarkerAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarkerAlt, faEdit, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 const TripDetails = () => {
   const { tripId } = useParams();
