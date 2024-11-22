@@ -1,35 +1,79 @@
-import React, { useState } from 'react';
-import api from '../services/api';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import api from "../services/api";
 
-const JoinTripPage = ({ currentUser }) => {
-  const [tripCode, setTripCode] = useState('');
-  const [error, setError] = useState('');
+const JoinTrip = ({ currentUser }) => {
+  const { tripId } = useParams();
   const navigate = useNavigate();
+  const [tripDetails, setTripDetails] = useState(null);
+  const [error, setError] = useState("");
 
-  const handleJoinTrip = async () => {
+  useEffect(() => {
+    fetchTripDetails();
+  }, []);
+
+  const fetchTripDetails = async () => {
     try {
-      const response = await api.post('/api/trips/join', { tripCode, userId: currentUser.id });
-      alert('You have successfully joined the trip!');
-      navigate(`/trips/${response.data.tripId}`);
+      const response = await api.get(`/api/trips/${tripId}`);
+      setTripDetails(response.data);
     } catch (err) {
-      setError('Invalid trip code or unable to join trip.');
+      setError("Failed to load trip details. The link may be invalid or expired.");
     }
   };
 
+  const handleJoinTrip = async () => {
+    if (!currentUser) {
+      alert("You need to log in to join the trip.");
+      navigate("/login"); // Redirect to login
+      return;
+    }
+
+    try {
+      await api.post(`/api/trips/${tripId}/join`, { userId: currentUser.id });
+      alert("Successfully joined the trip!");
+      navigate(`/trips/${tripId}`); // Redirect to trip details
+    } catch (err) {
+      setError("Failed to join the trip. Please try again later.");
+    }
+  };
+
+  if (!tripDetails && !error) return <p>Loading...</p>;
+
   return (
     <div className="join-trip-page">
-      <h1>Join a Trip</h1>
-      {error && <p className="error-message">{error}</p>}
-      <input
-        type="text"
-        value={tripCode}
-        onChange={(e) => setTripCode(e.target.value)}
-        placeholder="Enter trip code"
-      />
-      <button onClick={handleJoinTrip}>Join Trip</button>
+      {error ? (
+        <p className="error-message">{error}</p>
+      ) : (
+        <div className="trip-invitation-details">
+          <h1>You're Invited to a Trip!</h1>
+          <p>
+            <strong>{tripDetails.organizer.name}</strong> has invited you to join the trip{" "}
+            <strong>"{tripDetails.name}"</strong> on TravelTogether.
+          </p>
+          <p>{tripDetails.description || "No additional details provided."}</p>
+          <p>
+            Start Date: {new Date(tripDetails.startDate).toLocaleDateString()} <br />
+            End Date: {new Date(tripDetails.endDate).toLocaleDateString()}
+          </p>
+          {currentUser ? (
+            <button className="join-trip-button" onClick={handleJoinTrip}>
+              Join Trip
+            </button>
+          ) : (
+            <div>
+              <p>You’ll need an account to join this trip.</p>
+              <button
+                onClick={() => navigate("/signup")}
+                className="signup-button"
+              >
+                Sign Up Now
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
-export default JoinTripPage;
+export default JoinTrip;
