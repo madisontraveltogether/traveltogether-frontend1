@@ -9,9 +9,18 @@ const TripDetails = () => {
   const [error, setError] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({});
+  const [currentUser, setCurrentUser] = useState(null);
   const isOrganizer = currentUser?.id === trip?.organizer?.id;
 
   useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await api.get("/api/auth/me");
+        setCurrentUser(response.data);
+      } catch (err) {
+        console.error("Failed to fetch user:", err);
+      }
+    };
     const fetchTripDetails = async () => {
       try {
         const response = await api.get(`/api/trips/${tripId}`);
@@ -26,7 +35,7 @@ const TripDetails = () => {
         setError("Failed to load trip details.");
       }
     };
-
+    fetchUser();
     fetchTripDetails();
   }, [tripId]);
 
@@ -56,7 +65,7 @@ const TripDetails = () => {
     setIsEditing(false);
   };
 
-
+  if (!currentUser) return <p>Loading...</p>;
   if (!trip) return <p>Loading...</p>;
 
   return (
