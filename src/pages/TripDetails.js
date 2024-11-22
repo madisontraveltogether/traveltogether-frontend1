@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../services/api";
-import "./css/TripDashboard"
+import "../css/TripDashboard.css"
+
 const TripDetails = () => {
   const { tripId } = useParams();
   const [trip, setTrip] = useState({});
