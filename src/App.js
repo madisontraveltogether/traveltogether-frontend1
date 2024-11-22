@@ -66,6 +66,7 @@ const App = () => {
           <Route path="/login" element={!user ? <Login setUser={setUser} /> : <Navigate to="/my-trips" replace />} />
           <Route path="/register" element={!user ? <Register setUser={setUser} /> : <Navigate to="/my-trips" replace />} />
           <Route path="/reset-password" element={<PasswordReset />} />
+          <Route path="/join/:tripId" element={<JoinTripPage />} />
 
 
           {/* Protected Routes */}
@@ -88,7 +89,6 @@ const App = () => {
           <Route path="/trips/:tripId/balance-report" element={<ProtectedRoute user={user}><BalanceReport /></ProtectedRoute>} />
           <Route path="/trips/:tripId/itinerary/new" element={<ProtectedRoute user={user}><AddItinerary /></ProtectedRoute>} />
           <Route path="/trips/:tripId/itinerary" element={<ProtectedRoute user={user}><Itinerary /></ProtectedRoute>} />
-
         </Routes>
       </Router>
     </ErrorBoundary>
