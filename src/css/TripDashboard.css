@@ -1,4 +1,4 @@
-/* Background for the page */
+/* Page Background */
 .page-container {
   background: #FFF;
   width: 100%;
@@ -18,54 +18,59 @@
   align-items: center;
   gap: 20px;
   width: 100%;
-  max-width: 500px; /* Limit width for responsiveness */
+  max-width: 500px;
   margin: auto;
+}
+
+/* Cover Photo */
+.cover-photo img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Trip Header */
+.trip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trip-header h1 {
+  color: #443C3C;
+  font-family: "SF Pro", sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.edit-icon {
+  color: #EA8C1A;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 /* Dates Box */
 .dates-box {
-  width: 171px;
-  height: 24px;
-  flex-shrink: 0;
+  width: 100%;
+  text-align: center;
   border-radius: 50px;
   background: #FED;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   color: #EA8C1A;
   font-family: "SF Pro", sans-serif;
   font-size: 14px;
-  font-style: normal;
   font-weight: 590;
-  line-height: normal;
-}
-
-/* Trip Title */
-.trip-title {
-  color: #443C3C;
-  font-family: "SF Pro", sans-serif;
-  font-size: 28px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin-top: 10px;
-  text-align: center;
+  padding: 5px 0;
 }
 
 /* Location */
 .location-container {
   display: flex;
-  width: 145px;
-  height: 17px;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 5px;
-  color: #EA8C1A;
-  font-family: "SF Pro", sans-serif;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+  margin-top: 10px;
 }
 
 .location-icon {
@@ -73,61 +78,52 @@
   color: #EA8C1A;
 }
 
+.location-container span {
+  color: #EA8C1A;
+  font-family: "SF Pro", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
 /* Trip Description */
 .trip-description {
   color: #443C3C;
   font-family: "SF Pro", sans-serif;
   font-size: 14px;
-  font-style: normal;
   font-weight: 400;
-  line-height: normal;
-  width: 100%;
-  max-width: 399px;
-  margin-top: 15px;
   text-align: justify;
+  margin-top: 15px;
 }
 
-/* Organizer Section */
-.organizer-container {
+/* Edit Trip Form */
+.edit-trip-form {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 10px;
-  margin-top: 20px;
 }
 
-.organized-by {
-  color: #1E1E1E;
-  font-family: "SF Pro", sans-serif;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-.profile-picture {
-  width: 15px;
-  height: 15px;
-  flex-shrink: 0;
-  border-radius: 15px;
-  background: lightgray;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-.organizer-name {
-  display: flex;
-  width: auto;
-  height: 17px;
-  padding: 1px 0px;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 4px;
-  flex-shrink: 0;
-  color: #EA8C1A;
-  font-family: "SF Pro", sans-serif;
+.edit-input {
+  padding: 10px;
   font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
+  border: 1px solid #CCC;
+  border-radius: 5px;
+}
+
+.save-button,
+.cancel-button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.save-button {
+  background-color: #EA8C1A;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #CCC;
+  color: black;
 }
