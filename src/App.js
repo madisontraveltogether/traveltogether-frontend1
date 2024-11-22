@@ -26,7 +26,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import PasswordReset from './pages/PasswordReset';
 import AddItinerary from './pages/AddItinerary';
 import Home from './landingpages/Homepage'
-import Join from './pages/JoinTripPage'
+import JoinTrip from './pages/JoinTripPage'
 
 const ProtectedRoute = ({ user, children }) => {
   return user ? children : <Navigate to="/login" replace />;
@@ -66,7 +66,7 @@ const App = () => {
           <Route path="/login" element={!user ? <Login setUser={setUser} /> : <Navigate to="/my-trips" replace />} />
           <Route path="/register" element={!user ? <Register setUser={setUser} /> : <Navigate to="/my-trips" replace />} />
           <Route path="/reset-password" element={<PasswordReset />} />
-          <Route path="/join/:tripId" element={<JoinTripPage />} />
+          <Route path="/join/:tripId" element={<JoinTrip />} />
 
 
           {/* Protected Routes */}
