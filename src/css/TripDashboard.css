@@ -11,18 +11,18 @@
 }
 
 .box {
-  width: 100%;
-  max-width: 450px; /* Limits width for larger phones */
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  max-width: 100%; /* Prevents overflow */
 }
 
 /* Cover Photo */
 .cover-photo img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
+  width: 100%; /* Adjust to parent width */
+  height: auto; /* Maintain aspect ratio */
   object-fit: cover;
 }
 
@@ -98,7 +98,15 @@
 .edit-trip-form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+}
+
+.edit-trip-form input,
+.edit-trip-form textarea,
+.edit-trip-form button {
+  width: 100%; /* Full width */
+  padding: 8px;
+  font-size: 16px;
 }
 
 .edit-input {
@@ -135,4 +143,28 @@
   font-size: 14px;
   text-align: center;
   margin-top: 10px;
+}
+
+.trip-details {
+  width: 100%; /* Fill parent container */
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.trip-details h1 {
+  font-size: 1.5rem; /* Scales based on root font size */
+}
+
+.trip-details p {
+  font-size: 1rem;
+}
+
+@media (max-width: 375px) {
+  .box {
+    padding: 10px;
+  }
+
+  .trip-details h1 {
+    font-size: 1.25rem; /* Smaller font size */
+  }
 }
