@@ -30,6 +30,12 @@ const TripDetails = () => {
     fetchTripDetails();
   }, [tripId]);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+
   const handleSaveChanges = async () => {
     try {
       const response = await api.patch(`/api/trips/${tripId}`, editForm);
