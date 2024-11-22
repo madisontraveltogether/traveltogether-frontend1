@@ -8,7 +8,11 @@ import BottomNav from '../components/BottomNav';
 const TripDetails = ({ currentUser }) => {
   const { tripId } = useParams();
   const navigate = useNavigate();
-  const [trip, setTrip] = useState(null);
+  const [trip, setTrip] = useState({
+    pendingInvites: [], // Default as an array
+    notifications: [],  // Default as an array
+    attendees: [],      // Default as an array
+  });
   const [email, setEmail] = useState('');
   const [notifications, setNotifications] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -194,7 +198,7 @@ const TripDetails = ({ currentUser }) => {
       {/* Notifications */}
       <div className="notifications-section">
         <h3>Notifications</h3>
-        {notifications.length > 0 ? (
+        {notifications?.length > 0 ? (
           notifications.map((note, index) => (
             <div key={index} className="notification">
               <p>{note.message}</p>
@@ -221,12 +225,16 @@ const TripDetails = ({ currentUser }) => {
             <button type="submit">Invite</button>
           </form>
           <ul>
-            {trip.pendingInvites.map((invite) => (
-              <li key={invite}>
-                {invite}
-                <button onClick={() => handleResendInvite(invite)}>Resend</button>
-              </li>
-            ))}
+            {trip?.pendingInvites?.length > 0 ? (
+              trip.pendingInvites.map((invite) => (
+                <li key={invite}>
+                  {invite}
+                  <button onClick={() => handleResendInvite(invite)}>Resend</button>
+                </li>
+              ))
+            ) : (
+              <p>No pending invites.</p>
+            )}
           </ul>
         </div>
       )}
