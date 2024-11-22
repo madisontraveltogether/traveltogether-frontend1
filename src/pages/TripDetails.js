@@ -152,6 +152,16 @@ const TripDetails = () => {
                 <p className="trip-description">
                   {trip.description || "No description provided."}
                 </p>
+                <div className="organizer-container">
+                  <FontAwesomeIcon
+                    icon={faUserCircle}
+                    className="organizer-icon"
+                  />
+                  <span>
+                    Organized by{" "}
+                    {trip.organizer?.name || "Unknown Organizer"}
+                  </span>
+                </div>
               </>
             )}
           </div>

@@ -1,129 +1,138 @@
-/* Page Background */
+/* General Mobile-First Layout */
 .page-container {
-  background: #FFF;
+  background: #fff;
   width: 100%;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 20px;
+  padding: 16px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Box Container */
 .box {
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
   width: 100%;
-  max-width: 500px;
-  margin: auto;
+  max-width: 450px; /* Limits width for larger phones */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 /* Cover Photo */
 .cover-photo img {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  height: auto;
   border-radius: 10px;
+  object-fit: cover;
 }
 
-/* Trip Header */
+/* Trip Details */
 .trip-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 .trip-header h1 {
-  color: #443C3C;
-  font-family: "SF Pro", sans-serif;
-  font-size: 28px;
-  font-weight: 400;
+  font-size: 20px;
+  font-weight: 500;
+  color: #443c3c;
   margin: 0;
+  word-wrap: break-word;
 }
 
 .edit-icon {
-  color: #EA8C1A;
-  font-size: 20px;
+  font-size: 18px;
+  color: #ea8c1a;
   cursor: pointer;
 }
 
-/* Dates Box */
 .dates-box {
-  width: 100%;
-  text-align: center;
-  border-radius: 50px;
-  background: #FED;
-  color: #EA8C1A;
-  font-family: "SF Pro", sans-serif;
+  background: #fed;
+  color: #ea8c1a;
   font-size: 14px;
-  font-weight: 590;
-  padding: 5px 0;
+  font-weight: bold;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 50px;
+  width: auto; /* Auto width to fit content */
 }
 
-/* Location */
 .location-container {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 5px;
-  margin-top: 10px;
+  gap: 8px;
+  font-size: 14px;
+  color: #ea8c1a;
 }
 
 .location-icon {
-  font-size: 15px;
-  color: #EA8C1A;
-}
-
-.location-container span {
-  color: #EA8C1A;
-  font-family: "SF Pro", sans-serif;
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 16px;
 }
 
 /* Trip Description */
 .trip-description {
-  color: #443C3C;
-  font-family: "SF Pro", sans-serif;
   font-size: 14px;
-  font-weight: 400;
-  text-align: justify;
-  margin-top: 15px;
+  color: #443c3c;
+  text-align: left;
+  line-height: 1.5;
+  margin-top: 10px;
 }
 
-/* Edit Trip Form */
+/* Organizer Info */
+.organizer-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #1e1e1e;
+}
+
+.organizer-icon {
+  font-size: 18px;
+  color: #ea8c1a;
+}
+
+/* Editing Form */
 .edit-trip-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .edit-input {
   padding: 10px;
   font-size: 14px;
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
   border-radius: 5px;
+  width: 100%;
 }
 
 .save-button,
 .cancel-button {
-  padding: 10px;
+  padding: 12px;
+  font-size: 14px;
   border: none;
   border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
+  width: 100%;
+  text-align: center;
 }
 
 .save-button {
-  background-color: #EA8C1A;
-  color: white;
+  background-color: #ea8c1a;
+  color: #fff;
 }
 
 .cancel-button {
-  background-color: #CCC;
-  color: black;
+  background-color: #ddd;
+  color: #000;
+}
+
+/* Error Message */
+.error-message {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
 }
