@@ -61,7 +61,7 @@ const JoinTrip = ({ currentUser }) => {
             </button>
           ) : (
             <div>
-              <p>You’ll need an account to join this trip.</p>
+              <p>If you don't have a TravelTogether account then you can sign up for one here.</p>
               <button
                 onClick={() => navigate("/signup")}
                 className="signup-button"
