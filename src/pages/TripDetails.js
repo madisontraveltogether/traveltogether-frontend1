@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import api from "../services/api";
-import "../css/TripDashboard.css"
+import "../css/TripDashboard.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const TripDetails = () => {
   const { tripId } = useParams();
@@ -10,6 +12,7 @@ const TripDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({});
   const [currentUser, setCurrentUser] = useState(null);
+
   const isOrganizer = currentUser?.id === trip?.organizer?.id;
 
   useEffect(() => {
@@ -26,6 +29,7 @@ const TripDetails = () => {
         const response = await api.get(`/api/trips/${tripId}`);
         setTrip(response.data);
         setEditForm({
+          name: response.data.name || "",
           description: response.data.description || "",
           location: response.data.location || "",
           startDate: response.data.startDate || "",
@@ -44,7 +48,6 @@ const TripDetails = () => {
     setEditForm((prev) => ({ ...prev, [name]: value }));
   };
 
-
   const handleSaveChanges = async () => {
     try {
       const response = await api.patch(`/api/trips/${tripId}`, editForm);
@@ -57,6 +60,7 @@ const TripDetails = () => {
 
   const handleCancelEdit = () => {
     setEditForm({
+      name: trip.name,
       description: trip.description,
       location: trip.location,
       startDate: trip.startDate,
@@ -65,72 +69,98 @@ const TripDetails = () => {
     setIsEditing(false);
   };
 
-  if (!currentUser) return <p>Loading...</p>;
-  if (!trip) return <p>Loading...</p>;
+  if (!currentUser || !trip) return <p>Loading...</p>;
 
   return (
-    <div className="trip-container">
-      <div className="cover-photo">
-        <img src="https://via.placeholder.com/428x200" alt="Cover" />
-      </div>
-
-      <div className="trip-details">
-        {isEditing ? (
-          <div className="edit-trip-form">
-            <textarea
-              name="description"
-              value={editForm.description}
-              onChange={handleInputChange}
-              placeholder="Enter trip description"
-            />
-            <input
-              type="text"
-              name="location"
-              value={editForm.location}
-              onChange={handleInputChange}
-              placeholder="Enter location"
-            />
-            <input
-              type="date"
-              name="startDate"
-              value={editForm.startDate}
-              onChange={handleInputChange}
-            />
-            <input
-              type="date"
-              name="endDate"
-              value={editForm.endDate}
-              onChange={handleInputChange}
-            />
-            <button onClick={handleSaveChanges}>Save</button>
-            <button onClick={handleCancelEdit}>Cancel</button>
+    <div className="page-container">
+      <div className="box">
+        <div className="trip-container">
+          <div className="cover-photo">
+            <img src="https://via.placeholder.com/428x200" alt="Cover" />
           </div>
-        ) : (
-          <>
-            <h1>{trip.name || "Trip Name"}</h1>
-            <p>{trip.description || "No description provided."}</p>
-            <p>{trip.location || "Location not set."}</p>
-            <p>
-              {trip.startDate
-                ? `Start Date: ${new Date(trip.startDate).toLocaleDateString()}`
-                : "Start Date not set."}
-            </p>
-            <p>
-              {trip.endDate
-                ? `End Date: ${new Date(trip.endDate).toLocaleDateString()}`
-                : "End Date not set."}
-            </p>
-            {isOrganizer && (
-              <button onClick={() => setIsEditing(true)}>Edit Trip</button>
-            )}
-          </>
-        )}
-      </div>
 
-      {error && <p className="error-message">{error}</p>}
+          <div className="trip-details">
+            {isEditing ? (
+              <div className="edit-trip-form">
+                <input
+                  type="text"
+                  name="name"
+                  value={editForm.name}
+                  onChange={handleInputChange}
+                  placeholder="Enter trip name"
+                  className="edit-input"
+                />
+                <textarea
+                  name="description"
+                  value={editForm.description}
+                  onChange={handleInputChange}
+                  placeholder="Enter trip description"
+                  className="edit-input"
+                />
+                <input
+                  type="text"
+                  name="location"
+                  value={editForm.location}
+                  onChange={handleInputChange}
+                  placeholder="Enter location"
+                  className="edit-input"
+                />
+                <input
+                  type="date"
+                  name="startDate"
+                  value={editForm.startDate}
+                  onChange={handleInputChange}
+                  className="edit-input"
+                />
+                <input
+                  type="date"
+                  name="endDate"
+                  value={editForm.endDate}
+                  onChange={handleInputChange}
+                  className="edit-input"
+                />
+                <button className="save-button" onClick={handleSaveChanges}>
+                  Save
+                </button>
+                <button className="cancel-button" onClick={handleCancelEdit}>
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="trip-header">
+                  <h1>{trip.name || "Trip Name"}</h1>
+                  {isOrganizer && (
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      className="edit-icon"
+                      onClick={() => setIsEditing(true)}
+                    />
+                  )}
+                </div>
+                <div className="dates-box">
+                  {trip.startDate && trip.endDate
+                    ? `${new Date(trip.startDate).toLocaleDateString()} - ${new Date(
+                        trip.endDate
+                      ).toLocaleDateString()}`
+                    : "Dates not set"}
+                </div>
+                <div className="location-container">
+                  <FontAwesomeIcon icon={faMapMarkerAlt} className="location-icon" />
+                  <span>{trip.location || "Location not set"}</span>
+                </div>
+                <p className="trip-description">
+                  {trip.description || "No description provided."}
+                </p>
+              </>
+            )}
+          </div>
+
+          {error && <p className="error-message">{error}</p>}
+        </div>
+      </div>
     </div>
   );
 };
-
 
 export default TripDetails;
