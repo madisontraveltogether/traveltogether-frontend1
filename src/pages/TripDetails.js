@@ -101,7 +101,7 @@ const TripDetails = ({ currentUser }) => {
   const handleAddAnnouncement = async () => {
     try {
       const response = await api.post(`/api/trips/${tripId}/announcements`, {
-        content: newAnnouncement,
+        message: newAnnouncement,
       });
       setTrip((prev) => ({
         ...prev,
