@@ -19,6 +19,7 @@ const TripDetails = () => {
     const fetchUser = async () => {
       try {
         const response = await api.get("/api/auth/me");
+        console.log(response.data);
         setCurrentUser(response.data);
       } catch (err) {
         console.error("Failed to fetch user:", err);
