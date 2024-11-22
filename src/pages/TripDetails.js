@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.css';
+import '../css/TripDashboard.css';
 
 export default function Main() {
   return (
