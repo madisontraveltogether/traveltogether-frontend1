@@ -12,6 +12,7 @@ const TripDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({});
   const [currentUser, setCurrentUser] = useState(null);
+  const [organizerName, setOrganizerName] = useState("Organizer Unknown");
 
   const isOrganizer = currentUser?.id === trip?.organizer?.id;
 
@@ -19,7 +20,6 @@ const TripDetails = () => {
     const fetchUser = async () => {
       try {
         const response = await api.get("/api/auth/me");
-        console.log(response.data);
         setCurrentUser(response.data);
       } catch (err) {
         console.error("Failed to fetch user:", err);
@@ -44,6 +44,16 @@ const TripDetails = () => {
     fetchUser();
     fetchTripDetails();
   }, [tripId]);
+
+  const fetchOrganizerName = async (organizerId) => {
+    try {
+      const response = await api.get(`/api/users/${organizerId}`); // Adjust the endpoint as per your API
+      setOrganizerName(response.data.name || "Organizer Unknown");
+    } catch (err) {
+      console.error("Failed to fetch organizer name:", err);
+    }
+  };
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -159,10 +169,10 @@ const TripDetails = () => {
                     icon={faUserCircle}
                     className="organizer-icon"
                   />
-                  <span>
-                    Organized by{" "}
-                    {trip.organizer?.name || "Unknown Organizer"}
-                  </span>
+                  <div className="organizer-info">
+                    <FontAwesomeIcon icon={faUser} className="organizer-icon" />
+                    <span>{organizerName}</span>
+                  </div>
                 </div>
               </>
             )}
