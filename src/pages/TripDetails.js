@@ -17,14 +17,18 @@ const TripDetails = () => {
   const isOrganizer = currentUser?.id === trip?.organizer?.id;
 
   useEffect(() => {
-    const fetchUser = async () => {
+    // Fetch the organizer name by ID
+    const fetchOrganizerName = async (organizerId) => {
       try {
-        const response = await api.get("/api/auth/me");
-        setCurrentUser(response.data);
+        const response = await api.get(`/api/users/${organizerId}`);
+        console.log("Organizer details:", response.data);
+        setOrganizerName(response.data.name || "Organizer Unknown");
       } catch (err) {
-        console.error("Failed to fetch user:", err);
+        console.error("Failed to fetch organizer name:", err);
       }
     };
+  
+    // Fetch trip details and organizer name
     const fetchTripDetails = async () => {
       try {
         const response = await api.get(`/api/trips/${tripId}`);
@@ -36,24 +40,32 @@ const TripDetails = () => {
           startDate: response.data.startDate || "",
           endDate: response.data.endDate || "",
         });
-        console.log(response.data.organizer);
-        const fetchOrganizerName = async () => {
-          try {
-            const response = await api.get(`/api/users/${response.data.organizer}`);
-            console.log(response.data);
-            setOrganizerName(response.data.name || "Organizer Unknown");
-          } catch (err) {
-            console.error("Failed to fetch organizer name:", err);
-          }
-        };
+  
+        // Fetch the organizer name after getting the trip details
+        if (response.data.organizer) {
+          await fetchOrganizerName(response.data.organizer);
+        }
       } catch (err) {
         setError("Failed to load trip details.");
       }
     };
+  
+    // Fetch the current user
+    const fetchUser = async () => {
+      try {
+        const response = await api.get("/api/auth/me");
+        setCurrentUser(response.data);
+      } catch (err) {
+        console.error("Failed to fetch user:", err);
+      }
+    };
+  
+    // Call the functions
     fetchUser();
     fetchTripDetails();
-    fetchTripDetails(fetchOrganizerName());
   }, [tripId]);
+  
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
