@@ -36,6 +36,9 @@ const TripDetails = () => {
           startDate: response.data.startDate || "",
           endDate: response.data.endDate || "",
         });
+      if (response.data.organizer?.id) {
+        fetchOrganizerName(response.data.organizer.id);
+      }
       } catch (err) {
         setError("Failed to load trip details.");
       }
@@ -47,8 +50,8 @@ const TripDetails = () => {
   const fetchOrganizerName = async (organizerId) => {
     try {
       const response = await api.get(`/api/users/${organizerId}`); // Adjust the endpoint as per your API
-      console.log(response.data);
-      //setOrganizerName(response.data.name || "Organizer Unknown");
+      console.log("Organizer fetched:", response.data); // For debugging
+      setOrganizerName(response.data.name || "Organizer Unknown");
     } catch (err) {
       console.error("Failed to fetch organizer name:", err);
     }
