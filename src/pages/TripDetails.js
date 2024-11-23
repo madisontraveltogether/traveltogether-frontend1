@@ -170,7 +170,7 @@ const TripDetails = () => {
                     className="organizer-icon"
                   />
                   <div className="organizer-info">
-                    <FontAwesomeIcon icon={faUser} className="organizer-icon" />
+                    <FontAwesomeIcon icon={faUserCircle} className="organizer-icon" />
                     <span>{organizerName}</span>
                   </div>
                 </div>
