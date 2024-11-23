@@ -36,8 +36,7 @@ const TripDetails = () => {
           startDate: response.data.startDate || "",
           endDate: response.data.endDate || "",
         });
-        fetchOrganizerName(response.data.organizer);
-        console.log(fetchOrganizerName);
+        console.log(response.data.organizer);
       } catch (err) {
         setError("Failed to load trip details.");
       }
