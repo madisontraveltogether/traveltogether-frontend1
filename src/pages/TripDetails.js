@@ -36,23 +36,12 @@ const TripDetails = () => {
           startDate: response.data.startDate || "",
           endDate: response.data.endDate || "",
         });
-      if (response.data.organizer) {
         fetchOrganizerName(response.data.organizer);
-      }
+        console.log(fetchOrganizerName);
       } catch (err) {
         setError("Failed to load trip details.");
       }
     };
-    const fetchOrganizerName = async (organizer) => {
-      try {
-        const response = await api.get(`/api/users/${userId}`);
-        console.log(response.data);
-        setOrganizerName(response.data.name || "Organizer Unknown");
-      } catch (err) {
-        console.error("Failed to fetch organizer name:", err);
-      }
-    };
-
     fetchUser();
     fetchTripDetails();
   }, [tripId]);
