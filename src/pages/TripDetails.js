@@ -48,7 +48,7 @@ const TripDetails = () => {
   const fetchOrganizerName = async (organizerId) => {
     try {
       const response = await api.get(`/api/users/${organizerId}`); // Adjust the endpoint as per your API
-      console.log
+      console.log(response.data);
       setOrganizerName(response.data.name || "Organizer Unknown");
     } catch (err) {
       console.error("Failed to fetch organizer name:", err);
