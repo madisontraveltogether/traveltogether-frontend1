@@ -29,7 +29,6 @@ const TripDetails = () => {
       try {
         const response = await api.get(`/api/trips/${tripId}`);
         setTrip(response.data);
-        console.log(response.data);
         setEditForm({
           name: response.data.name || "",
           description: response.data.description || "",
@@ -44,20 +43,19 @@ const TripDetails = () => {
         setError("Failed to load trip details.");
       }
     };
+    const fetchOrganizerName = async () => {
+      try {
+        const response = await api.get(`/api/users/${userId}`);
+        console.log(response.data);
+        setOrganizerName(response.data.name || "Organizer Unknown");
+      } catch (err) {
+        console.error("Failed to fetch organizer name:", err);
+      }
+    };
+
     fetchUser();
     fetchTripDetails();
   }, [tripId]);
-
-  const fetchOrganizerName = async (organizer) => {
-    try {
-      const response = await api.get(`/api/users/${organizer}`); // Adjust the endpoint as per your API
-      console.log("Organizer fetched:", response.data); // For debugging
-      setOrganizerName(response.data.name || "Organizer Unknown");
-    } catch (err) {
-      console.error("Failed to fetch organizer name:", err);
-    }
-  };
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
