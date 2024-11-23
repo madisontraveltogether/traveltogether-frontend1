@@ -37,8 +37,9 @@ const TripDetails = () => {
           endDate: response.data.endDate || "",
           organizer: response.data.organizer,
         });
-        const anotherresponse = await api.get(`/api/trips/users/${response.data.organizer}`)
-        console.log(anotherresponse.data)
+        const organizerResponse = await api.get(`/api/users/${response.data.organizer}`);
+          console.log("Organizer Response:", organizerResponse.data); // Debugging
+          setOrganizerName(organizerResponse.data.name || "Organizer Unknown");
         // console.log(response.data.organizer);
         // const fetchOrganizerName = async () => {
         //   try {
@@ -173,7 +174,7 @@ const TripDetails = () => {
                   />
                   <div className="organizer-info">
                     <FontAwesomeIcon icon={faUserCircle} className="organizer-icon" />
-                    <span>{trip.organizer}</span>
+                    <span>{organizerName}</span>
                   </div>
                 </div>
               </>
