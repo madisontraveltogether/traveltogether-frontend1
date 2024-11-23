@@ -43,7 +43,7 @@ const TripDetails = () => {
         setError("Failed to load trip details.");
       }
     };
-    const fetchOrganizerName = async () => {
+    const fetchOrganizerName = async (organizer) => {
       try {
         const response = await api.get(`/api/users/${userId}`);
         console.log(response.data);
