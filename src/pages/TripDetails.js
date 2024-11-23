@@ -37,7 +37,7 @@ const TripDetails = () => {
           endDate: response.data.endDate || "",
           organizer: response.data.organizer,
         });
-        const organizerResponse = await api.get(`/api/users/${response.data.organizer}`);
+        const organizerResponse = await api.get(`/api/trips/users/${response.data.organizer}`);
           console.log("Organizer Response:", organizerResponse.data); // Debugging
           setOrganizerName(organizerResponse.data.name || "Organizer Unknown");
         // console.log(response.data.organizer);
