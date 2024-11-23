@@ -35,17 +35,20 @@ const TripDetails = () => {
           location: response.data.location || "",
           startDate: response.data.startDate || "",
           endDate: response.data.endDate || "",
+          organizer: response.data.organizer,
         });
-        console.log(response.data.organizer);
-        const fetchOrganizerName = async () => {
-          try {
-            const response = await api.get(`/api/users/${response.data.organizer}`);
-            console.log(response.data);
-            setOrganizerName(response.data.name || "Organizer Unknown");
-          } catch (err) {
-            console.error("Failed to fetch organizer name:", err);
-          }
-        };
+        const anotherresponse = await api.get(`/api/users/${response.data.organizer}`)
+        console.log(anotherresponse.data)
+        // console.log(response.data.organizer);
+        // const fetchOrganizerName = async () => {
+        //   try {
+        //     const response = await api.get(`/api/users/${Fetchresponse.data.organizer}`);
+        //     console.log(response.data);
+        //     setOrganizerName(response.data.name || "Organizer Unknown");
+        //   } catch (err) {
+        //     console.error("Failed to fetch organizer name:", err);
+        //   }
+        // };
       } catch (err) {
         setError("Failed to load trip details.");
       }
@@ -170,7 +173,7 @@ const TripDetails = () => {
                   />
                   <div className="organizer-info">
                     <FontAwesomeIcon icon={faUserCircle} className="organizer-icon" />
-                    <span>{organizerName}</span>
+                    <span>{trip.organizer}</span>
                   </div>
                 </div>
               </>
