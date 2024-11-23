@@ -40,6 +40,7 @@ const TripDetails = () => {
         const fetchOrganizerName = async () => {
           try {
             const response = await api.get(`/api/users/${response.data.organizer}`);
+            console.log(response.data);
             setOrganizerName(response.data.name || "Organizer Unknown");
           } catch (err) {
             console.error("Failed to fetch organizer name:", err);
