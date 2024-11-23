@@ -50,6 +50,7 @@ const TripDetails = () => {
         setError("Failed to load trip details.");
       }
     };
+    fetchOrganizerName();
     fetchUser();
     fetchTripDetails();
   }, [tripId]);
