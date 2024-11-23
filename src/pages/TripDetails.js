@@ -37,6 +37,14 @@ const TripDetails = () => {
           endDate: response.data.endDate || "",
         });
         console.log(response.data.organizer);
+        const fetchOrganizerName = async () => {
+          try {
+            const response = await api.get(`/api/users/${response.data.organizer}`);
+            setOrganizerName(response.data.name || "Organizer Unknown");
+          } catch (err) {
+            console.error("Failed to fetch organizer name:", err);
+          }
+        };
       } catch (err) {
         setError("Failed to load trip details.");
       }
