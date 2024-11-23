@@ -48,7 +48,7 @@ const TripDetails = () => {
     fetchTripDetails();
   }, [tripId]);
 
-  const fetchOrganizerName = async (organizerId) => {
+  const fetchOrganizerName = async (organizer) => {
     try {
       const response = await api.get(`/api/users/${organizer}`); // Adjust the endpoint as per your API
       console.log("Organizer fetched:", response.data); // For debugging
