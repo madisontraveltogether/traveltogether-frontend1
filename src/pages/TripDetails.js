@@ -29,6 +29,7 @@ const TripDetails = () => {
       try {
         const response = await api.get(`/api/trips/${tripId}`);
         setTrip(response.data);
+        console.log(response.data);
         setEditForm({
           name: response.data.name || "",
           description: response.data.description || "",
