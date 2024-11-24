@@ -4,7 +4,7 @@ import api from "../services/api";
 import TopBar from "../components/TopBar";
 import BottomNav from "../components/BottomNav";
 import "../css/TaskList.css";
-import { saveAs } from "file-saver";
+//import { saveAs } from "file-saver";
 
 const TaskList = () => {
   const { tripId } = useParams();
@@ -90,8 +90,8 @@ const TaskList = () => {
       ),
     ].join("\n");
 
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    saveAs(blob, `tasks_${tripId}.csv`);
+    // const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    // saveAs(blob, `tasks_${tripId}.csv`);
   };
 
   return (
