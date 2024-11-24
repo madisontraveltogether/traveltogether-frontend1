@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import api from "../services/api";
 import "../css/TripDashboard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarkerAlt, faEdit, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarkerAlt, faEdit, faUserCircle, faCopy } from "@fortawesome/free-solid-svg-icons";
 
 const TripDetails = () => {
   const { tripId } = useParams();
@@ -13,6 +13,8 @@ const TripDetails = () => {
   const [editForm, setEditForm] = useState({});
   const [currentUser, setCurrentUser] = useState(null);
   const [organizerName, setOrganizerName] = useState("Organizer Unknown");
+  const [inviteLink, setInviteLink] = useState("");
+  const [attendees, setAttendees] = useState([]);
 
   const isOrganizer = currentUser?.id === trip?.organizer?.id;
 
