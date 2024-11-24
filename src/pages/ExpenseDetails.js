@@ -73,7 +73,6 @@ const ExpenseDetails = () => {
 
   return (
     <div>
-      <TopBar title="Expense Details" />
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       <button onClick={() => navigate(`/trips/${tripId}/expenses`)}>Back to Expenses</button>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import '../css/AddExpense.css'; 
+import '../css/AddExpense.css'; // Add styling details later
 import TopBar from '../components/TopBar';
 import BottomNav from '../components/BottomNav';
 
@@ -35,16 +35,18 @@ const AddExpense = () => {
 
   return (
     <div className="add-expense-container">
-            <TopBar title="Add an Expense" />
-      <header className="expense-header">
-        <button className="back-button">←</button>
+      <TopBar title="Add an Expense" />
+
+      <div className="expense-header">
+        <button className="back-button" onClick={() => navigate(-1)}>
+          ←
+        </button>
         <h1 className="header-title">New Budget Item</h1>
-        <button className="notification-button">🔔</button>
-      </header>
+      </div>
 
       <form className="expense-form" onSubmit={handleSubmit}>
         {error && <p className="error-message">{error}</p>}
-        
+
         <div className="form-group">
           <label className="form-label">Expense Name *</label>
           <input
@@ -54,30 +56,6 @@ const AddExpense = () => {
             placeholder="Enter expense name"
             className="form-input"
             required
-          />
-        </div>
-
-        <div className="form-group">
-          <label className="form-label">Type</label>
-          <select
-            value={splitType}
-            onChange={(e) => setSplitType(e.target.value)}
-            className="form-select"
-          >
-            <option value="even">Even</option>
-            <option value="byAmount">By Amount</option>
-            <option value="byPercentage">By Percentage</option>
-            <option value="byShares">By Shares</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label className="form-label">Date & Time</label>
-          <input
-            type="datetime-local"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="form-input"
           />
         </div>
 
@@ -94,12 +72,38 @@ const AddExpense = () => {
         </div>
 
         <div className="form-group">
-          <label className="form-label">To be split by</label>
+          <label className="form-label">Split Type</label>
+          <select
+            value={splitType}
+            onChange={(e) => setSplitType(e.target.value)}
+            className="form-select"
+          >
+            <option value="even">Even</option>
+            <option value="byAmount">By Amount</option>
+            <option value="byPercentage">By Percentage</option>
+            <option value="byShares">By Shares</option>
+          </select>
+        </div>
+
+        {splitType !== 'even' && (
+          <div className="form-group">
+            <label className="form-label">Split With</label>
+            <input
+              type="text"
+              value={splitWith}
+              onChange={(e) => setSplitWith(e.target.value)}
+              placeholder="Specify group members or amounts"
+              className="form-input"
+            />
+          </div>
+        )}
+
+        <div className="form-group">
+          <label className="form-label">Date</label>
           <input
-            type="text"
-            value={splitWith}
-            onChange={(e) => setSplitWith(e.target.value)}
-            placeholder="Enter group members or number of persons"
+            type="datetime-local"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
             className="form-input"
           />
         </div>
@@ -114,8 +118,12 @@ const AddExpense = () => {
           />
         </div>
 
-        <button type="submit" className="submit-button">Add Budget Item</button>
+        <button type="submit" className="submit-button">
+          Add Budget Item
+        </button>
       </form>
+
+      <BottomNav tripId={tripId} activeTab="expenses" />
     </div>
   );
 };
