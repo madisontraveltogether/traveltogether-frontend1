@@ -219,7 +219,7 @@ const TripDetails = () => {
             <p>Or share this code: {trip.inviteCode || "Not generated"}</p>
           </div>
         )}
-              <BottomNav tripId={tripId} activeSection="home"  />
+              <BottomNav tripId={tripId}  />
     </div>
   );
 };
