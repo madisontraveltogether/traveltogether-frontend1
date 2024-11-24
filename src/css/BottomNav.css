@@ -1,12 +1,19 @@
 /* Wrapper for the entire navigation */
 .bottom-nav-container {
+  width: 320px; /* Smaller width to fit better within mobile screens */
+  height: 70px; /* Reduced height */
+  background: #FFF9F3; /* Background box color */
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  background: #fff9f3;
-  height: 106px;
-  flex-shrink: 0;
+  border-radius: 35px;
+  margin: 0 auto; /* Center the nav on the page */
+  box-shadow: 0px 4px 20px 5px rgba(192, 183, 183, 0.51);
+  position: fixed;
+  bottom: 10px; /* Position it at the bottom */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  z-index: 100;
 }
 
 /* Styling for the navigation box */
