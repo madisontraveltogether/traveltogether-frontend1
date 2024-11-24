@@ -2,48 +2,35 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faMap, faMoneyBill, faComments } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import "../css/BottomNav.css";
 
 const BottomNav = ({ tripId, activeSection }) => {
   const navigate = useNavigate();
 
+  if (!tripId) {
+    return <div>Invalid trip navigation. Please refresh or try again.</div>;
+  }
+
+  const navItems = [
+    { label: "Trip Home", icon: faHome, route: `/trips/${tripId}`, section: "home" },
+    { label: "Plans", icon: faMap, route: `/trips/${tripId}/itinerary`, section: "plans" },
+    { label: "Expenses", icon: faMoneyBill, route: `/trips/${tripId}/expenses`, section: "expenses" },
+    { label: "Messages", icon: faComments, route: `/trips/${tripId}/messages`, section: "messages" },
+  ];
+
   return (
-    <div className="outer-box">
-      <div className="nav-box">
-        {/* Trip Home */}
-        <button
-          className={`nav-item ${activeSection === "home" ? "active" : ""}`}
-          onClick={() => navigate(`/trips/${tripId}`)}
-        >
-          <FontAwesomeIcon icon={faHome} className="nav-icon" />
-          <span className="nav-text">Trip Home</span>
-        </button>
-
-        {/* Plans */}
-        <button
-          className={`nav-item ${activeSection === "plans" ? "active" : ""}`}
-          onClick={() => navigate(`/trips/${tripId}/itinerary`)}
-        >
-          <FontAwesomeIcon icon={faMap} className="nav-icon" />
-          <span className="nav-text">Plans</span>
-        </button>
-
-        {/* Expenses */}
-        <button
-          className={`nav-item ${activeSection === "expenses" ? "active" : ""}`}
-          onClick={() => navigate(`/trips/${tripId}/expenses`)}
-        >
-          <FontAwesomeIcon icon={faMoneyBill} className="nav-icon" />
-          <span className="nav-text">Expenses</span>
-        </button>
-
-        {/* Messages */}
-        <button
-          className={`nav-item ${activeSection === "messages" ? "active" : ""}`}
-          onClick={() => navigate(`/trips/${tripId}/messages`)}
-        >
-          <FontAwesomeIcon icon={faComments} className="nav-icon" />
-          <span className="nav-text">Messages</span>
-        </button>
+    <div className="bottom-nav-container">
+      <div className="bottom-nav">
+        {navItems.map((item) => (
+          <button
+            key={item.label}
+            onClick={() => navigate(item.route)}
+            className={`nav-item ${activeSection === item.section ? "active" : ""}`}
+          >
+            <FontAwesomeIcon icon={item.icon} className="nav-icon" />
+            <span className="nav-label">{item.label}</span>
+          </button>
+        ))}
       </div>
     </div>
   );
