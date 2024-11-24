@@ -1,36 +1,61 @@
+/* Main container styling */
 .bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: #fff;
-    padding: 0.5rem 0;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 1000;
-  }
-  
-  .bottom-nav button {
-    background: none;
-    border: none;
-    color: #666;
-    text-align: center;
-    font-size: 0.8rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    padding: 0.5rem;
-  }
-  
-  .bottom-nav button.active,
-  .bottom-nav button:hover {
-    color: #ff7e1a;
-  }
-  
-  .bottom-nav button span {
-    margin-top: 0.3rem;
-    font-size: 0.75rem;
-  }
-  
+  display: flex;
+  width: 397px;
+  height: 91px;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 40px;
+  background: #fffaF5;
+  box-shadow: 0px 4px 20px 5px rgba(192, 183, 183, 0.51);
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+/* Individual navigation items */
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 5px;
+}
+
+/* Icon styling for inactive state */
+.nav-icon {
+  width: 28px;
+  height: 28px;
+  color: #9c9c9c;
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+
+/* Text styling for inactive state */
+.nav-text {
+  color: #9c9c9c;
+  font-family: "SF Pro Text", sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  transition: color 0.3s ease;
+}
+
+/* Active state styles */
+.nav-item.active .nav-icon {
+  color: #ea8c1a;
+}
+
+.nav-item.active .nav-text {
+  color: #ea8c1a;
+}
+
+/* Hover effects (optional) */
+.nav-item:hover .nav-icon,
+.nav-item:hover .nav-text {
+  color: #ea8c1a;
+}

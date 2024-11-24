@@ -7,10 +7,11 @@ const JoinTrip = ({ currentUser }) => {
   const navigate = useNavigate();
   const [tripDetails, setTripDetails] = useState(null);
   const [error, setError] = useState("");
+  const [joining, setJoining] = useState(false);
 
   useEffect(() => {
     fetchTripDetails();
-  }, []);
+  }, );
 
   const fetchTripDetails = async () => {
     try {
@@ -24,16 +25,19 @@ const JoinTrip = ({ currentUser }) => {
   const handleJoinTrip = async () => {
     if (!currentUser) {
       alert("You need to log in to join the trip.");
-      navigate("/login"); // Redirect to login
+      navigate("/login");
       return;
     }
 
+    setJoining(true);
     try {
       await api.post(`/api/trips/${tripId}/join`, { userId: currentUser.id });
       alert("Successfully joined the trip!");
-      navigate(`/trips/${tripId}`); // Redirect to trip details
+      navigate(`/trips/${tripId}`);
     } catch (err) {
       setError("Failed to join the trip. Please try again later.");
+    } finally {
+      setJoining(false);
     }
   };
 
@@ -47,25 +51,22 @@ const JoinTrip = ({ currentUser }) => {
         <div className="trip-invitation-details">
           <h1>You're Invited to a Trip!</h1>
           <p>
-            <strong>{tripDetails.organizer.name}</strong> has invited you to join the trip{" "}
+            <strong>{tripDetails.organizer?.name || "The organizer"}</strong> has invited you to join the trip{" "}
             <strong>"{tripDetails.name}"</strong> on TravelTogether.
           </p>
           <p>{tripDetails.description || "No additional details provided."}</p>
           <p>
-            Start Date: {new Date(tripDetails.startDate).toLocaleDateString()} <br />
-            End Date: {new Date(tripDetails.endDate).toLocaleDateString()}
+            Start Date: {tripDetails.startDate ? new Date(tripDetails.startDate).toLocaleDateString() : "N/A"} <br />
+            End Date: {tripDetails.endDate ? new Date(tripDetails.endDate).toLocaleDateString() : "N/A"}
           </p>
           {currentUser ? (
-            <button className="join-trip-button" onClick={handleJoinTrip}>
-              Join Trip
+            <button className="join-trip-button" onClick={handleJoinTrip} disabled={joining}>
+              {joining ? "Joining..." : "Join Trip"}
             </button>
           ) : (
             <div>
-              <p>If you don't have a TravelTogether account then you can sign up for one here.</p>
-              <button
-                onClick={() => navigate("/signup")}
-                className="signup-button"
-              >
+              <p>If you don't have a TravelTogether account, sign up to join the trip:</p>
+              <button onClick={() => navigate("/signup")} className="signup-button">
                 Sign Up Now
               </button>
             </div>

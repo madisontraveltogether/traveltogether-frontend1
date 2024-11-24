@@ -210,3 +210,7 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+.content {
+  padding-bottom: 100px; /* Adjust this to match the height of your BottomNav */
+}

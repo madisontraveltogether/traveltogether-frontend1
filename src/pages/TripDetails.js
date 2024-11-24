@@ -4,6 +4,7 @@ import api from "../services/api";
 import "../css/TripDashboard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt, faEdit, faUserCircle, faCopy } from "@fortawesome/free-solid-svg-icons";
+import BottomNav from '../components/BottomNav';
 
 const TripDetails = () => {
   const { tripId } = useParams();
@@ -188,7 +189,12 @@ const TripDetails = () => {
         </div>
       </div>
       <div className="attendees-section">
-          <h3>Attendees</h3>
+      <h3>Attendees</h3>
+          {attendees.length === 0 ? (
+            <p>
+              Looks like you haven't invited anyone to your trip yet. Use the link or code below to invite your trip group.
+            </p>
+          ) : (
           <ul>
             {attendees.map((attendee) => (
               <li key={attendee.user}>
@@ -197,6 +203,7 @@ const TripDetails = () => {
               </li>
             ))}
           </ul>
+          )}
         </div>
 
         {isOrganizer && (
@@ -212,6 +219,7 @@ const TripDetails = () => {
             <p>Or share this code: {trip.inviteCode || "Not generated"}</p>
           </div>
         )}
+              <BottomNav tripId={tripId} />
     </div>
   );
 };
