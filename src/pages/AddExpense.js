@@ -20,13 +20,20 @@ const AddExpense = () => {
   const [totalCost, setTotalCost] = useState("");
   const [costPerPerson, setCostPerPerson] = useState("");
   const [notes, setNotes] = useState("");
+  const [currency, setCurrency] = useState("USD");
+  const [customCategories, setCustomCategories] = useState([]);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   useEffect(() => {
     const fetchAttendees = async () => {
       try {
-        const response = await api.get(`/api/trips/${tripId}/guests`);
+        const response = await api.get(`/api/trips/${tripId}/attendees`);
+        const rsvpYesAttendees = response.data.filter(
+          (attendee) => attendee.rsvpStatus === "yes"
+        );
         setAttendees(response.data);
+        setMembersAffected(rsvpYesAttendees.map((attendee) => attendee.id));
       } catch (err) {
         setError("Failed to fetch attendees.");
       }
@@ -35,12 +42,10 @@ const AddExpense = () => {
     fetchAttendees();
   }, [tripId]);
 
-  // Picture Upload Handler
   const handlePictureChange = (e) => {
     setPicture(e.target.files[0]);
   };
 
-  // Date and Time Handler
   const handleDateTimeChange = (index, value) => {
     const updatedDates = [...dates];
     updatedDates[index].startDateTime = value;
@@ -51,7 +56,6 @@ const AddExpense = () => {
     setDates([...dates, { startDateTime: new Date() }]);
   };
 
-  // Cost Change Handler
   const handleCostChange = (field, value) => {
     const numAttendees = membersAffected.length;
 
@@ -74,18 +78,12 @@ const AddExpense = () => {
     }
   };
 
-  // Update Costs Dynamically when Members Affected Change
-  useEffect(() => {
-    const numAttendees = membersAffected.length;
-
-    if (totalCost && numAttendees > 0) {
-      const calculatedCostPerPerson = (parseFloat(totalCost) / numAttendees).toFixed(2);
-      setCostPerPerson(calculatedCostPerPerson);
-    } else if (costPerPerson && numAttendees > 0) {
-      const calculatedTotalCost = (parseFloat(costPerPerson) * numAttendees).toFixed(2);
-      setTotalCost(calculatedTotalCost);
+  const addCustomCategory = () => {
+    const newCategory = prompt("Enter a custom category:");
+    if (newCategory) {
+      setCustomCategories((prev) => [...prev, newCategory]);
     }
-  }, [membersAffected]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -98,13 +96,15 @@ const AddExpense = () => {
       formData.append("totalCost", totalCost);
       formData.append("costPerPerson", costPerPerson);
       formData.append("notes", notes);
+      formData.append("currency", currency);
       if (picture) formData.append("picture", picture);
 
       await api.post(`/api/trips/${tripId}/expenses`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      navigate(`/trips/${tripId}/expenses`);
+      setSuccess("Expense added successfully!");
+      setTimeout(() => navigate(`/trips/${tripId}/expenses`), 2000);
     } catch (err) {
       setError("Failed to add expense.");
     }
@@ -112,9 +112,10 @@ const AddExpense = () => {
 
   return (
     <div className="add-expense-container">
-      <TopBar title="Add an Expense" />
+      <TopBar title="Add Expense" />
       <form className="expense-form" onSubmit={handleSubmit}>
         {error && <p className="error-message">{error}</p>}
+        {success && <p className="success-message">{success}</p>}
 
         {/* Picture Upload */}
         <div className="form-group">
@@ -143,7 +144,15 @@ const AddExpense = () => {
             <option value="accommodation">🏨 Accommodation</option>
             <option value="activity">🎡 Activity</option>
             <option value="other">🔧 Other</option>
+            {customCategories.map((category, index) => (
+              <option key={index} value={category}>
+                {category}
+              </option>
+            ))}
           </select>
+          <button type="button" onClick={addCustomCategory}>
+            + Add Custom Category
+          </button>
         </div>
 
         {/* Date & Time Picker */}
@@ -184,14 +193,14 @@ const AddExpense = () => {
           </select>
         </div>
 
-        {/* Cost Fields */}
+        {/* Cost Inputs */}
         <div className="form-group">
           <label>Total Cost *</label>
           <input
             type="number"
             value={totalCost}
             onChange={(e) => handleCostChange("total", e.target.value)}
-            placeholder="Enter total cost"
+            placeholder={`Enter total cost in ${currency}`}
             required
           />
         </div>
@@ -201,7 +210,7 @@ const AddExpense = () => {
             type="number"
             value={costPerPerson}
             onChange={(e) => handleCostChange("person", e.target.value)}
-            placeholder="Enter cost per person"
+            placeholder={`Enter cost per person in ${currency}`}
           />
         </div>
 
@@ -213,6 +222,17 @@ const AddExpense = () => {
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Add any notes"
           />
+        </div>
+
+        {/* Currency Selector */}
+        <div className="form-group">
+          <label>Currency</label>
+          <select value={currency} onChange={(e) => setCurrency(e.target.value)}>
+            <option value="USD">USD</option>
+            <option value="CAD">CAD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+          </select>
         </div>
 
         <button type="submit" className="submit-button">
