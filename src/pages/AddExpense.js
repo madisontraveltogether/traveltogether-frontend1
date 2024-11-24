@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import api from "../services/api";
 import "../css/AddExpense.css";
 import TopBar from "../components/TopBar";
@@ -13,7 +15,7 @@ const AddExpense = () => {
   const [picture, setPicture] = useState(null);
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
-  const [dates, setDates] = useState([{ date: "", time: "" }]);
+  const [dates, setDates] = useState([{ startDateTime: new Date() }]);
   const [membersAffected, setMembersAffected] = useState([]);
   const [totalCost, setTotalCost] = useState("");
   const [costPerPerson, setCostPerPerson] = useState("");
@@ -23,7 +25,7 @@ const AddExpense = () => {
   useEffect(() => {
     const fetchAttendees = async () => {
       try {
-        const response = await api.get(`/api/trips/${tripId}/guests`);
+        const response = await api.get(`/api/trips/${tripId}/attendees`);
         setAttendees(response.data);
       } catch (err) {
         setError("Failed to fetch attendees.");
@@ -37,31 +39,36 @@ const AddExpense = () => {
     setPicture(e.target.files[0]);
   };
 
-  const handleDateChange = (index, field, value) => {
+  const handleDateTimeChange = (index, value) => {
     const updatedDates = [...dates];
-    updatedDates[index][field] = value;
+    updatedDates[index].startDateTime = value;
     setDates(updatedDates);
   };
 
   const addMoreDates = () => {
-    setDates([...dates, { date: "", time: "" }]);
+    setDates([...dates, { startDateTime: new Date() }]);
   };
 
+  // Function to handle cost inputs dynamically
   const handleCostChange = (field, value) => {
+    const numAttendees = membersAffected.length;
+
     if (field === "total") {
       setTotalCost(value);
-      const perPersonCost =
-        value && membersAffected.length
-          ? (parseFloat(value) / membersAffected.length).toFixed(2)
-          : "";
-      setCostPerPerson(perPersonCost);
-    } else {
+      if (numAttendees > 0) {
+        const calculatedCostPerPerson = (parseFloat(value) / numAttendees).toFixed(2);
+        setCostPerPerson(calculatedCostPerPerson);
+      } else {
+        setCostPerPerson(""); // Reset if no attendees selected
+      }
+    } else if (field === "person") {
       setCostPerPerson(value);
-      const total =
-        value && membersAffected.length
-          ? (parseFloat(value) * membersAffected.length).toFixed(2)
-          : "";
-      setTotalCost(total);
+      if (numAttendees > 0) {
+        const calculatedTotalCost = (parseFloat(value) * numAttendees).toFixed(2);
+        setTotalCost(calculatedTotalCost);
+      } else {
+        setTotalCost(""); // Reset if no attendees selected
+      }
     }
   };
 
@@ -124,20 +131,16 @@ const AddExpense = () => {
           </select>
         </div>
 
-        {/* Date & Time */}
+        {/* Date & Time Picker */}
         <div className="form-group">
           <label>Date & Time</label>
           {dates.map((item, index) => (
-            <div key={index} className="date-time-inputs">
-              <input
-                type="date"
-                value={item.date}
-                onChange={(e) => handleDateChange(index, "date", e.target.value)}
-              />
-              <input
-                type="time"
-                value={item.time}
-                onChange={(e) => handleDateChange(index, "time", e.target.value)}
+            <div key={index} className="date-time-picker">
+              <DatePicker
+                selected={item.startDateTime}
+                onChange={(date) => handleDateTimeChange(index, date)}
+                showTimeSelect
+                dateFormat="Pp"
               />
             </div>
           ))}
