@@ -19,7 +19,6 @@ const BottomNav = ({ tripId, activeSection }) => {
   ];
 
   return (
-    <div className="bottom-nav-container">
       <div className="bottom-nav">
         {navItems.map((item) => (
           <button
@@ -32,7 +31,6 @@ const BottomNav = ({ tripId, activeSection }) => {
           </button>
         ))}
       </div>
-    </div>
   );
 };
 
