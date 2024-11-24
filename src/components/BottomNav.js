@@ -9,7 +9,7 @@ const BottomNav = ({ tripId, activeSection }) => {
   return (
     <div className="bottom-nav-container">
       <div className="bottom-nav-box">
-        {/* Home */}
+        {/* Trip Home */}
         <button
           className={activeSection === "home" ? "active" : ""}
           onClick={() => navigate(`/trips/${tripId}`)}

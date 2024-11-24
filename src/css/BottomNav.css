@@ -1,28 +1,26 @@
 .bottom-nav-container {
   width: 100%;
-  max-width: 428px; /* Match the container width */
+  max-width: 428px; /* Ensure it matches the width of a typical phone */
   height: 114px;
   position: fixed;
   bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
-  background: #f9f6f2; /* Adjust to match the desired background color */
-  box-shadow: 0px 4px 20px 5px rgba(192, 183, 183, 0.51);
+  background: none;
+  padding: 10px 0;
   z-index: 1000;
-  border-radius: 20px 20px 0 0;
 }
 
 .bottom-nav-box {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
-  max-width: 397px; /* Ensure proper width */
+  width: 90%; /* Slightly reduce width to create a floating effect */
   height: 91px;
   border-radius: 40px;
-  background: #fffae6;
+  background: #FFFAF5;
+  box-shadow: 0px 4px 20px rgba(192, 183, 183, 0.51);
 }
 
 .bottom-nav-box button {
@@ -30,29 +28,30 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex: 1;
-  border: none;
+  gap: 5px; /* Space between icon and text */
   background: none;
+  border: none;
   outline: none;
+  cursor: pointer;
   font-family: "SF Pro Text", sans-serif;
   font-size: 12px;
   font-weight: 400;
-  color: #9c9c9c;
+  color: #9C9C9C; /* Default inactive color */
   text-align: center;
-  padding: 10px;
-  cursor: pointer;
+  flex: 1; /* Equal space for all buttons */
 }
 
 .bottom-nav-box button.active {
-  color: #ea8c1a;
-}
-
-.bottom-nav-box button span {
-  margin-top: 5px;
-  font-size: 12px;
+  color: #EA8C1A; /* Highlight active button */
 }
 
 .bottom-nav-box button svg {
   width: 24px;
   height: 24px;
 }
+
+.bottom-nav-box button span {
+  font-size: 12px;
+  font-weight: 400;
+}
+
