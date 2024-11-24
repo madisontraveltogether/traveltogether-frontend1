@@ -40,13 +40,25 @@ const TripDetails = () => {
         const organizerResponse = await api.get(`/api/trips/users/${response.data.organizer}`);
           console.log("Organizer Response:", organizerResponse.data); // Debugging
           setOrganizerName(organizerResponse.data.name || "Organizer Unknown");
-      } catch (err) {
+          const inviteResponse = await api.get(`/api/trips/${tripId}/invite-link`);
+          setInviteLink(inviteResponse.data.inviteLink);
+  
+          // Fetch attendees
+          if (response.data.guests) {
+            setAttendees(response.data.guests);
+          }
+        } catch (err) {
         setError("Failed to load trip details.");
       }
     };
     fetchUser();
     fetchTripDetails();
   }, [tripId]);
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(inviteLink);
+    alert("Invite link copied to clipboard!");
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -166,12 +178,38 @@ const TripDetails = () => {
                     <span>{organizerName}</span>
                 </div>
               </>
+              
             )}
           </div>
 
           {error && <p className="error-message">{error}</p>}
         </div>
       </div>
+      <div className="attendees-section">
+          <h3>Attendees</h3>
+          <ul>
+            {attendees.map((attendee) => (
+              <li key={attendee.user}>
+                <FontAwesomeIcon icon={faUserCircle} />
+                {attendee.name} - {attendee.rsvpStatus || "Pending"}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {isOrganizer && (
+          <div className="invite-section">
+            <h3>Invite Others</h3>
+            <p>Share this link to invite collaborators:</p>
+            <div className="invite-link">
+              <input type="text" value={inviteLink} readOnly />
+              <button onClick={handleCopyLink}>
+                <FontAwesomeIcon icon={faCopy} /> Copy Link
+              </button>
+            </div>
+            <p>Or share this code: {trip.inviteCode || "Not generated"}</p>
+          </div>
+        )}
     </div>
   );
 };

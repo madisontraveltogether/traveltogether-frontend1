@@ -168,3 +168,45 @@
     font-size: 1.25rem; /* Smaller font size */
   }
 }
+
+.attendees-section {
+  margin-top: 20px;
+}
+
+.attendees-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.attendees-section li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.invite-section {
+  margin-top: 20px;
+}
+
+.invite-link {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.invite-link input {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.invite-link button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
