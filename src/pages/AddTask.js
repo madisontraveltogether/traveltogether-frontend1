@@ -1,133 +1,204 @@
-import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import api from '../services/api';
-import '../css/TaskPages.css';
-import TopBar from '../components/TopBar';
-import BottomNav from '../components/BottomNav';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import api from "../services/api";
+import TopBar from "../components/TopBar";
+import BottomNav from "../components/BottomNav";
+import "../css/TaskList.css";
+import { saveAs } from "file-saver";
 
-const AddTask = () => {
+const TaskList = () => {
   const { tripId } = useParams();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [assignedTo, setAssignedTo] = useState([]);
-  const [dueDate, setDueDate] = useState('');
-  const [priority, setPriority] = useState('medium');
-  const [isRecurring, setIsRecurring] = useState(false);
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await api.post(`/trips/${tripId}/tasks`, {
-        title,
-        description,
-        assignedTo,
-        dueDate,
-        priority,
-        isRecurring,
-      });
-      navigate(`/trips/${tripId}/tasks`);
-    } catch (err) {
-      setError('Failed to create task.');
+  const [tasks, setTasks] = useState([]);
+  const [error, setError] = useState("");
+  const [filters, setFilters] = useState({
+    assignedToMe: false,
+    progress: "all", // Could be 'all', 'completed', 'in-progress', 'not-started'
+    tags: [],
+  });
+  const [availableTags, setAvailableTags] = useState(["Urgent", "Optional", "Teamwork"]);
+
+  const currentUserId = "user-id"; // Replace with current logged-in user's ID
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await api.get(`/api/trips/${tripId}/tasks`);
+        setTasks(response.data);
+      } catch (err) {
+        setError("Failed to load tasks.");
+      }
+    };
+    fetchTasks();
+  }, [tripId]);
+
+  // Apply filters dynamically
+  const filteredTasks = tasks.filter((task) => {
+    const assignedFilter = filters.assignedToMe
+      ? task.assignedTo.some((user) => user.id === currentUserId)
+      : true;
+
+    const progressFilter =
+      filters.progress === "all" ||
+      (filters.progress === "completed" && task.progress === 100) ||
+      (filters.progress === "in-progress" && task.progress > 0 && task.progress < 100) ||
+      (filters.progress === "not-started" && task.progress === 0);
+
+    const tagFilter =
+      filters.tags.length === 0 || filters.tags.some((tag) => task.tags.includes(tag));
+
+    return assignedFilter && progressFilter && tagFilter;
+  });
+
+  const toggleTagFilter = (tag) => {
+    setFilters((prev) => ({
+      ...prev,
+      tags: prev.tags.includes(tag)
+        ? prev.tags.filter((t) => t !== tag)
+        : [...prev.tags, tag],
+    }));
+  };
+
+  const handleMarkAsCompleted = async (taskId) => {
+    if (window.confirm("Are you sure you want to mark this task as completed?")) {
+      try {
+        await api.patch(`/api/trips/${tripId}/tasks/${taskId}/status`, { status: "completed" });
+        setTasks((prev) =>
+          prev.map((task) =>
+            task._id === taskId ? { ...task, status: "completed", progress: 100 } : task
+          )
+        );
+      } catch (err) {
+        setError("Failed to update task status.");
+      }
     }
   };
 
-  const handleAddAssignee = () => {
-    setAssignedTo([...assignedTo, '']);
+  const handleExportTasks = () => {
+    const csvContent = [
+      ["Title", "Description", "Due Date", "Priority", "Progress", "Tags"].join(","),
+      ...tasks.map((task) =>
+        [
+          `"${task.title}"`,
+          `"${task.description}"`,
+          task.dueDate ? new Date(task.dueDate).toLocaleDateString() : "N/A",
+          task.priority,
+          `${task.progress}%`,
+          task.tags.join("; "),
+        ].join(",")
+      ),
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, `tasks_${tripId}.csv`);
   };
 
   return (
-    <div className="add-task-container">
-      <TopBar title="Add a Task" />
+    <div className="task-list-container">
+      <TopBar title="Tasks" />
+
       {error && <p className="error-message">{error}</p>}
-      <form className="task-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label className="form-label">Task Title</label>
-          <input
-            type="text"
-            className="form-input"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter task title"
-            required
-          />
-        </div>
 
-        <div className="form-group">
-          <label className="form-label">Description</label>
-          <textarea
-            className="form-input"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Enter task description"
-          />
-        </div>
-
-        <div className="form-group">
-          <label className="form-label">Due Date</label>
-          <input
-            type="date"
-            className="form-input"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-          />
-        </div>
-
-        <div className="form-group">
-          <label className="form-label">Priority</label>
-          <select
-            className="form-input"
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
-          >
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label className="form-label">Recurring Task</label>
+      {/* Filters */}
+      <div className="filters-container">
+        <label>
           <input
             type="checkbox"
-            className="form-checkbox"
-            checked={isRecurring}
-            onChange={(e) => setIsRecurring(e.target.checked)}
+            checked={filters.assignedToMe}
+            onChange={(e) =>
+              setFilters((prev) => ({ ...prev, assignedToMe: e.target.checked }))
+            }
           />
-        </div>
+          Assigned to Me
+        </label>
 
-        <div className="form-group">
-          <label className="form-label">Assign To</label>
-          {assignedTo.map((assignee, index) => (
-            <input
-              key={index}
-              type="text"
-              className="form-input"
-              placeholder="Enter assignee name or email"
-              value={assignee}
-              onChange={(e) => {
-                const newAssignedTo = [...assignedTo];
-                newAssignedTo[index] = e.target.value;
-                setAssignedTo(newAssignedTo);
-              }}
-            />
-          ))}
-          <button
-            type="button"
-            className="add-assignee-button"
-            onClick={handleAddAssignee}
+        <label>
+          Progress:
+          <select
+            value={filters.progress}
+            onChange={(e) =>
+              setFilters((prev) => ({ ...prev, progress: e.target.value }))
+            }
           >
-            Add Assignee
+            <option value="all">All</option>
+            <option value="completed">Completed</option>
+            <option value="in-progress">In Progress</option>
+            <option value="not-started">Not Started</option>
+          </select>
+        </label>
+
+        <div className="tag-filters">
+          {availableTags.map((tag) => (
+            <button
+              key={tag}
+              className={`tag-filter-button ${
+                filters.tags.includes(tag) ? "active" : ""
+              }`}
+              onClick={() => toggleTagFilter(tag)}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Export Button */}
+      <div className="export-container">
+        <button onClick={handleExportTasks} className="export-btn">
+          Export Tasks to CSV
+        </button>
+      </div>
+
+      {/* Task List */}
+      {filteredTasks.length === 0 ? (
+        <div className="no-tasks">
+          <p>No tasks found. Add your first task!</p>
+          <button
+            className="add-task-btn"
+            onClick={() => navigate(`/trips/${tripId}/tasks/new`)}
+          >
+            + Add Task
           </button>
         </div>
+      ) : (
+        <div className="task-list">
+          {filteredTasks.map((task) => (
+            <div
+              key={task._id}
+              className="task-card"
+              onClick={() => navigate(`/trips/${tripId}/tasks/${task._id}`)}
+            >
+              <h3>{task.title}</h3>
+              <p>{task.description || "No description provided."}</p>
+              <p>Due: {task.dueDate ? new Date(task.dueDate).toLocaleDateString() : "N/A"}</p>
+              <p>Priority: {task.priority}</p>
+              <div className="progress-bar">
+                <div
+                  className="progress"
+                  style={{ width: `${task.progress}%` }}
+                ></div>
+              </div>
+              <p>Tags: {task.tags.join(", ") || "No tags"}</p>
+              {task.progress < 100 && (
+                <button
+                  className="mark-completed-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMarkAsCompleted(task._id);
+                  }}
+                >
+                  Mark as Completed
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
 
-        <button type="submit" className="submit-button">
-          Create Task
-        </button>
-      </form>
+      <BottomNav tripId={tripId} />
     </div>
   );
 };
 
-export default AddTask;
+export default TaskList;

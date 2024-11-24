@@ -218,6 +218,19 @@ const TripDetails = () => {
             <p>Or share this code: {trip.inviteCode || "Not generated"}</p>
           </div>
         )}
+
+        <div className="trip-actions">
+          <h3>Quick Links</h3>
+          <button onClick={() => navigate(`/trips/${tripId}/tasks`)}>View Tasks</button>
+        </div>
+
+        <div className="tasks-summary">
+          <h3>Tasks Overview</h3>
+          <p>Pending: {pendingTasks}</p>
+          <p>In Progress: {inProgressTasks}</p>
+          <p>Completed: {completedTasks}</p>
+          <button onClick={() => navigate(`/trips/${tripId}/tasks`)}>Manage Tasks</button>
+        </div>
               <BottomNav tripId={tripId}  activeSection="home" />
     </div>
   );

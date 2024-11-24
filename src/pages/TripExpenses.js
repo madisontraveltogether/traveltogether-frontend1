@@ -4,8 +4,8 @@ import api from "../services/api";
 import "../css/TripExpenses.css";
 import TopBar from "../components/TopBar";
 import BottomNav from "../components/BottomNav";
-import { Pie } from "react-chartjs-2";
-import "chart.js/auto";
+// import { Pie } from "react-chartjs-2";
+// import "chart.js/auto";
 
 const TripExpenses = () => {
   const { tripId } = useParams();
@@ -45,16 +45,16 @@ const TripExpenses = () => {
     setCategorySummary(summary);
   };
 
-  const chartData = {
-    labels: Object.keys(categorySummary),
-    datasets: [
-      {
-        data: Object.values(categorySummary),
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
-        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
-      },
-    ],
-  };
+  // const chartData = {
+  //   labels: Object.keys(categorySummary),
+  //   datasets: [
+  //     {
+  //       data: Object.values(categorySummary),
+  //       backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
+  //       hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
+  //     },
+  //   ],
+  // };
 
   return (
     <div className="trip-expenses-page">
@@ -68,13 +68,13 @@ const TripExpenses = () => {
 
       {error && <p className="error-message">{error}</p>}
 
-      {/* Show Summary Chart */}
+      {/* Show Summary Chart
       {Object.keys(categorySummary).length > 0 && (
         <div className="chart-container">
           <h3>Expense Summary</h3>
           <Pie data={chartData} />
         </div>
-      )}
+      )} */}
 
       {/* List of Expenses */}
       {expenses.length === 0 ? (
