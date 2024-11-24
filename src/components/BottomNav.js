@@ -11,10 +11,6 @@ const BottomNav = ({ tripId }) => {
   // Helper function to check if a nav item is active
   const isActive = (path) => location.pathname === path;
 
-  if (!tripId) {
-    return <div>Invalid trip navigation. Please refresh or try again.</div>;
-  }
-
   return (
     <div className="bottom-nav">
       <button

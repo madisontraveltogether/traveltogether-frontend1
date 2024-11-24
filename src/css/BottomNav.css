@@ -1,61 +1,57 @@
-/* Main container styling */
+/* Bottom Navigation Container */
 .bottom-nav {
   display: flex;
-  width: 397px;
-  height: 91px;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
-  border-radius: 40px;
-  background: #fffaF5;
-  box-shadow: 0px 4px 20px 5px rgba(192, 183, 183, 0.51);
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100%; /* Full width for mobile screens */
+  height: 80px; /* Adjust height for mobile ergonomics */
+  position: fixed; /* Stick to the bottom */
+  bottom: 0;
+  left: 0;
+  background: #FFFAF5; /* Light background color */
+  border-radius: 20px 20px 0 0; /* Rounded corners on the top */
+  box-shadow: 0px -2px 10px rgba(192, 183, 183, 0.5); /* Subtle shadow */
   z-index: 1000;
 }
 
-/* Individual navigation items */
-.nav-item {
+/* Individual Button */
+.bottom-nav button {
+  flex: 1; /* Each button takes up equal space */
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
-  gap: 5px;
-}
-
-/* Icon styling for inactive state */
-.nav-icon {
-  width: 28px;
-  height: 28px;
-  color: #9c9c9c;
-  flex-shrink: 0;
-  transition: color 0.3s ease;
-}
-
-/* Text styling for inactive state */
-.nav-text {
-  color: #9c9c9c;
-  font-family: "SF Pro Text", sans-serif;
+  justify-content: center;
+  border: none;
+  background: none;
+  padding: 10px;
+  font-family: "SF Pro Text", Arial, sans-serif;
   font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+  color: #9C9C9C; /* Inactive text color */
+  cursor: pointer;
+}
+
+/* Button Icon */
+.bottom-nav button svg {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px; /* Space between icon and text */
+  color: #9C9C9C; /* Default inactive color */
   transition: color 0.3s ease;
 }
 
-/* Active state styles */
-.nav-item.active .nav-icon {
-  color: #ea8c1a;
+/* Active Button Styling */
+.bottom-nav button.active svg,
+.bottom-nav button.active span {
+  color: #EA8C1A; /* Active icon and text color */
 }
 
-.nav-item.active .nav-text {
-  color: #ea8c1a;
+.bottom-nav button.active {
+  font-weight: bold; /* Slight emphasis on active text */
 }
 
-/* Hover effects (optional) */
-.nav-item:hover .nav-icon,
-.nav-item:hover .nav-text {
-  color: #ea8c1a;
+/* Button Text */
+.bottom-nav button span {
+  font-size: 10px;
+  line-height: normal;
+  text-align: center;
 }
