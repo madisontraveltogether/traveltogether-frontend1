@@ -101,32 +101,3 @@
     object-fit: cover;
   }
   
-  .bottom-nav {
-    display: flex;
-    justify-content: space-between;
-    background-color: white;
-    padding: 0.5rem 1rem;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-  }
-  
-  .bottom-nav button {
-    background: none;
-    border: none;
-    color: #7a7a7a;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  
-  .bottom-nav button.active {
-    color: #ff8000;
-    font-weight: bold;
-  }
-  
-  .bottom-nav button:hover {
-    color: #ff8000;
-  }
-  
