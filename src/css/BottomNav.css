@@ -1,124 +1,58 @@
-/* Bottom Navigation Container */
-.bottom-nav {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%; /* Full width for mobile screens */
-  height: 80px; /* Adjust height for mobile ergonomics */
-  position: fixed; /* Stick to the bottom */
-  bottom: 0;
-  left: 0;
-  background: #FFFAF5; /* Light background color */
-  border-radius: 20px 20px 0 0; /* Rounded corners on the top */
-  box-shadow: 0px -2px 10px rgba(192, 183, 183, 0.5); /* Subtle shadow */
-  z-index: 1000;
-}
-
-/* Individual Button */
-.bottom-nav button {
-  flex: 1; /* Each button takes up equal space */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: none;
-  padding: 10px;
-  font-family: "SF Pro Text", Arial, sans-serif;
-  font-size: 12px;
-  color: #9C9C9C; /* Inactive text color */
-  cursor: pointer;
-}
-
-/* Button Icon */
-.bottom-nav button svg {
-  width: 24px;
-  height: 24px;
-  margin-bottom: 4px; /* Space between icon and text */
-  color: #9C9C9C; /* Default inactive color */
-  transition: color 0.3s ease;
-}
-
-/* Active Button Styling */
-.bottom-nav button.active svg,
-.bottom-nav button.active span {
-  color: #EA8C1A; /* Active icon and text color */
-}
-
-.bottom-nav button.active {
-  font-weight: bold; /* Slight emphasis on active text */
-}
-
-/* Button Text */
-.bottom-nav button span {
-  font-size: 10px;
-  line-height: normal;
-  text-align: center;
-}
-
-/* Container for the floating effect */
 .bottom-nav-container {
-  display: flex;
-  justify-content: center; /* Center the nav bar horizontally */
-  align-items: flex-end; /* Align the nav bar at the bottom */
+  width: 100%;
+  max-width: 428px; /* Match the container width */
+  height: 114px;
   position: fixed;
   bottom: 0;
-  width: 100%; /* Full width for responsiveness */
-  height: 114px; /* Height for the floating box */
-  background-color: transparent; /* Transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background: #f9f6f2; /* Adjust to match the desired background color */
+  box-shadow: 0px 4px 20px 5px rgba(192, 183, 183, 0.51);
   z-index: 1000;
+  border-radius: 20px 20px 0 0;
 }
 
-/* Box for the Bottom Navigation */
 .bottom-nav-box {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 428px; /* Exact width of the floating box */
-  height: 91px; /* Actual height of the bottom nav */
-  padding: 10px; /* Padding for the floating effect */
-  background: #FFFAF5; /* Light background */
-  border-radius: 40px; /* Rounded corners for floating effect */
-  box-shadow: 0px 4px 20px rgba(192, 183, 183, 0.51); /* Shadow for the floating effect */
+  width: 100%;
+  max-width: 397px; /* Ensure proper width */
+  height: 91px;
+  border-radius: 40px;
+  background: #fffae6;
 }
 
-/* Individual Button */
 .bottom-nav-box button {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex: 1;
   border: none;
   background: none;
-  font-family: "SF Pro Text", Arial, sans-serif;
+  outline: none;
+  font-family: "SF Pro Text", sans-serif;
   font-size: 12px;
-  color: #9C9C9C; /* Default text color */
+  font-weight: 400;
+  color: #9c9c9c;
+  text-align: center;
+  padding: 10px;
   cursor: pointer;
 }
 
-/* Button Icon */
-.bottom-nav-box button svg {
-  width: 28px;
-  height: 28px;
-  margin-bottom: 4px;
-  color: #9C9C9C; /* Default icon color */
-  transition: color 0.3s ease;
-}
-
-/* Active Button Styling */
-.bottom-nav-box button.active svg,
-.bottom-nav-box button.active span {
-  color: #EA8C1A; /* Active color for icon and text */
-}
-
 .bottom-nav-box button.active {
-  font-weight: bold;
+  color: #ea8c1a;
 }
 
-/* Button Text */
 .bottom-nav-box button span {
-  font-size: 10px;
-  line-height: normal;
-  text-align: center;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.bottom-nav-box button svg {
+  width: 24px;
+  height: 24px;
 }
