@@ -5,6 +5,7 @@ import "../css/TripDashboard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt, faEdit, faUserCircle, faCopy } from "@fortawesome/free-solid-svg-icons";
 import BottomNav from '../components/BottomNav';
+import { useNavigate } from 'react-router-dom';
 
 const TripDetails = () => {
   const { tripId } = useParams();
@@ -16,6 +17,9 @@ const TripDetails = () => {
   const [organizerName, setOrganizerName] = useState("Organizer Unknown");
   const [inviteLink, setInviteLink] = useState("");
   const [attendees, setAttendees] = useState([]);
+  const navigate = useNavigate();
+  const [tasks, setTasks] = useState([]);
+  const [error, setError] = useState('');
 
   const isOrganizer = currentUser?.id === trip?.organizer?.id;
 
@@ -53,8 +57,18 @@ const TripDetails = () => {
         setError("Failed to load trip details.");
       }
     };
+    const fetchTasks = async () => {
+      try {
+        const response = await api.get(`/api/trips/${tripId}/tasks`);
+        setTasks(response.data);
+      } catch (err) {
+        console.error('Error fetching tasks:', err);
+        setError('Failed to load tasks.');
+      }
+    };
     fetchUser();
     fetchTripDetails();
+    fetchTasks();
   }, [tripId]);
 
   const handleCopyLink = () => {
@@ -89,6 +103,10 @@ const TripDetails = () => {
   };
 
   if (!currentUser || !trip) return <p>Loading...</p>;
+  const pendingTasks = tasks.filter(task => task.status === 'pending');
+  const inProgressTasks = tasks.filter(task => task.status === 'in-progress');
+  const completedTasks = tasks.filter(task => task.status === 'completed');
+
 
   return (
     <div className="page-container">
