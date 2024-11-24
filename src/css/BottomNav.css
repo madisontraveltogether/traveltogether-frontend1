@@ -1,34 +1,37 @@
-.bottom-nav-container {
-  width: 100%;
-  max-width: 428px; /* Ensure it matches the width of a typical phone */
-  height: 114px;
-  position: fixed;
-  bottom: 0;
+/* Outer Box */
+.outer-box {
+  width: 426px;
+  height: 106px;
+  background: #FFF9F3;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: none;
-  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1000;
 }
 
-.bottom-nav-box {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 90%; /* Slightly reduce width to create a floating effect */
+/* Inner Navigation Box */
+.nav-box {
+  width: 397px;
   height: 91px;
   border-radius: 40px;
   background: #FFFAF5;
-  box-shadow: 0px 4px 20px rgba(192, 183, 183, 0.51);
+  box-shadow: 0px 4px 20px 5px rgba(192, 183, 183, 0.51);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.bottom-nav-box button {
+/* Buttons (Nav Items) */
+.nav-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px; /* Space between icon and text */
+  gap: 5px;
   background: none;
   border: none;
   outline: none;
@@ -36,22 +39,17 @@
   font-family: "SF Pro Text", sans-serif;
   font-size: 12px;
   font-weight: 400;
-  color: #9C9C9C; /* Default inactive color */
-  text-align: center;
-  flex: 1; /* Equal space for all buttons */
+  color: #9C9C9C; /* Inactive color */
 }
 
-.bottom-nav-box button.active {
-  color: #EA8C1A; /* Highlight active button */
+/* Icon Styles */
+.nav-icon {
+  width: 28px;
+  height: 28px;
 }
 
-.bottom-nav-box button svg {
-  width: 24px;
-  height: 24px;
+/* Active State */
+.nav-item.active .nav-icon,
+.nav-item.active .nav-text {
+  color: #EA8C1A; /* Active color */
 }
-
-.bottom-nav-box button span {
-  font-size: 12px;
-  font-weight: 400;
-}
-
