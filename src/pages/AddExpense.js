@@ -25,7 +25,7 @@ const AddExpense = () => {
   useEffect(() => {
     const fetchAttendees = async () => {
       try {
-        const response = await api.get(`/api/trips/${tripId}/attendees`);
+        const response = await api.get(`/api/trips/${tripId}/guests`);
         setAttendees(response.data);
       } catch (err) {
         setError("Failed to fetch attendees.");
