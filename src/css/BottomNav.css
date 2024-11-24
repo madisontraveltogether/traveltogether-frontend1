@@ -13,7 +13,11 @@
   bottom: 10px; /* Position it at the bottom */
   left: 50%;
   transform: translateX(-50%); /* Center horizontally */
-  z-index: 100;
+  position: fixed; /* Keep the navigation fixed */
+  bottom: 10px; /* 10px from the bottom of the viewport */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Adjust for centering */
+  z-index: 1000; /* Ensure it stays on top of other content */
 }
 
 /* Styling for the navigation box */

@@ -82,7 +82,7 @@ const TripExpenses = () => {
         </div>
       )}
 
-<BottomNav tripId={tripId} />
+<BottomNav tripId={tripId} activeSection="expenses" />
 
 
     </div>

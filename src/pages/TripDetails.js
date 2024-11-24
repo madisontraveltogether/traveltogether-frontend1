@@ -41,7 +41,6 @@ const TripDetails = () => {
           organizer: response.data.organizer,
         });
         const organizerResponse = await api.get(`/api/trips/users/${response.data.organizer}`);
-          console.log("Organizer Response:", organizerResponse.data); // Debugging
           setOrganizerName(organizerResponse.data.name || "Organizer Unknown");
           const inviteResponse = await api.get(`/api/trips/${tripId}/invite-link`);
           setInviteLink(inviteResponse.data.inviteLink);
