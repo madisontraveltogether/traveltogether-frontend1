@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; //Ii don
+import "react-datepicker/dist/react-datepicker.css";
 import api from "../services/api";
 import "../css/AddExpense.css";
 import TopBar from "../components/TopBar";
@@ -35,10 +35,12 @@ const AddExpense = () => {
     fetchAttendees();
   }, [tripId]);
 
+  // Picture Upload Handler
   const handlePictureChange = (e) => {
     setPicture(e.target.files[0]);
   };
 
+  // Date and Time Handler
   const handleDateTimeChange = (index, value) => {
     const updatedDates = [...dates];
     updatedDates[index].startDateTime = value;
@@ -49,7 +51,7 @@ const AddExpense = () => {
     setDates([...dates, { startDateTime: new Date() }]);
   };
 
-  // Function to handle cost inputs dynamically
+  // Cost Change Handler
   const handleCostChange = (field, value) => {
     const numAttendees = membersAffected.length;
 
@@ -71,6 +73,19 @@ const AddExpense = () => {
       }
     }
   };
+
+  // Update Costs Dynamically when Members Affected Change
+  useEffect(() => {
+    const numAttendees = membersAffected.length;
+
+    if (totalCost && numAttendees > 0) {
+      const calculatedCostPerPerson = (parseFloat(totalCost) / numAttendees).toFixed(2);
+      setCostPerPerson(calculatedCostPerPerson);
+    } else if (costPerPerson && numAttendees > 0) {
+      const calculatedTotalCost = (parseFloat(costPerPerson) * numAttendees).toFixed(2);
+      setTotalCost(calculatedTotalCost);
+    }
+  }, [membersAffected]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -169,7 +184,7 @@ const AddExpense = () => {
           </select>
         </div>
 
-        {/* Cost */}
+        {/* Cost Fields */}
         <div className="form-group">
           <label>Total Cost *</label>
           <input
