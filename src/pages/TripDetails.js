@@ -19,7 +19,6 @@ const TripDetails = () => {
   const [attendees, setAttendees] = useState([]);
   const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
-  const [error, setError] = useState('');
 
   const isOrganizer = currentUser?.id === trip?.organizer?.id;
 
