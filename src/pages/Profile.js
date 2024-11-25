@@ -5,6 +5,7 @@ import TopBar from '../components/TopBar';
 const Profile = ({ user, setUser }) => {
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
+  const [username, setUsername] = useState(user?.username || '');
   const [profilePicture, setProfilePicture] = useState(null);
   const [previewPicture, setPreviewPicture] = useState(null);
   const [oldPassword, setOldPassword] = useState('');
@@ -12,25 +13,58 @@ const Profile = ({ user, setUser }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [activityLog, setActivityLog] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
       setName(user.name);
       setEmail(user.email);
+      setUsername(user.username);
     }
+
+    // Fetch user activity log
+    const fetchActivityLog = async () => {
+      try {
+        const response = await api.get('/auth/profile/activity-log');
+        setActivityLog(response.data);
+      } catch (err) {
+        console.error('Error fetching activity log', err);
+      }
+    };
+
+    fetchActivityLog();
   }, [user]);
 
   const handleUpdateProfile = async () => {
+    setIsLoading(true);
     try {
-      if (!name.trim() || !email.trim()) {
-        setError('Name and email cannot be empty.');
-        return;
+      if (!name.trim() || !email.trim() || !username.trim()) {
+        throw new Error('Name, email, and username are required.');
       }
-      const response = await api.patch('/auth/profile', { name, email });
+      const response = await api.patch('/auth/profile', { name, email, username });
       setUser(response.data.user);
       setMessage('Profile updated successfully');
-    } catch (error) {
-      setError(error.response?.data?.message || 'Error updating profile');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error updating profile');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleProfilePicturePreview = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (!['image/jpeg', 'image/png'].includes(file.type)) {
+        setError('Only JPEG and PNG formats are allowed.');
+        return;
+      }
+      if (file.size > 2 * 1024 * 1024) {
+        setError('File size must be under 2MB.');
+        return;
+      }
+      setProfilePicture(file);
+      setPreviewPicture(URL.createObjectURL(file));
     }
   };
 
@@ -40,6 +74,7 @@ const Profile = ({ user, setUser }) => {
       setError('Please select a picture to upload.');
       return;
     }
+
     const formData = new FormData();
     formData.append('profilePicture', profilePicture);
 
@@ -50,8 +85,8 @@ const Profile = ({ user, setUser }) => {
       setUser((prevUser) => ({ ...prevUser, profilePicture: response.data.profilePicture }));
       setMessage('Profile picture updated successfully');
       setPreviewPicture(null); // Clear the preview
-    } catch (error) {
-      setError(error.response?.data?.message || 'Error uploading profile picture');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error uploading profile picture');
     }
   };
 
@@ -70,56 +105,80 @@ const Profile = ({ user, setUser }) => {
       setOldPassword('');
       setNewPassword('');
       setConfirmPassword('');
-    } catch (error) {
-      setError(error.response?.data?.message || 'Error changing password');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error changing password');
     }
   };
 
-  const handleProfilePicturePreview = (e) => {
-    const file = e.target.files[0];
-    setProfilePicture(file);
-    if (file) {
-      setPreviewPicture(URL.createObjectURL(file));
+
+
+  const handleDeleteAccount = async () => {
+    if (window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+      try {
+        await api.delete('/auth/profile');
+        setUser(null);
+        window.location.href = '/logout'; // Redirect to logout or homepage
+      } catch (err) {
+        setError('Error deleting account');
+      }
     }
   };
 
   return (
-    <div>
+    <div className="profile-container">
       <TopBar title="Profile" />
-      {message && <p style={{ color: 'green' }}>{message}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {message && <p className="success-message">{message}</p>}
+      {error && <p className="error-message">{error}</p>}
 
       <div>
-        <label>Name:</label>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <label htmlFor="name">Name:</label>
+        <input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
       </div>
       <div>
-        <label>Email:</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <label htmlFor="email">Email:</label>
+        <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
       </div>
-      <button onClick={handleUpdateProfile}>Update Profile</button>
+      <div>
+        <label htmlFor="username">Username:</label>
+        <input id="username" type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+      </div>
+      <button onClick={handleUpdateProfile} disabled={isLoading}>
+        {isLoading ? 'Updating...' : 'Update Profile'}
+      </button>
 
       <h3>Profile Picture</h3>
-      {previewPicture && <img src={previewPicture} alt="Preview" style={{ width: '100px', height: '100px' }} />}
-      <form onSubmit={handleProfilePictureUpload}>
+      {user?.profilePicture && <img src={user.profilePicture} alt="Current Profile" className="profile-picture" />}
+      {previewPicture && <img src={previewPicture} alt="Preview" className="profile-picture-preview" />}
+      <form>
         <input type="file" accept="image/*" onChange={handleProfilePicturePreview} />
-        <button type="submit">Upload Profile Picture</button>
+        <button type="submit" onClick={handleProfilePictureUpload}>Upload Profile Picture</button>
       </form>
 
       <h3>Change Password</h3>
       <div>
-        <label>Old Password:</label>
-        <input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
+        <label htmlFor="oldPassword">Old Password:</label>
+        <input id="oldPassword" type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
       </div>
       <div>
-        <label>New Password:</label>
-        <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+        <label htmlFor="newPassword">New Password:</label>
+        <input id="newPassword" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
       </div>
       <div>
-        <label>Confirm Password:</label>
-        <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+        <label htmlFor="confirmPassword">Confirm Password:</label>
+        <input id="confirmPassword" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
       </div>
       <button onClick={handleChangePassword}>Change Password</button>
+
+      <h3>Recent Activity</h3>
+      <ul>
+        {activityLog.map((activity) => (
+          <li key={activity.id}>
+            {activity.action} on {new Date(activity.timestamp).toLocaleString()}
+          </li>
+        ))}
+      </ul>
+
+      <button className="delete-account-button" onClick={handleDeleteAccount}>Delete Account</button>
     </div>
   );
 };

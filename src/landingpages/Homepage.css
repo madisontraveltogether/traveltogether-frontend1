@@ -34,12 +34,12 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.2rem; /* Adjusted for smaller screens */
   color: #2F4F4F;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 1.8rem; /* Adjusted for smaller screens */
   color: #2F4F4F;
   margin-bottom: 10px;
 }
@@ -51,12 +51,13 @@ h3 {
 
 p {
   margin: 10px 0 20px;
+  font-size: 1rem; /* Adjusted for readability on small screens */
 }
 
 /* Button Styles */
 button {
-  font-size: 16px;
-  padding: 10px 20px;
+  font-size: 14px; /* Adjusted for mobile-friendly size */
+  padding: 10px 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -87,16 +88,18 @@ button {
 /* Hero Section */
 .hero {
   display: flex;
+  flex-direction: column; /* Stack content for small screens */
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   background: linear-gradient(to right, #FAF3E0, white);
-  padding: 50px;
+  padding: 30px; /* Adjusted padding for smaller screens */
   text-align: center;
 }
 
 .hero-content {
   flex: 1;
-  max-width: 50%;
+  max-width: 100%; /* Full width on mobile */
+  margin-bottom: 20px; /* Space between content and image */
 }
 
 .hero-image img {
@@ -107,8 +110,8 @@ button {
 
 /* Section Styles */
 section {
-  padding: 50px 20px;
-  max-width: 1200px;
+  padding: 30px 15px; /* Adjusted padding for smaller screens */
+  max-width: 100%; /* Ensure sections adapt fully to screen width */
   margin: 0 auto;
 }
 
@@ -122,8 +125,8 @@ section {
 
 .features-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Flexible for small screens */
+  gap: 15px; /* Adjusted spacing */
   list-style: none;
   padding: 0;
 }
@@ -133,21 +136,21 @@ section {
 }
 
 .features-list img {
-  width: 50px;
-  height: 50px;
+  width: 40px; /* Reduced size for mobile */
+  height: 40px;
   margin-bottom: 10px;
 }
 
 /* Pricing Section */
 .pricing {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Single column for small screens */
+  gap: 15px;
   text-align: center;
 }
 
 .pricing-card {
-  padding: 20px;
+  padding: 15px; /* Reduced padding for smaller screens */
   border: 1px solid #ddd;
   border-radius: 5px;
   background-color: white;
@@ -163,18 +166,18 @@ section {
   background-color: #2F4F4F; /* Dark slate gray */
   color: white;
   text-align: center;
-  padding: 40px;
+  padding: 30px 15px; /* Adjusted padding for smaller screens */
 }
 
 .testimonials blockquote {
   font-style: italic;
   margin: 0 auto 20px;
-  max-width: 600px;
+  max-width: 90%; /* Ensure it fits on smaller screens */
 }
 
 .testimonials cite {
   display: block;
-  font-size: 14px;
+  font-size: 0.9rem; /* Smaller text for mobile */
   margin-top: 10px;
 }
 
@@ -193,6 +196,8 @@ section {
   border: none;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Full width for mobile */
+  height: 400px; /* Reduced height for small screens */
 }
 
 /* Footer */
@@ -200,12 +205,12 @@ section {
   background-color: #2F4F4F; /* Dark slate gray */
   color: white;
   text-align: center;
-  padding: 20px 0;
+  padding: 15px 10px; /* Adjusted padding for smaller screens */
 }
 
 .footer nav a {
   color: #EA8C1A; /* Brand color */
-  margin: 0 10px;
+  margin: 0 5px; /* Reduced margin for smaller screens */
 }
 
 .footer nav a:hover {
@@ -214,21 +219,51 @@ section {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .hero {
-    flex-direction: column;
-    text-align: center;
-  }
-
   .hero-content {
-    max-width: 100%;
+    text-align: center;
     margin-bottom: 20px;
   }
 
   .features-list {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Single column layout */
   }
 
   .pricing {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Single column layout */
+  }
+
+  .testimonials blockquote {
+    max-width: 100%; /* Full width for mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.8rem; /* Adjust heading size for very small screens */
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  button {
+    font-size: 14px; /* Adjusted button text size */
+    padding: 8px 12px; /* Reduced padding for buttons */
+  }
+
+  .hero {
+    padding: 20px; /* Further reduced padding */
+  }
+
+  section {
+    padding: 20px 10px; /* Compact sections */
+  }
+
+  .footer {
+    padding: 10px 5px; /* Compact footer */
   }
 }
