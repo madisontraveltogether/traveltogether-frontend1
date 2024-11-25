@@ -14,10 +14,10 @@ const TripPolls = () => {
   useEffect(() => {
     const fetchPolls = async () => {
       try {
-        const response = await api.get(`api/trips/${tripId}/polls`);
+        const response = await api.get(`/api/trips/${tripId}/polls`);
         setPolls(response.data);
       } catch (err) {
-        setError('Failed to load polls.');
+        setError('Failed to load polls. Please try again later.');
       }
     };
     fetchPolls();
@@ -25,6 +25,11 @@ const TripPolls = () => {
 
   const handleAddPoll = () => {
     navigate(`/trips/${tripId}/polls/new`);
+  };
+
+  const renderPollStatus = (poll) => {
+    const isExpired = new Date(poll.expirationDate) < new Date();
+    return isExpired ? <span className="poll-expired">Expired</span> : <span className="poll-active">Active</span>;
   };
 
   return (
@@ -48,14 +53,23 @@ const TripPolls = () => {
             >
               <h3 className="poll-question">{poll.question}</h3>
               <p className="poll-meta">
-                Expires: {poll.expirationDate ? new Date(poll.expirationDate).toLocaleDateString() : 'No Expiration'}
+                {renderPollStatus(poll)} | Expires: {poll.expirationDate ? new Date(poll.expirationDate).toLocaleDateString() : 'No Expiration'}
               </p>
+              <button
+                className="share-button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigator.clipboard.writeText(`${window.location.origin}/trips/${tripId}/polls/${poll._id}`);
+                  alert('Poll link copied to clipboard!');
+                }}
+              >
+                Share Poll
+              </button>
             </li>
           ))}
         </ul>
       )}
-            <BottomNav />
-
+      <BottomNav />
     </div>
   );
 };
