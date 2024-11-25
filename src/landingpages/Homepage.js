@@ -113,17 +113,51 @@ const Home = () => {
         </section>
 
         {/* FAQ Section */}
-        <section id="faq" className="faq">
-          <h2>FAQ</h2>
-          <div>
-            <h3>How does TravelTogether work?</h3>
-            <p>We centralize all the tools you need to plan your trips easily.</p>
-          </div>
-          <div>
-            <h3>Is there a free plan?</h3>
-            <p>Yes! You can start with basic features for free.</p>
-          </div>
-        </section>
+        <section id="faq" class="faq-section">
+  <h2 class="faq-heading">Frequently Asked Questions</h2>
+
+  <input type="text" placeholder="Search FAQs..." class="faq-search" aria-label="Search FAQs" />
+
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary>What is TravelTogether?</summary>
+      <p>TravelTogether is a platform designed to simplify group travel planning by providing tools for itineraries, expense tracking, and real-time collaboration.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Who is TravelTogether for?</summary>
+      <p>TravelTogether is perfect for families, friends, and colleagues planning group trips.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Do I need to download an app, or can I use it on a web browser?</summary>
+      <p>TravelTogether is accessible via both web browsers and our mobile app, available for iOS and Android.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can I use TravelTogether for free?</summary>
+      <p>Yes! Our Free Plan includes basic features, and you can upgrade to Premium for unlimited trips and additional features.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How does expense tracking work?</summary>
+      <p>Expense tracking allows you to split costs, track payments, and ensure transparency among group members.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can I invite others to collaborate on a trip?</summary>
+      <p>Absolutely! You can invite others via email or share a link to join your trip.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What happens to a trip after it’s completed?</summary>
+      <p>Completed trips are archived automatically, and you can revisit them anytime for memories or financial records.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is my data safe with TravelTogether?</summary>
+      <p>Yes, we use encryption to secure your data and comply with international privacy standards.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How do I contact support if I have an issue?</summary>
+      <p>You can reach us anytime at help@gettraveltogether.com.</p>
+    </details>
+  </div>
+</section>
+
 
         {/* Sign-Up Form Section */}
         <section id="signup-form" className="signup-form">
