@@ -9,7 +9,6 @@ const MyTrips = () => {
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('all');
-  const [menuOpen, setMenuOpen] = useState(null); // Track which trip's menu is open
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -25,27 +24,12 @@ const MyTrips = () => {
         setLoading(false);
       }
     };
-
+    console.log(response.data);
     fetchTrips();
   }, []);
 
   const handleCreateNewTrip = () => {
     navigate('/create-trip');
-  };
-
-  const handleMenuToggle = (tripId) => {
-    setMenuOpen(menuOpen === tripId ? null : tripId);
-  };
-
-  const handleDeleteTrip = async (tripId) => {
-    if (window.confirm('Are you sure you want to delete this trip? This action cannot be undone.')) {
-      try {
-        await api.delete(`/api/trips/${tripId}`);
-        setTrips(trips.filter((trip) => trip.tripId !== tripId));
-      } catch (err) {
-        setError('Failed to delete trip.');
-      }
-    }
   };
 
   const filteredTrips = trips.filter((trip) => {
@@ -94,10 +78,6 @@ const MyTrips = () => {
               upcomingTrips.map((trip) => (
                 <li key={trip.tripId}>
                   <div className="trip-info" onClick={() => navigate(`/trips/${trip.tripId}`)}>
-                    <img
-                      src={trip.coverImage || '/default-cover.jpg'}
-                      alt={`${trip.name} cover`}
-                    />
                     <div>
                       <h3>{trip.name}</h3>
                       <p>Location: {trip.location || 'Not specified'}</p>
@@ -113,21 +93,6 @@ const MyTrips = () => {
                       </p>
                       <p>Privacy: {trip.privacy}</p>
                     </div>
-                  </div>
-
-                  <div className="kebab-menu">
-                    <button className="menu-button" onClick={(e) => { e.stopPropagation(); handleMenuToggle(trip.tripId); }}>
-                      &#x22EE; {/* Three vertical dots */}
-                    </button>
-                    {menuOpen === trip.tripId && (
-                      <div className="menu-dropdown" onClick={(e) => e.stopPropagation()}>
-                        <button onClick={() => navigate(`/trips/${trip.tripId}/edit`)}>Edit Trip</button>
-                        <button onClick={() => navigate(`/trips/${trip.tripId}/add-guests`)}>Add Guests</button>
-                        <button className="delete-button" onClick={() => handleDeleteTrip(trip.tripId)}>
-                          Delete Trip
-                        </button>
-                      </div>
-                    )}
                   </div>
                 </li>
               ))
@@ -161,21 +126,6 @@ const MyTrips = () => {
                       </p>
                       <p>Privacy: {trip.privacy}</p>
                     </div>
-                  </div>
-
-                  <div className="kebab-menu">
-                    <button className="menu-button" onClick={(e) => { e.stopPropagation(); handleMenuToggle(trip.tripId); }}>
-                      &#x22EE;
-                    </button>
-                    {menuOpen === trip.tripId && (
-                      <div className="menu-dropdown" onClick={(e) => e.stopPropagation()}>
-                        <button onClick={() => navigate(`/trips/${trip.tripId}/edit`)}>Edit Trip</button>
-                        <button onClick={() => navigate(`/trips/${trip.tripId}/add-guests`)}>Add Guests</button>
-                        <button className="delete-button" onClick={() => handleDeleteTrip(trip.tripId)}>
-                          Delete Trip
-                        </button>
-                      </div>
-                    )}
                   </div>
                 </li>
               ))

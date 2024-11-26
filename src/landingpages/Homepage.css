@@ -18,14 +18,13 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.8rem; /* Larger for hero section */
   color: #2F4F4F;
 }
 
 h2 {
   font-size: 2rem;
   color: #2F4F4F;
-  margin-bottom: 10px;
 }
 
 h3 {
@@ -36,37 +35,41 @@ h3 {
 p {
   font-size: 1rem;
   color: #666;
+  margin: 10px 0;
 }
 
-/* Buttons */
-button {
-  font-size: 1rem;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s;
-}
-
-.cta-button {
+/* Navigation Bar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
   background-color: #EA8C1A;
   color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.cta-button:hover {
-  background-color: #d97a16;
-  transform: scale(1.05);
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
-.secondary-button {
-  background-color: white;
-  color: #EA8C1A;
-  border: 2px solid #EA8C1A;
+.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
 }
 
-.secondary-button:hover {
-  background-color: #fdf1e0;
-  transform: scale(1.05);
+.nav-links a {
+  color: white;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
 }
 
 /* Hero Section */
@@ -74,87 +77,85 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: #FFFAF5;
-  padding: 40px;
   text-align: center;
-  margin-bottom: 40px;
+  padding: 80px 20px;
+  background-color: white;
+  border-bottom: 2px solid #EA8C1A;
 }
 
 .hero h1 {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin-bottom: 20px;
 }
 
 .hero p {
   font-size: 1.2rem;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.hero .cta-button {
+  padding: 15px 30px;
+  font-size: 1rem;
+  background-color: #EA8C1A;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.hero .cta-button:hover {
+  background-color: #d97a16;
 }
 
 /* Features Section */
 .features {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
-  padding: 40px;
+  padding: 60px 20px;
   background-color: #FFFAF5;
-  border-radius: 10px;
-  margin: 20px auto;
 }
 
 .features-item {
   background: white;
-  padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
   text-align: center;
-  border: 1px solid #EA8C1A;
+  transition: transform 0.3s ease;
+}
+
+.features-item:hover {
+  transform: scale(1.05);
 }
 
 .features-item img {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   margin-bottom: 15px;
 }
 
 .features-item h3 {
-  font-size: 1.2rem;
   margin-bottom: 10px;
-  color: #EA8C1A;
-}
-
-.features-item p {
-  font-size: 1rem;
-  color: #2F4F4F;
 }
 
 /* FAQ Section */
-.faq-section {
-  padding: 40px;
-  background: #FFFAF5;
-  border-radius: 10px;
-  margin: 20px auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+.faq {
+  padding: 60px 20px;
+  background-color: white;
 }
 
-.faq-heading {
+.faq h2 {
   text-align: center;
-  font-size: 2rem;
-  margin-bottom: 30px;
-  color: #2F4F4F;
-}
-
-.faq-list {
-  max-width: 800px;
-  margin: 0 auto;
+  margin-bottom: 40px;
 }
 
 .faq-item {
-  margin-bottom: 15px;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  background: white;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-bottom: 15px;
+  background: #FFFAF5;
 }
 
 .faq-item summary {
@@ -169,46 +170,29 @@ button {
 }
 
 .faq-item p {
-  padding: 10px 20px;
+  padding: 15px 20px;
   margin: 0;
-  border-top: 1px solid #ddd;
-  color: #666;
-}
-
-/* Sign-Up Form Section */
-.signup-form {
-  padding: 40px;
-  background: white;
-  border-radius: 10px;
-  margin: 20px auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.signup-form h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #2F4F4F;
-}
-
-.signup-form p {
-  font-size: 1rem;
-  margin-bottom: 20px;
-  color: #666;
-}
-
-.signup-form iframe {
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  height: 400px;
 }
 
 /* Footer */
 .footer {
+  padding: 40px 20px;
   background-color: #EA8C1A;
   color: white;
-  text-align: center;
-  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer .footer-section {
+  margin-bottom: 20px;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
 }
