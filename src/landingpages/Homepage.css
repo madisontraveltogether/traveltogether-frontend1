@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0;
   color: #2F4F4F; /* Dark slate gray for text */
-  background-color: #F9F9F9; /* Light background */
+  background-color: #FFFAF5; /* Soft warm background color */
 }
 
 a {
@@ -18,30 +18,30 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2rem; /* Base font size for mobile */
   color: #2F4F4F;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 1.5rem; /* Smaller heading size for mobile */
   color: #2F4F4F;
   margin-bottom: 10px;
 }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: 1.2rem; /* Smaller subheading */
   color: #EA8C1A; /* Brand accent color */
 }
 
 p {
-  font-size: 1rem;
+  font-size: 0.95rem; /* Adjusted for readability on mobile */
   color: #666;
 }
 
 /* Buttons */
 button {
   font-size: 1rem;
-  padding: 10px 20px;
+  padding: 10px 15px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -49,7 +49,7 @@ button {
 }
 
 .cta-button {
-  background-color: #EA8C1A; /* Brand color */
+  background-color: #EA8C1A; /* Brand orange */
   color: white;
 }
 
@@ -72,33 +72,34 @@ button {
 /* Hero Section */
 .hero {
   display: flex;
-  flex-direction: row;
+  flex-direction: column; /* Stacks content for mobile */
   align-items: center;
-  justify-content: space-between;
-  background: white;
-  padding: 40px;
+  justify-content: center;
+  background-color: #FFFAF5;
+  padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
-  max-width: 1200px;
 }
 
 .hero-content {
-  flex: 1;
-}
-
-.hero h1 {
-  font-size: 2.5rem;
+  text-align: center;
   margin-bottom: 20px;
 }
 
+.hero h1 {
+  font-size: 1.8rem; /* Smaller font size for mobile */
+  margin-bottom: 10px;
+}
+
 .hero p {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-bottom: 20px;
 }
 
 .hero-image img {
-  max-width: 400px;
+  width: 100%;
+  max-width: 300px; /* Scales down for smaller screens */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -106,113 +107,148 @@ button {
 /* Features Section */
 .features {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: 1fr; /* Single column for mobile */
   gap: 20px;
-  padding: 40px;
-  background-color: #FAF3E0;
+  padding: 20px;
+  background-color: #FFFAF5;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
-  max-width: 1200px;
 }
 
 .features-item {
   background: white;
-  padding: 20px;
+  padding: 15px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
+  border: 1px solid #EA8C1A;
 }
 
 .features-item img {
-  width: 50px;
-  height: 50px;
-  margin-bottom: 15px;
-}
-
-.features-item h3 {
-  font-size: 1.2rem;
+  width: 40px;
+  height: 40px;
   margin-bottom: 10px;
 }
 
+.features-item h3 {
+  font-size: 1rem; /* Slightly smaller for mobile */
+  margin-bottom: 10px;
+  color: #EA8C1A;
+}
+
 .features-item p {
-  font-size: 1rem;
+  font-size: 0.9rem;
+  color: #2F4F4F;
 }
 
 /* Pricing Section */
 .pricing {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr; /* Single column for mobile */
   gap: 20px;
-  justify-content: center;
-  padding: 40px;
-  background-color: #fff;
+  padding: 20px;
+  background-color: #FFFAF5;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
-  max-width: 1200px;
 }
 
 .pricing-card {
   background: white;
-  padding: 30px;
+  padding: 20px;
   border-radius: 10px;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.pricing-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transform: scale(1.02);
-}
-
-.pricing-card h3 {
-  font-size: 1.5rem;
-  color: #EA8C1A;
-  margin-bottom: 10px;
-}
-
-.pricing-card p {
-  font-size: 1rem;
-  margin-bottom: 20px;
+  border: 1px solid #EA8C1A;
 }
 
 /* Testimonials Section */
 .testimonials {
-  background: linear-gradient(to right, #2F4F4F, #3A5F5F);
-  color: white;
-  padding: 50px;
+  background: linear-gradient(to right, #EA8C1A, #FFFAF5);
+  color: #2F4F4F;
+  padding: 20px;
   border-radius: 10px;
   text-align: center;
   margin: 20px auto;
-  max-width: 1200px;
 }
 
 .testimonials blockquote {
-  font-style: italic;
+  font-size: 1rem;
   margin: 0 auto 20px;
-  max-width: 700px;
-  font-size: 1.2rem;
 }
 
 .testimonials cite {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #EA8C1A;
 }
 
 /* Footer */
 .footer {
-  background-color: #2F4F4F;
+  background-color: #EA8C1A;
   color: white;
   text-align: center;
-  padding: 20px;
+  padding: 15px;
   margin-top: 20px;
 }
 
 .footer nav a {
-  color: #EA8C1A;
-  margin: 0 10px;
+  color: #FFFAF5;
+  margin: 0 5px;
 }
 
-.footer nav a:hover {
-  text-decoration: underline;
+/* Responsive Design for Larger Screens */
+@media (min-width: 768px) {
+  .hero {
+    flex-direction: row; /* Aligns hero section side-by-side */
+    max-width: 1200px;
+  }
+
+  .hero-content {
+    text-align: left;
+  }
+
+  .features {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Switch to grid layout */
+  }
+
+  .pricing {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Grid layout for pricing */
+  }
+
+  .testimonials blockquote {
+    font-size: 1.2rem;
+    max-width: 700px;
+  }
+}
+
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+  }
+
+  .features {
+    max-width: 1200px;
+    padding: 40px;
+  }
+
+  .pricing {
+    max-width: 1200px;
+    padding: 40px;
+  }
+
+  .testimonials {
+    max-width: 1200px;
+    padding: 40px;
+  }
 }

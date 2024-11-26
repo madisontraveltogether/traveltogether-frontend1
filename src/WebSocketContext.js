@@ -11,7 +11,7 @@ const WebSocketProvider = ({ children }) => {
 
   useEffect(() => {
     // Connect to the WebSocket server
-    socket.current = io('http://your-server-url'); // Replace with your server URL
+    socket.current = io('https://traveltogether-server-6e176f53a84f.herokuapp.com/'); // Replace with your server URL
 
     socket.current.on('connect', () => {
       console.log('WebSocket connected:', socket.current.id);

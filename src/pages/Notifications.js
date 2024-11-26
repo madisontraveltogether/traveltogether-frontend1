@@ -24,7 +24,7 @@ const Notifications = () => {
     fetchNotifications();
 
     // Set up WebSocket connection
-    const socketInstance = io('http://your-server-url'); // Replace with your server URL
+    const socketInstance = io('https://traveltogether-server-6e176f53a84f.herokuapp.com/'); // Replace with your server URL
     setSocket(socketInstance);
 
     socketInstance.on('connect', () => {
