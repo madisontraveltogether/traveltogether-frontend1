@@ -1,5 +1,6 @@
 // src/pages/Notifications.js
 import React, { useEffect, useState } from 'react';
+import { io } from 'socket.io-client';
 import api from '../services/api';
 import TopBar from '../components/TopBar';
 import BottomNav from '../components/BottomNav';
@@ -7,11 +8,13 @@ import BottomNav from '../components/BottomNav';
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
   const [error, setError] = useState('');
+  const [socket, setSocket] = useState(null); // State to manage WebSocket connection
 
   useEffect(() => {
+    // Fetch initial notifications from the server
     const fetchNotifications = async () => {
       try {
-        const response = await api.get('api/notifications');
+        const response = await api.get('/api/notifications');
         setNotifications(response.data);
       } catch (err) {
         setError('Failed to load notifications.');
@@ -19,6 +22,29 @@ const Notifications = () => {
     };
 
     fetchNotifications();
+
+    // Set up WebSocket connection
+    const socketInstance = io('http://your-server-url'); // Replace with your server URL
+    setSocket(socketInstance);
+
+    socketInstance.on('connect', () => {
+      console.log('WebSocket connected:', socketInstance.id);
+    });
+
+    // Listen for real-time notifications
+    socketInstance.on('newNotification', (notification) => {
+      console.log('Received new notification:', notification);
+      setNotifications((prev) => [notification, ...prev]); // Add the new notification to the list
+    });
+
+    socketInstance.on('disconnect', () => {
+      console.log('WebSocket disconnected');
+    });
+
+    // Clean up WebSocket on unmount
+    return () => {
+      socketInstance.disconnect();
+    };
   }, []);
 
   const markAsRead = async (notificationId) => {
@@ -51,7 +77,6 @@ const Notifications = () => {
         ))}
       </ul>
       <BottomNav />
-
     </div>
   );
 };
