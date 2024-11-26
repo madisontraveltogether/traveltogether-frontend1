@@ -77,8 +77,8 @@ const MyTrips = () => {
               <p>No upcoming trips found.</p>
             ) : (
               upcomingTrips.map((trip) => (
-                <li key={trip.tripId}>
-                  <div className="trip-info" onClick={() => navigate(`/trips/${trip.tripId}`)}>
+                <li key={tripId}>
+                  <div className="trip-info" onClick={() => navigate(`/trips/${tripId}`)}>
                     <div>
                       <h3>{trip.name}</h3>
                       <p>Location: {trip.location || 'Not specified'}</p>
@@ -106,8 +106,8 @@ const MyTrips = () => {
               <p>No past trips found.</p>
             ) : (
               pastTrips.map((trip) => (
-                <li key={trip.tripId}>
-                  <div className="trip-info" onClick={() => navigate(`/trips/${trip.tripId}`)}>
+                <li key={tripId}>
+                  <div className="trip-info" onClick={() => navigate(`/trips/${tripId}`)}>
                     <img
                       src={trip.coverImage || '/default-cover.jpg'}
                       alt={`${trip.name} cover`}
