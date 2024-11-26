@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import '../css/MyTrips.css'; 
+import '../css/MyTrips.css';
 import TopBar from '../components/TopBar';
 
 const MyTrips = () => {
@@ -9,6 +9,7 @@ const MyTrips = () => {
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('all');
+  const [menuOpen, setMenuOpen] = useState(null); // Track which trip's menu is open
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -16,11 +17,6 @@ const MyTrips = () => {
     const fetchTrips = async () => {
       setLoading(true);
       try {
-        const token = localStorage.getItem('accessToken'); // Retrieve token from localStorage
-    if (!token) {
-      setError('User is not authenticated.');
-      return;
-    }
         const response = await api.get('api/trips/all');
         setTrips(response.data);
       } catch (err) {
@@ -37,6 +33,22 @@ const MyTrips = () => {
     navigate('/create-trip');
   };
 
+  const handleMenuToggle = (tripId) => {
+    // If clicking the same trip, close the menu. Otherwise, open the clicked trip's menu.
+    setMenuOpen(menuOpen === tripId ? null : tripId);
+  };
+
+  const handleDeleteTrip = async (tripId) => {
+    if (window.confirm('Are you sure you want to delete this trip? This action cannot be undone.')) {
+      try {
+        await api.delete(`/api/trips/${tripId}`);
+        setTrips(trips.filter((trip) => tripId !== tripId));
+      } catch (err) {
+        setError('Failed to delete trip.');
+      }
+    }
+  };
+
   const filteredTrips = trips.filter((trip) => {
     const matchesSearch = trip.name.toLowerCase().includes(search.toLowerCase());
     const matchesFilter = filter === 'all' || trip.privacy === filter;
@@ -49,7 +61,7 @@ const MyTrips = () => {
 
   return (
     <div className="my-trips-container">
-            <TopBar title="My Trips" />
+      <TopBar title="My Trips" />
 
       <div className="my-trips-header">
         <button onClick={handleCreateNewTrip}>Create New Trip</button>
@@ -81,25 +93,42 @@ const MyTrips = () => {
               <p>No upcoming trips found.</p>
             ) : (
               upcomingTrips.map((trip) => (
-                <li key={trip._id} onClick={() => navigate(`/trips/${trip._id}`)}>
-                  <img
-                    src={trip.coverImage || '/default-cover.jpg'}
-                    alt={`${trip.name} cover`}
-                  />
-                  <div>
-                    <h3>{trip.name}</h3>
-                    <p>Location: {trip.location || 'Not specified'}</p>
-                    <p>
-                      Dates:{' '}
-                      {trip.startDate
-                        ? new Date(trip.startDate).toLocaleDateString()
-                        : 'N/A'}{' '}
-                      -{' '}
-                      {trip.endDate
-                        ? new Date(trip.endDate).toLocaleDateString()
-                        : 'N/A'}
-                    </p>
-                    <p>Privacy: {trip.privacy}</p>
+                <li key={tripId}>
+                  <div className="trip-info" onClick={() => navigate(`/trips/${tripId}`)}>
+                    <img
+                      src={trip.coverImage || '/default-cover.jpg'}
+                      alt={`${trip.name} cover`}
+                    />
+                    <div>
+                      <h3>{trip.name}</h3>
+                      <p>Location: {trip.location || 'Not specified'}</p>
+                      <p>
+                        Dates:{' '}
+                        {trip.startDate
+                          ? new Date(trip.startDate).toLocaleDateString()
+                          : 'N/A'}{' '}
+                        -{' '}
+                        {trip.endDate
+                          ? new Date(trip.endDate).toLocaleDateString()
+                          : 'N/A'}
+                      </p>
+                      <p>Privacy: {trip.privacy}</p>
+                    </div>
+                  </div>
+
+                  <div className="kebab-menu">
+                    <button className="menu-button" onClick={(e) => { e.stopPropagation(); handleMenuToggle(tripId); }}>
+                      &#x22EE; {/* Three vertical dots */}
+                    </button>
+                    {menuOpen === tripId && (
+                      <div className="menu-dropdown" onClick={(e) => e.stopPropagation()}>
+                        <button onClick={() => navigate(`/trips/${tripId}/edit`)}>Edit Trip</button>
+                        <button onClick={() => navigate(`/trips/${tripId}/add-guests`)}>Add Guests</button>
+                        <button className="delete-button" onClick={() => handleDeleteTrip(tripId)}>
+                          Delete Trip
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </li>
               ))
@@ -112,25 +141,42 @@ const MyTrips = () => {
               <p>No past trips found.</p>
             ) : (
               pastTrips.map((trip) => (
-                <li key={trip._id} onClick={() => navigate(`/trips/${trip._id}`)}>
-                  <img
-                    src={trip.coverImage || '/default-cover.jpg'}
-                    alt={`${trip.name} cover`}
-                  />
-                  <div>
-                    <h3>{trip.name}</h3>
-                    <p>Location: {trip.location || 'Not specified'}</p>
-                    <p>
-                      Dates:{' '}
-                      {trip.startDate
-                        ? new Date(trip.startDate).toLocaleDateString()
-                        : 'N/A'}{' '}
-                      -{' '}
-                      {trip.endDate
-                        ? new Date(trip.endDate).toLocaleDateString()
-                        : 'N/A'}
-                    </p>
-                    <p>Privacy: {trip.privacy}</p>
+                <li key={tripId}>
+                  <div className="trip-info" onClick={() => navigate(`/trips/${tripId}`)}>
+                    <img
+                      src={trip.coverImage || '/default-cover.jpg'}
+                      alt={`${trip.name} cover`}
+                    />
+                    <div>
+                      <h3>{trip.name}</h3>
+                      <p>Location: {trip.location || 'Not specified'}</p>
+                      <p>
+                        Dates:{' '}
+                        {trip.startDate
+                          ? new Date(trip.startDate).toLocaleDateString()
+                          : 'N/A'}{' '}
+                        -{' '}
+                        {trip.endDate
+                          ? new Date(trip.endDate).toLocaleDateString()
+                          : 'N/A'}
+                      </p>
+                      <p>Privacy: {trip.privacy}</p>
+                    </div>
+                  </div>
+
+                  <div className="kebab-menu">
+                    <button className="menu-button" onClick={(e) => { e.stopPropagation(); handleMenuToggle(tripId); }}>
+                      &#x22EE;
+                    </button>
+                    {menuOpen === tripId && (
+                      <div className="menu-dropdown" onClick={(e) => e.stopPropagation()}>
+                        <button onClick={() => navigate(`/trips/${tripId}/edit`)}>Edit Trip</button>
+                        <button onClick={() => navigate(`/trips/${tripId}/add-guests`)}>Add Guests</button>
+                        <button className="delete-button" onClick={() => handleDeleteTrip(tripId)}>
+                          Delete Trip
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </li>
               ))
