@@ -7,7 +7,7 @@ import { faMapMarkerAlt, faEdit, faUserCircle, faCopy } from "@fortawesome/free-
 import BottomNav from '../components/BottomNav';
 import { useNavigate } from 'react-router-dom';
 import ProgressTracker from '../components/ProgressTracker.js';
-
+import ActivityLog from '../pages/ActivityLog.js';
 const TripDetails = () => {
   const { tripId } = useParams();
   const [trip, setTrip] = useState({});
@@ -249,6 +249,9 @@ const TripDetails = () => {
           <p>Completed: {completedTasks}</p>
           <button onClick={() => navigate(`/trips/${tripId}/tasks`)}>Manage Tasks</button>
         </div>
+
+        <ActivityLog tripId={tripId} />
+
               <BottomNav tripId={tripId}  activeSection="home" />
     </div>
   );
