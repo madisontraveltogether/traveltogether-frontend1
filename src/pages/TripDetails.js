@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt, faEdit, faUserCircle, faCopy } from "@fortawesome/free-solid-svg-icons";
 import BottomNav from '../components/BottomNav';
 import { useNavigate } from 'react-router-dom';
+import ProgressTracker from '../components/ProgressTracker.js';
 
 const TripDetails = () => {
   const { tripId } = useParams();
