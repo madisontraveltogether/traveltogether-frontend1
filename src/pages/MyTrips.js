@@ -18,13 +18,14 @@ const MyTrips = () => {
       try {
         const response = await api.get('api/trips/all');
         setTrips(response.data);
+        console.log(response.data);
+
       } catch (err) {
         setError('Failed to load trips.');
       } finally {
         setLoading(false);
       }
     };
-    console.log(response.data);
     fetchTrips();
   }, []);
 
