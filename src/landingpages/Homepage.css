@@ -3,8 +3,8 @@ body {
   font-family: 'Poppins', Arial, sans-serif;
   margin: 0;
   padding: 0;
-  color: #2F4F4F; /* Dark slate gray for text */
-  background-color: #FFFAF5; /* Soft warm background color */
+  color: #2F4F4F;
+  background-color: #FFFAF5;
 }
 
 a {
@@ -18,30 +18,30 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: 2rem; /* Base font size for mobile */
+  font-size: 2.5rem;
   color: #2F4F4F;
 }
 
 h2 {
-  font-size: 1.5rem; /* Smaller heading size for mobile */
+  font-size: 2rem;
   color: #2F4F4F;
   margin-bottom: 10px;
 }
 
 h3 {
-  font-size: 1.2rem; /* Smaller subheading */
-  color: #EA8C1A; /* Brand accent color */
+  font-size: 1.5rem;
+  color: #EA8C1A;
 }
 
 p {
-  font-size: 0.95rem; /* Adjusted for readability on mobile */
+  font-size: 1rem;
   color: #666;
 }
 
 /* Buttons */
 button {
   font-size: 1rem;
-  padding: 10px 15px;
+  padding: 10px 20px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -49,7 +49,7 @@ button {
 }
 
 .cta-button {
-  background-color: #EA8C1A; /* Brand orange */
+  background-color: #EA8C1A;
   color: white;
 }
 
@@ -72,44 +72,31 @@ button {
 /* Hero Section */
 .hero {
   display: flex;
-  flex-direction: column; /* Stacks content for mobile */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #FFFAF5;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
-}
-
-.hero-content {
+  padding: 40px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .hero h1 {
-  font-size: 1.8rem; /* Smaller font size for mobile */
-  margin-bottom: 10px;
-}
-
-.hero p {
-  font-size: 1rem;
+  font-size: 2.5rem;
   margin-bottom: 20px;
 }
 
-.hero-image img {
-  width: 100%;
-  max-width: 300px; /* Scales down for smaller screens */
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
 }
 
 /* Features Section */
 .features {
   display: grid;
-  grid-template-columns: 1fr; /* Single column for mobile */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
-  padding: 20px;
+  padding: 40px;
   background-color: #FFFAF5;
   border-radius: 10px;
   margin: 20px auto;
@@ -117,7 +104,7 @@ button {
 
 .features-item {
   background: white;
-  padding: 15px;
+  padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -125,60 +112,97 @@ button {
 }
 
 .features-item img {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 10px;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 15px;
 }
 
 .features-item h3 {
-  font-size: 1rem; /* Slightly smaller for mobile */
+  font-size: 1.2rem;
   margin-bottom: 10px;
   color: #EA8C1A;
 }
 
 .features-item p {
-  font-size: 0.9rem;
-  color: #2F4F4F;
-}
-
-/* Pricing Section */
-.pricing {
-  display: grid;
-  grid-template-columns: 1fr; /* Single column for mobile */
-  gap: 20px;
-  padding: 20px;
-  background-color: #FFFAF5;
-  border-radius: 10px;
-  margin: 20px auto;
-}
-
-.pricing-card {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #EA8C1A;
-}
-
-/* Testimonials Section */
-.testimonials {
-  background: linear-gradient(to right, #EA8C1A, #FFFAF5);
-  color: #2F4F4F;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  margin: 20px auto;
-}
-
-.testimonials blockquote {
   font-size: 1rem;
-  margin: 0 auto 20px;
+  color: #2F4F4F;
 }
 
-.testimonials cite {
-  font-size: 0.9rem;
-  color: #EA8C1A;
+/* FAQ Section */
+.faq-section {
+  padding: 40px;
+  background: #FFFAF5;
+  border-radius: 10px;
+  margin: 20px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.faq-heading {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #2F4F4F;
+}
+
+.faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.faq-item summary {
+  padding: 15px 20px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #2F4F4F;
+}
+
+.faq-item summary:hover {
+  background-color: #f8f8f8;
+}
+
+.faq-item p {
+  padding: 10px 20px;
+  margin: 0;
+  border-top: 1px solid #ddd;
+  color: #666;
+}
+
+/* Sign-Up Form Section */
+.signup-form {
+  padding: 40px;
+  background: white;
+  border-radius: 10px;
+  margin: 20px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.signup-form h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #2F4F4F;
+}
+
+.signup-form p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.signup-form iframe {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 400px;
 }
 
 /* Footer */
@@ -186,69 +210,5 @@ button {
   background-color: #EA8C1A;
   color: white;
   text-align: center;
-  padding: 15px;
-  margin-top: 20px;
-}
-
-.footer nav a {
-  color: #FFFAF5;
-  margin: 0 5px;
-}
-
-/* Responsive Design for Larger Screens */
-@media (min-width: 768px) {
-  .hero {
-    flex-direction: row; /* Aligns hero section side-by-side */
-    max-width: 1200px;
-  }
-
-  .hero-content {
-    text-align: left;
-  }
-
-  .features {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Switch to grid layout */
-  }
-
-  .pricing {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Grid layout for pricing */
-  }
-
-  .testimonials blockquote {
-    font-size: 1.2rem;
-    max-width: 700px;
-  }
-}
-
-@media (min-width: 1024px) {
-  h1 {
-    font-size: 2.5rem;
-  }
-
-  h2 {
-    font-size: 2rem;
-  }
-
-  .hero h1 {
-    font-size: 2.5rem;
-  }
-
-  .hero p {
-    font-size: 1.2rem;
-  }
-
-  .features {
-    max-width: 1200px;
-    padding: 40px;
-  }
-
-  .pricing {
-    max-width: 1200px;
-    padding: 40px;
-  }
-
-  .testimonials {
-    max-width: 1200px;
-    padding: 40px;
-  }
+  padding: 20px;
 }
