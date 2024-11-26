@@ -5,6 +5,7 @@ import '../css/MyTrips.css';
 import TopBar from '../components/TopBar';
 
 const MyTrips = () => {
+
   const [trips, setTrips] = useState([]);
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
@@ -18,7 +19,7 @@ const MyTrips = () => {
       try {
         const response = await api.get('api/trips/all');
         setTrips(response.data);
-        console.log(response.data);
+        console.log(response.data.trip._id);
 
       } catch (err) {
         setError('Failed to load trips.');
