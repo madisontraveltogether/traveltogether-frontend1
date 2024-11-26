@@ -5,7 +5,6 @@ import '../css/MyTrips.css';
 import TopBar from '../components/TopBar';
 
 const MyTrips = () => {
-
   const [trips, setTrips] = useState([]);
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
@@ -18,15 +17,14 @@ const MyTrips = () => {
       setLoading(true);
       try {
         const response = await api.get('api/trips/all');
-        setTrips(response.data);
-        console.log(response.data.trip._id);
-
+        setTrips(response.data); // Use the response data directly
       } catch (err) {
         setError('Failed to load trips.');
       } finally {
         setLoading(false);
       }
     };
+
     fetchTrips();
   }, []);
 
@@ -39,10 +37,6 @@ const MyTrips = () => {
     const matchesFilter = filter === 'all' || trip.privacy === filter;
     return matchesSearch && matchesFilter;
   });
-
-  const now = new Date();
-  const upcomingTrips = filteredTrips.filter((trip) => new Date(trip.startDate) > now);
-  const pastTrips = filteredTrips.filter((trip) => new Date(trip.startDate) <= now);
 
   return (
     <div className="my-trips-container">
@@ -71,69 +65,28 @@ const MyTrips = () => {
       ) : trips.length === 0 ? (
         <p>No trips found. Click "Create New Trip" to start planning!</p>
       ) : (
-        <div>
-          <h3>Upcoming Trips</h3>
-          <ul className="trip-list">
-            {upcomingTrips.length === 0 ? (
-              <p>No upcoming trips found.</p>
-            ) : (
-              upcomingTrips.map((trip) => (
-                <li key={tripId}>
-                  <div className="trip-info" onClick={() => navigate(`/trips/${tripId}`)}>
-                    <div>
-                      <h3>{trip.name}</h3>
-                      <p>Location: {trip.location || 'Not specified'}</p>
-                      <p>
-                        Dates:{' '}
-                        {trip.startDate
-                          ? new Date(trip.startDate).toLocaleDateString()
-                          : 'N/A'}{' '}
-                        -{' '}
-                        {trip.endDate
-                          ? new Date(trip.endDate).toLocaleDateString()
-                          : 'N/A'}
-                      </p>
-                      <p>Privacy: {trip.privacy}</p>
-                    </div>
-                  </div>
-                </li>
-              ))
-            )}
-          </ul>
-
-          <h3>Past Trips</h3>
-          <ul className="trip-list">
-            {pastTrips.length === 0 ? (
-              <p>No past trips found.</p>
-            ) : (
-              pastTrips.map((trip) => (
-                <li key={tripId}>
-                  <div className="trip-info" onClick={() => navigate(`/trips/${tripId}`)}>
-                    <img
-                      src={trip.coverImage || '/default-cover.jpg'}
-                      alt={`${trip.name} cover`}
-                    />
-                    <div>
-                      <h3>{trip.name}</h3>
-                      <p>Location: {trip.location || 'Not specified'}</p>
-                      <p>
-                        Dates:{' '}
-                        {trip.startDate
-                          ? new Date(trip.startDate).toLocaleDateString()
-                          : 'N/A'}{' '}
-                        -{' '}
-                        {trip.endDate
-                          ? new Date(trip.endDate).toLocaleDateString()
-                          : 'N/A'}
-                      </p>
-                      <p>Privacy: {trip.privacy}</p>
-                    </div>
-                  </div>
-                </li>
-              ))
-            )}
-          </ul>
-        </div>
+        <ul className="trip-list">
+          {filteredTrips.map((trip) => (
+            <li key={trip._id}>
+              <div className="trip-info" onClick={() => navigate(`/trips/${trip._id}`)}>
+                <img
+                  src={trip.coverImage || '/default-cover.jpg'}
+                  alt={`${trip.name} cover`}
+                />
+                <div>
+                  <h3>{trip.name}</h3>
+                  <p>Location: {trip.location || 'Not specified'}</p>
+                  <p>
+                    Dates:{' '}
+                    {trip.startDate ? new Date(trip.startDate).toLocaleDateString() : 'N/A'} -{' '}
+                    {trip.endDate ? new Date(trip.endDate).toLocaleDateString() : 'N/A'}
+                  </p>
+                  <p>Privacy: {trip.privacy}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
