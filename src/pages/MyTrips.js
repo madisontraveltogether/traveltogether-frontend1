@@ -34,7 +34,6 @@ const MyTrips = () => {
   };
 
   const handleMenuToggle = (tripId) => {
-    // If clicking the same trip, close the menu. Otherwise, open the clicked trip's menu.
     setMenuOpen(menuOpen === tripId ? null : tripId);
   };
 
@@ -42,7 +41,7 @@ const MyTrips = () => {
     if (window.confirm('Are you sure you want to delete this trip? This action cannot be undone.')) {
       try {
         await api.delete(`/api/trips/${tripId}`);
-        setTrips(trips.filter((trip) => tripId !== tripId));
+        setTrips(trips.filter((trip) => trip.tripId !== tripId));
       } catch (err) {
         setError('Failed to delete trip.');
       }
@@ -93,8 +92,8 @@ const MyTrips = () => {
               <p>No upcoming trips found.</p>
             ) : (
               upcomingTrips.map((trip) => (
-                <li key={tripId}>
-                  <div className="trip-info" onClick={() => navigate(`/trips/${tripId}`)}>
+                <li key={trip.tripId}>
+                  <div className="trip-info" onClick={() => navigate(`/trips/${trip.tripId}`)}>
                     <img
                       src={trip.coverImage || '/default-cover.jpg'}
                       alt={`${trip.name} cover`}
@@ -117,14 +116,14 @@ const MyTrips = () => {
                   </div>
 
                   <div className="kebab-menu">
-                    <button className="menu-button" onClick={(e) => { e.stopPropagation(); handleMenuToggle(tripId); }}>
+                    <button className="menu-button" onClick={(e) => { e.stopPropagation(); handleMenuToggle(trip.tripId); }}>
                       &#x22EE; {/* Three vertical dots */}
                     </button>
-                    {menuOpen === tripId && (
+                    {menuOpen === trip.tripId && (
                       <div className="menu-dropdown" onClick={(e) => e.stopPropagation()}>
-                        <button onClick={() => navigate(`/trips/${tripId}/edit`)}>Edit Trip</button>
-                        <button onClick={() => navigate(`/trips/${tripId}/add-guests`)}>Add Guests</button>
-                        <button className="delete-button" onClick={() => handleDeleteTrip(tripId)}>
+                        <button onClick={() => navigate(`/trips/${trip.tripId}/edit`)}>Edit Trip</button>
+                        <button onClick={() => navigate(`/trips/${trip.tripId}/add-guests`)}>Add Guests</button>
+                        <button className="delete-button" onClick={() => handleDeleteTrip(trip.tripId)}>
                           Delete Trip
                         </button>
                       </div>
@@ -141,8 +140,8 @@ const MyTrips = () => {
               <p>No past trips found.</p>
             ) : (
               pastTrips.map((trip) => (
-                <li key={tripId}>
-                  <div className="trip-info" onClick={() => navigate(`/trips/${tripId}`)}>
+                <li key={trip.tripId}>
+                  <div className="trip-info" onClick={() => navigate(`/trips/${trip.tripId}`)}>
                     <img
                       src={trip.coverImage || '/default-cover.jpg'}
                       alt={`${trip.name} cover`}
@@ -165,14 +164,14 @@ const MyTrips = () => {
                   </div>
 
                   <div className="kebab-menu">
-                    <button className="menu-button" onClick={(e) => { e.stopPropagation(); handleMenuToggle(tripId); }}>
+                    <button className="menu-button" onClick={(e) => { e.stopPropagation(); handleMenuToggle(trip.tripId); }}>
                       &#x22EE;
                     </button>
-                    {menuOpen === tripId && (
+                    {menuOpen === trip.tripId && (
                       <div className="menu-dropdown" onClick={(e) => e.stopPropagation()}>
-                        <button onClick={() => navigate(`/trips/${tripId}/edit`)}>Edit Trip</button>
-                        <button onClick={() => navigate(`/trips/${tripId}/add-guests`)}>Add Guests</button>
-                        <button className="delete-button" onClick={() => handleDeleteTrip(tripId)}>
+                        <button onClick={() => navigate(`/trips/${trip.tripId}/edit`)}>Edit Trip</button>
+                        <button onClick={() => navigate(`/trips/${trip.tripId}/add-guests`)}>Add Guests</button>
+                        <button className="delete-button" onClick={() => handleDeleteTrip(trip.tripId)}>
                           Delete Trip
                         </button>
                       </div>
